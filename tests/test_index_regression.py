@@ -51,8 +51,8 @@ def _build_and_get_documents(project_name: str, sdd_root_name: str, tmp_path: Pa
 
 
 def _load_expected(project_name: str) -> list[dict]:
-    """Load expected.json for a project."""
-    path = _TEST_PROJECTS_DIR / project_name / "expected.json"
+    """Load index_expected.json for a project."""
+    path = _TEST_PROJECTS_DIR / project_name / "index_expected.json"
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 

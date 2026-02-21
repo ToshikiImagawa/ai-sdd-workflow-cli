@@ -52,9 +52,9 @@ def build_and_get_documents(project_name: str, sdd_root_name: str) -> list[dict]
 
 
 def generate(project_name: str, sdd_root_name: str) -> None:
-    """Generate expected.json for a single project."""
+    """Generate index_expected.json for a single project."""
     documents = build_and_get_documents(project_name, sdd_root_name)
-    output_path = _TEST_PROJECTS_DIR / project_name / "expected.json"
+    output_path = _TEST_PROJECTS_DIR / project_name / "index_expected.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(documents, f, indent=2, ensure_ascii=False)
     print(f"  {project_name}: {len(documents)} docs -> {output_path}")
