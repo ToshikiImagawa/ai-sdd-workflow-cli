@@ -38,12 +38,13 @@
     "feature_id": "auth",
     "parent_feature_id": null,
     "tags": [
-      "security"
+      "security",
+      "user"
     ],
-    "depends_on": [
-      "auth"
-    ],
-    "links": []
+    "depends_on": [],
+    "links": [
+      "../requirement/auth.md"
+    ]
   },
   {
     "file_path": "specification/payment_spec.md",
@@ -54,12 +55,13 @@
     "feature_id": "payment",
     "parent_feature_id": null,
     "tags": [
-      "billing"
+      "billing",
+      "commerce"
     ],
-    "depends_on": [
-      "payment"
-    ],
-    "links": []
+    "depends_on": [],
+    "links": [
+      "../requirement/payment.md"
+    ]
   },
   {
     "file_path": "task/AUTH-001/index.md",
