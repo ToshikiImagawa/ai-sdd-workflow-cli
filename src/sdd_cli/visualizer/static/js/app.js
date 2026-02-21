@@ -282,7 +282,8 @@ async function loadGraphData(dataUrl, elementId, renderDivId, metadata) {
             title: node.title,
             path: node.id,
             directory: node.directory,
-            featureId: node.feature_id || 'N/A'
+            featureId: node.feature_id || 'N/A',
+            links: node.links || []
         };
     }
     buildParentMap(graphData, metadata);
@@ -640,6 +641,10 @@ function showNodeDetail(nodeId, nodeData) {
         ? nodeData.parent.split(', ').map(p => `<span class="parent-tag">${p}</span>`).join(' ')
         : 'N/A';
 
+    const linksHtml = nodeData.links && nodeData.links.length > 0
+        ? nodeData.links.map(l => `<span class="parent-tag">${l}</span>`).join(' ')
+        : 'N/A';
+
     const detailContent = document.getElementById('detail-content');
     detailContent.innerHTML = `
         <h2>${nodeData.title || nodeId}</h2>
@@ -654,6 +659,10 @@ function showNodeDetail(nodeId, nodeData) {
         <div class="detail-item">
             <div class="detail-label">Feature ID</div>
             <div class="detail-value">${nodeData.featureId || 'N/A'}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Links</div>
+            <div class="detail-value">${linksHtml}</div>
         </div>
         <div class="detail-item">
             <div class="detail-label">Parent</div>

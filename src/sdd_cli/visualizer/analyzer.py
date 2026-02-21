@@ -323,8 +323,9 @@ class DependencyAnalyzer:
             docs: Documents to check
             file_types: Set of file_type values eligible for CONSTITUTION edges
         """
-        # Only count implicit/explicit edges as hierarchy incoming (not task link edges)
-        nodes_with_incoming = {edge["target"] for edge in graph["edges"] if edge["type"] in ("implicit", "explicit")}
+        # Only count implicit edges as hierarchy incoming
+        # Parent-Child or file-type-order implicit edges indicate the node already has a parent
+        nodes_with_incoming = {edge["target"] for edge in graph["edges"] if edge["type"] == "implicit"}
         for doc in docs:
             if doc.get("file_type") in file_types and doc["file_path"] not in nodes_with_incoming:
                 graph["edges"].append(
@@ -427,6 +428,7 @@ class DependencyAnalyzer:
                     directory=doc["directory"],
                     file_type=doc.get("file_type", ""),
                     feature_id=doc.get("feature_id", ""),
+                    links=doc.get("links", []),
                 )
             )
 
@@ -440,6 +442,7 @@ class DependencyAnalyzer:
                     directory="",
                     file_type="",
                     feature_id="",
+                    links=[],
                 ),
             )
 

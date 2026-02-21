@@ -68,6 +68,7 @@ class GraphNode(TypedDict):
     directory: str
     file_type: str
     feature_id: str
+    links: list[str]
 
 
 class GraphEdge(TypedDict):
