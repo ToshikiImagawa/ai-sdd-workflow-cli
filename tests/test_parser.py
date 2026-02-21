@@ -254,6 +254,16 @@ class TestParse:
         assert result["feature_id"] == "bad"
         assert result["file_type"] == "unknown"
 
+    def test_parse_with_custom_directory(self, tmp_path):
+        md = write_md(
+            tmp_path / "reqs" / "auth" / "index.md",
+            frontmatter={"title": "Auth"},
+            body="# Auth\nContent here.",
+        )
+        result = DocumentParser.parse(md, directory="requirement", rel_path="reqs/auth/index.md")
+        assert result["file_type"] == "requirement"
+        assert result["feature_id"] == "auth"
+
     def test_links_extracted(self, tmp_path):
         md = write_md(
             tmp_path / "specification" / "auth_spec.md",
@@ -261,3 +271,123 @@ class TestParse:
         )
         result = DocumentParser.parse(md)
         assert "../requirement/auth.md" in result["links"]
+
+
+# ---------------------------------------------------------------------------
+# _infer_file_type with directory argument
+# ---------------------------------------------------------------------------
+
+
+class TestInferFileTypeWithDirectory:
+    def test_task_with_custom_dir(self):
+        assert DocumentParser._infer_file_type(Path("todos/TICKET-1/index.md"), directory="task") == "task"
+
+    def test_requirement_with_custom_dir(self):
+        assert DocumentParser._infer_file_type(Path("reqs/auth/index.md"), directory="requirement") == "requirement"
+
+    def test_design_suffix_in_custom_dir(self):
+        assert DocumentParser._infer_file_type(Path("specs/auth_design.md"), directory="specification") == "design"
+
+    def test_spec_suffix_in_custom_dir(self):
+        assert DocumentParser._infer_file_type(Path("specs/auth_spec.md"), directory="specification") == "spec"
+
+    def test_specification_without_suffix(self):
+        assert DocumentParser._infer_file_type(Path("specs/auth.md"), directory="specification") == "unknown"
+
+    def test_directory_none_falls_back(self):
+        assert DocumentParser._infer_file_type(Path("task/TICKET-1/index.md"), directory=None) == "task"
+
+
+# ---------------------------------------------------------------------------
+# _infer_parent_feature_id with directory/rel_path arguments
+# ---------------------------------------------------------------------------
+
+
+class TestInferParentWithDirectory:
+    def test_custom_dir_nested_index(self):
+        # reqs/auth/login/index.md → parent = 'auth'
+        result = DocumentParser._infer_parent_feature_id(
+            Path("/abs/reqs/auth/login/index.md"),
+            directory="requirement",
+            rel_path="reqs/auth/login/index.md",
+        )
+        assert result == "auth"
+
+    def test_custom_dir_single_level_no_parent(self):
+        # reqs/auth/index.md → None (defines the feature itself)
+        result = DocumentParser._infer_parent_feature_id(
+            Path("/abs/reqs/auth/index.md"),
+            directory="requirement",
+            rel_path="reqs/auth/index.md",
+        )
+        assert result is None
+
+    def test_custom_dir_non_index_parent(self):
+        # reqs/auth/login.md → parent = 'auth'
+        result = DocumentParser._infer_parent_feature_id(
+            Path("/abs/reqs/auth/login.md"),
+            directory="requirement",
+            rel_path="reqs/auth/login.md",
+        )
+        assert result == "auth"
+
+    def test_custom_dir_flat_no_parent(self):
+        # reqs/auth.md → None
+        result = DocumentParser._infer_parent_feature_id(
+            Path("/abs/reqs/auth.md"),
+            directory="requirement",
+            rel_path="reqs/auth.md",
+        )
+        assert result is None
+
+    def test_custom_dir_task_returns_none(self):
+        result = DocumentParser._infer_parent_feature_id(
+            Path("/abs/todos/TICKET-1/index.md"),
+            directory="task",
+            rel_path="todos/TICKET-1/index.md",
+        )
+        assert result is None
+
+    def test_none_rel_path_falls_back(self):
+        result = DocumentParser._infer_parent_feature_id(
+            Path("requirement/auth/login/index.md"),
+            directory=None,
+            rel_path=None,
+        )
+        assert result == "auth"
+
+
+# ---------------------------------------------------------------------------
+# _extract_feature_id with directory/rel_path arguments
+# ---------------------------------------------------------------------------
+
+
+class TestExtractFeatureIdWithDirectory:
+    def test_index_md_in_custom_dir(self):
+        # reqs/auth/index.md → 'auth' (parent dir is not "reqs")
+        result = DocumentParser._extract_feature_id(
+            {},
+            Path("/abs/reqs/auth/index.md"),
+            directory="requirement",
+            rel_path="reqs/auth/index.md",
+        )
+        assert result == "auth"
+
+    def test_index_md_directly_under_custom_base(self):
+        # reqs/index.md → parent is "reqs" which is in skip list → keep "index"
+        result = DocumentParser._extract_feature_id(
+            {},
+            Path("/abs/reqs/index.md"),
+            directory="requirement",
+            rel_path="reqs/index.md",
+        )
+        assert result == "index"
+
+    def test_frontmatter_overrides(self):
+        result = DocumentParser._extract_feature_id(
+            {"feature-id": "my-feat"},
+            Path("/abs/reqs/auth/index.md"),
+            directory="requirement",
+            rel_path="reqs/auth/index.md",
+        )
+        assert result == "my-feat"

@@ -45,7 +45,11 @@ def _build_index(project_name: str, sdd_root_name: str, tmp_path: Path) -> Index
     db_path = tmp_path / "index.db"
     db = IndexDB(db_path)
     for doc_info in scan_results:
-        parsed_data = DocumentParser.parse(doc_info["full_path"])
+        parsed_data = DocumentParser.parse(
+            doc_info["full_path"],
+            directory=doc_info["directory"],
+            rel_path=doc_info["file_path"],
+        )
         db.index_document(doc_info, parsed_data)
     return db
 

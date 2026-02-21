@@ -13,7 +13,7 @@
         "file_path": "prd/search-feature.md",
         "file_name": "search-feature",
         "directory": "requirement",
-        "file_type": "unknown",
+        "file_type": "requirement",
         "title": "Search Feature",
         "feature_id": "search-feature",
         "parent_feature_id": null,

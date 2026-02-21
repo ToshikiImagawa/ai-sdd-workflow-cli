@@ -13,11 +13,17 @@ class DocumentParser:
     """Parses SDD Markdown documents and extracts metadata."""
 
     @staticmethod
-    def parse(file_path: Path) -> ParsedDocument:
+    def parse(
+        file_path: Path,
+        directory: Optional[str] = None,
+        rel_path: Optional[str] = None,
+    ) -> ParsedDocument:
         """Parse a Markdown document and extract metadata.
 
         Args:
             file_path: Path to the Markdown file
+            directory: Logical directory name from scanner (e.g. "task", "requirement")
+            rel_path: Relative path from SDD root (e.g. "reqs/auth/index.md")
 
         Returns:
             Dictionary with keys:
@@ -41,13 +47,13 @@ class DocumentParser:
             title = DocumentParser._extract_title(metadata, content)
 
             # Extract or infer feature ID
-            feature_id = DocumentParser._extract_feature_id(metadata, file_path)
+            feature_id = DocumentParser._extract_feature_id(metadata, file_path, directory, rel_path)
 
             # Infer file type
-            file_type = DocumentParser._infer_file_type(file_path)
+            file_type = DocumentParser._infer_file_type(file_path, directory)
 
             # Infer parent feature ID from directory nesting
-            parent_feature_id = DocumentParser._infer_parent_feature_id(file_path)
+            parent_feature_id = DocumentParser._infer_parent_feature_id(file_path, directory, rel_path)
 
             # Extract tags
             tags = DocumentParser._extract_tags(metadata)
@@ -100,7 +106,12 @@ class DocumentParser:
         return "Untitled"
 
     @staticmethod
-    def _extract_feature_id(metadata: dict[str, Any], file_path: Path) -> str:
+    def _extract_feature_id(
+        metadata: dict[str, Any],
+        file_path: Path,
+        directory: Optional[str] = None,
+        rel_path: Optional[str] = None,
+    ) -> str:
         """Extract feature ID from frontmatter or infer from filename."""
         # Try frontmatter variants
         for key in ["feature-id", "feature_id", "id"]:
@@ -115,8 +126,13 @@ class DocumentParser:
         # This handles cases like: requirement/{feature-name}/index.md, task/{ticket-id}/tasks.md
         if name in ("index", "tasks"):
             parent_name = file_path.parent.name
+            # Build skip list: standard dirs + actual base dir from rel_path
+            skip_dirs = {"requirement", "specification", "task"}
+            if rel_path:
+                base_dir = Path(rel_path).parts[0]
+                skip_dirs.add(base_dir)
             # Avoid using directory names like "requirement", "specification", "task"
-            if parent_name not in ["requirement", "specification", "task"]:
+            if parent_name not in skip_dirs:
                 return parent_name
 
         return name
@@ -179,15 +195,37 @@ class DocumentParser:
         return links
 
     @staticmethod
-    def _infer_file_type(file_path: Path) -> str:
-        """Infer file type from file path and name.
+    def _infer_file_type(file_path: Path, directory: Optional[str] = None) -> str:
+        """Infer the file type from the file path and name.
 
         Args:
             file_path: Path to the file
+            directory: Logical directory name from scanner (e.g. "task", "requirement")
 
         Returns:
             File type: 'requirement', 'spec', 'design', or 'task'
         """
+        # If a directory is provided, use it for primary classification
+        if directory is not None:
+            if directory == "task":
+                return "task"
+
+            file_name = file_path.name
+            if file_name.endswith("_design.md") or file_name == "index_design.md":
+                return "design"
+            if file_name.endswith("_spec.md") or file_name == "index_spec.md":
+                return "spec"
+
+            if directory == "requirement":
+                return "requirement"
+
+            # specification directory without _design/_spec suffix
+            if directory == "specification":
+                return "unknown"
+
+            return "unknown"
+
+        # Fallback: infer from path string (backward compatibility)
         path_str = str(file_path)
         file_name = file_path.name
 
@@ -211,11 +249,17 @@ class DocumentParser:
         return "unknown"
 
     @staticmethod
-    def _infer_parent_feature_id(file_path: Path) -> Optional[str]:
+    def _infer_parent_feature_id(
+        file_path: Path,
+        directory: Optional[str] = None,
+        rel_path: Optional[str] = None,
+    ) -> Optional[str]:
         """Infer parent feature ID from directory nesting.
 
         Args:
             file_path: Path to the file
+            directory: Logical directory name from scanner (e.g. "task", "requirement")
+            rel_path: Relative path from SDD root (e.g. "reqs/auth/index.md")
 
         Returns:
             Parent feature ID or None if no parent exists
@@ -226,17 +270,49 @@ class DocumentParser:
             specification/auth/login/index_spec.md → 'auth'
             task/TICKET-123/index.md → None (task uses ticket ID, not feature hierarchy)
         """
+        # If rel_path is provided, use it to find the base directory
+        if rel_path is not None and directory is not None:
+            # For task directories, we don't infer parent from path
+            if directory == "task":
+                return None
+
+            rel_parts = Path(rel_path).parts
+            # rel_path starts with the actual base dir name (e.g. "reqs/auth/index.md")
+            # parts[0] is the base dir
+            if len(rel_parts) < 1:
+                return None
+
+            # Use rel_path parts, treating parts[0] as the base directory
+            base_dir_index = 0
+            depth_from_base = len(rel_parts) - base_dir_index - 1
+            is_index = Path(rel_path).name in ["index.md", "index_spec.md", "index_design.md"]
+
+            if depth_from_base >= 2:
+                if is_index:
+                    if depth_from_base >= 3:
+                        parent_dir = rel_parts[base_dir_index + depth_from_base - 2]
+                        return parent_dir
+                    else:
+                        return None
+                else:
+                    parent_dir = rel_parts[base_dir_index + depth_from_base - 1]
+                    return parent_dir
+
+            return None
+
+        # Fallback: infer from file_path (backward compatibility)
         parts = file_path.parts
 
         # Find the base directory (requirement, specification, task)
-        base_dir_index = None
+        found_index: Optional[int] = None
         for i, part in enumerate(parts):
             if part in ["requirement", "specification", "task"]:
-                base_dir_index = i
+                found_index = i
                 break
 
-        if base_dir_index is None:
+        if found_index is None:
             return None
+        base_dir_index = found_index
 
         # For task directories, we don't infer parent from path
         # (ticket ID is not feature hierarchy)

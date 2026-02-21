@@ -45,7 +45,11 @@ def _build_and_get_documents(project_name: str, sdd_root_name: str, tmp_path: Pa
     db_path = tmp_path / "index.db"
     with IndexDB(db_path) as db:
         for doc_info in scan_results:
-            parsed_data = DocumentParser.parse(doc_info["full_path"])
+            parsed_data = DocumentParser.parse(
+                doc_info["full_path"],
+                directory=doc_info["directory"],
+                rel_path=doc_info["file_path"],
+            )
             db.index_document(doc_info, parsed_data)
         return [dict(doc) for doc in db.get_all_documents()]
 

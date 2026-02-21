@@ -37,7 +37,7 @@ def build_index(root: Path, quiet: bool = False) -> None:
     db_path = cache_dir / "index.db"
 
     with IndexDB(db_path) as db:
-        # Clear existing index
+        # Clear the existing index
         db.clear()
 
         # Index each document
@@ -45,7 +45,11 @@ def build_index(root: Path, quiet: bool = False) -> None:
         for doc_info in documents:
             try:
                 # Parse document
-                parsed_data = DocumentParser.parse(doc_info["full_path"])
+                parsed_data = DocumentParser.parse(
+                    doc_info["full_path"],
+                    directory=doc_info["directory"],
+                    rel_path=doc_info["file_path"],
+                )
 
                 # Index document
                 db.index_document(doc_info, parsed_data)
