@@ -1,0 +1,316 @@
+[
+  {
+    "name": "all",
+    "params": {
+      "query": null,
+      "feature_id": null,
+      "tag": null,
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/dashboard.md",
+        "file_name": "dashboard",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Dashboard",
+        "feature_id": "dashboard",
+        "parent_feature_id": null,
+        "tags": [
+          "ui",
+          "analytics"
+        ]
+      },
+      {
+        "file_path": "requirement/user-auth.md",
+        "file_name": "user-auth",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "User Authentication",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user",
+          "core"
+        ]
+      },
+      {
+        "file_path": "requirement/user-profile.md",
+        "file_name": "user-profile",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "User Profile",
+        "feature_id": "user-profile",
+        "parent_feature_id": null,
+        "tags": [
+          "user",
+          "profile"
+        ]
+      },
+      {
+        "file_path": "specification/dashboard_spec.md",
+        "file_name": "dashboard_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Dashboard Specification",
+        "feature_id": "dashboard",
+        "parent_feature_id": null,
+        "tags": [
+          "ui",
+          "api"
+        ]
+      },
+      {
+        "file_path": "specification/user-auth_design.md",
+        "file_name": "user-auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "User Auth Design",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "architecture"
+        ]
+      },
+      {
+        "file_path": "specification/user-auth_spec.md",
+        "file_name": "user-auth_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "User Auth Specification",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "api"
+        ]
+      },
+      {
+        "file_path": "specification/user-profile_spec.md",
+        "file_name": "user-profile_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "User Profile Specification",
+        "feature_id": "user-profile",
+        "parent_feature_id": null,
+        "tags": [
+          "user",
+          "api"
+        ]
+      },
+      {
+        "file_path": "task/DASH-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Implement Dashboard",
+        "feature_id": "DASH-001",
+        "parent_feature_id": null,
+        "tags": [
+          "ui"
+        ]
+      },
+      {
+        "file_path": "task/DASH-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Dashboard Implementation Tasks",
+        "feature_id": "DASH-001",
+        "parent_feature_id": null,
+        "tags": []
+      },
+      {
+        "file_path": "task/UA-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Implement Authentication",
+        "feature_id": "UA-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "tag=security",
+    "params": {
+      "query": null,
+      "feature_id": null,
+      "tag": "security",
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/user-auth.md",
+        "file_name": "user-auth",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "User Authentication",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user",
+          "core"
+        ]
+      },
+      {
+        "file_path": "specification/user-auth_design.md",
+        "file_name": "user-auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "User Auth Design",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "architecture"
+        ]
+      },
+      {
+        "file_path": "specification/user-auth_spec.md",
+        "file_name": "user-auth_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "User Auth Specification",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "api"
+        ]
+      },
+      {
+        "file_path": "task/UA-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Implement Authentication",
+        "feature_id": "UA-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "directory=requirement",
+    "params": {
+      "query": null,
+      "feature_id": null,
+      "tag": null,
+      "directory": "requirement",
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/dashboard.md",
+        "file_name": "dashboard",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Dashboard",
+        "feature_id": "dashboard",
+        "parent_feature_id": null,
+        "tags": [
+          "ui",
+          "analytics"
+        ]
+      },
+      {
+        "file_path": "requirement/user-auth.md",
+        "file_name": "user-auth",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "User Authentication",
+        "feature_id": "user-auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user",
+          "core"
+        ]
+      },
+      {
+        "file_path": "requirement/user-profile.md",
+        "file_name": "user-profile",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "User Profile",
+        "feature_id": "user-profile",
+        "parent_feature_id": null,
+        "tags": [
+          "user",
+          "profile"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "query=Dashboard",
+    "params": {
+      "query": "Dashboard",
+      "feature_id": null,
+      "tag": null,
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "specification/dashboard_spec.md",
+        "file_name": "dashboard_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Dashboard Specification",
+        "feature_id": "dashboard",
+        "parent_feature_id": null,
+        "tags": [
+          "ui",
+          "api"
+        ]
+      },
+      {
+        "file_path": "task/DASH-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Implement Dashboard",
+        "feature_id": "DASH-001",
+        "parent_feature_id": null,
+        "tags": [
+          "ui"
+        ]
+      },
+      {
+        "file_path": "requirement/dashboard.md",
+        "file_name": "dashboard",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Dashboard",
+        "feature_id": "dashboard",
+        "parent_feature_id": null,
+        "tags": [
+          "ui",
+          "analytics"
+        ]
+      },
+      {
+        "file_path": "task/DASH-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Dashboard Implementation Tasks",
+        "feature_id": "DASH-001",
+        "parent_feature_id": null,
+        "tags": []
+      }
+    ]
+  }
+]
