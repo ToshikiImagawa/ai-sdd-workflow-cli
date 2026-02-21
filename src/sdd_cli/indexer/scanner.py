@@ -1,24 +1,32 @@
 """Document scanner for SDD directories."""
 
-import os
 from pathlib import Path
+from typing import Optional
 
-from sdd_cli.types import ScanResult
+from sdd_cli.config import resolve_config
+from sdd_cli.types import ScanResult, SDDDirectories
 
 
 class DocumentScanner:
     """Scans SDD directory structure and collects document metadata."""
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, directories: Optional[SDDDirectories] = None):
         """Initialize scanner with SDD root directory.
 
         Args:
             root: Path to SDD root directory (e.g., .sdd)
+            directories: Optional directory name overrides. If None, resolved
+                via resolve_config (env > .sdd-config.json > defaults).
         """
         self.root = root
-        self.requirement_dir = root / os.environ.get("SDD_REQUIREMENT_DIR", "requirement")
-        self.specification_dir = root / os.environ.get("SDD_SPECIFICATION_DIR", "specification")
-        self.task_dir = root / os.environ.get("SDD_TASK_DIR", "task")
+        if directories is not None:
+            dirs = directories
+        else:
+            config = resolve_config(root.parent)
+            dirs = config["directories"]
+        self.requirement_dir = root / dirs["requirement"]
+        self.specification_dir = root / dirs["specification"]
+        self.task_dir = root / dirs["task"]
 
     def scan_all(self) -> list[ScanResult]:
         """Scan all directories and return document metadata.

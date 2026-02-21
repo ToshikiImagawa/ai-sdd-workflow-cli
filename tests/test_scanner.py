@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from sdd_cli.indexer.scanner import DocumentScanner
+from sdd_cli.types import SDDDirectories
 
 # ---------------------------------------------------------------------------
 # Directory name defaults / env override
@@ -126,3 +127,34 @@ class TestRelativePath:
         # Should NOT contain the sdd_root prefix
         assert not doc["file_path"].startswith(str(sdd_root))
         assert doc["file_path"] == "requirement/auth.md"
+
+
+# ---------------------------------------------------------------------------
+# directories argument (config integration)
+# ---------------------------------------------------------------------------
+
+
+class TestDirectoriesArgument:
+    def test_custom_directories(self, tmp_path):
+        sdd = tmp_path / ".sdd"
+        for d in ("reqs", "specs", "todos"):
+            (sdd / d).mkdir(parents=True)
+        (sdd / "reqs" / "auth.md").write_text("# Auth")
+
+        dirs: SDDDirectories = {"requirement": "reqs", "specification": "specs", "task": "todos"}
+        scanner = DocumentScanner(sdd, directories=dirs)
+        assert scanner.requirement_dir == sdd / "reqs"
+        assert scanner.specification_dir == sdd / "specs"
+        assert scanner.task_dir == sdd / "todos"
+
+        docs = scanner.scan_all()
+        assert len(docs) == 1
+        assert docs[0]["directory"] == "requirement"
+
+    def test_directories_none_uses_config(self, sdd_root):
+        """directories=None should fall back to resolve_config (defaults)."""
+        (sdd_root / "requirement" / "a.md").write_text("# A")
+        scanner = DocumentScanner(sdd_root)
+        assert scanner.requirement_dir == sdd_root / "requirement"
+        docs = scanner.scan_all()
+        assert len(docs) == 1

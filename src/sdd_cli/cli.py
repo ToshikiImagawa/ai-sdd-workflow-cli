@@ -1,9 +1,10 @@
 """CLI definition for sdd-cli."""
 
-import os
 from pathlib import Path
 
 import click
+
+from sdd_cli.config import resolve_config
 
 
 def root_option(f):
@@ -11,8 +12,8 @@ def root_option(f):
     return click.option(
         "--root",
         type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path),
-        default=lambda: Path(os.environ.get("SDD_ROOT", ".sdd")),
-        help="SDD root directory (default: $SDD_ROOT or .sdd)",
+        default=lambda: Path(resolve_config(Path.cwd())["root"]),
+        help="SDD root directory (default: $SDD_ROOT or .sdd-config.json or .sdd)",
     )(f)
 
 

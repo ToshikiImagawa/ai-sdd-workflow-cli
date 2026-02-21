@@ -83,3 +83,19 @@ class DependencyGraph(TypedDict):
 
     nodes: list[GraphNode]
     edges: list[GraphEdge]
+
+
+class SDDDirectories(TypedDict):
+    """SDD ディレクトリ設定"""
+
+    requirement: str
+    specification: str
+    task: str
+
+
+class SDDConfig(TypedDict):
+    """SDD 設定 (.sdd-config.json schema)"""
+
+    root: str
+    lang: str
+    directories: SDDDirectories
