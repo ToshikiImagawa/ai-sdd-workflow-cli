@@ -1,0 +1,61 @@
+[
+  {
+    "file_path": "prd/search-feature.md",
+    "file_name": "search-feature",
+    "directory": "requirement",
+    "file_type": "unknown",
+    "title": "Search Feature",
+    "feature_id": "search-feature",
+    "parent_feature_id": null,
+    "tags": [
+      "search",
+      "ux"
+    ],
+    "depends_on": [],
+    "links": []
+  },
+  {
+    "file_path": "specification/search-feature_spec.md",
+    "file_name": "search-feature_spec",
+    "directory": "specification",
+    "file_type": "spec",
+    "title": "Search Feature Specification",
+    "feature_id": "search-feature",
+    "parent_feature_id": null,
+    "tags": [
+      "search"
+    ],
+    "depends_on": [
+      "search-feature"
+    ],
+    "links": []
+  },
+  {
+    "file_path": "task/SEARCH-001/index.md",
+    "file_name": "index",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Implement Search",
+    "feature_id": "SEARCH-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [
+      "search-feature"
+    ],
+    "links": [
+      "../../specification/search-feature_spec.md"
+    ]
+  },
+  {
+    "file_path": "task/SEARCH-001/tasks.md",
+    "file_name": "tasks",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Search Tasks",
+    "feature_id": "SEARCH-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [],
+    "links": []
+  }
+]

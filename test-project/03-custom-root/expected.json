@@ -1,0 +1,61 @@
+[
+  {
+    "file_path": "requirement/notification.md",
+    "file_name": "notification",
+    "directory": "requirement",
+    "file_type": "requirement",
+    "title": "Notification System",
+    "feature_id": "notification",
+    "parent_feature_id": null,
+    "tags": [
+      "messaging",
+      "realtime"
+    ],
+    "depends_on": [],
+    "links": []
+  },
+  {
+    "file_path": "specification/notification_spec.md",
+    "file_name": "notification_spec",
+    "directory": "specification",
+    "file_type": "spec",
+    "title": "Notification Specification",
+    "feature_id": "notification",
+    "parent_feature_id": null,
+    "tags": [
+      "messaging"
+    ],
+    "depends_on": [
+      "notification"
+    ],
+    "links": []
+  },
+  {
+    "file_path": "task/NOTIF-001/index.md",
+    "file_name": "index",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Implement Notification Service",
+    "feature_id": "NOTIF-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [
+      "notification"
+    ],
+    "links": [
+      "../../specification/notification_spec.md"
+    ]
+  },
+  {
+    "file_path": "task/NOTIF-001/tasks.md",
+    "file_name": "tasks",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Notification Tasks",
+    "feature_id": "NOTIF-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [],
+    "links": []
+  }
+]
