@@ -17,6 +17,15 @@ def sdd_root(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
+def custom_sdd_root(tmp_path: Path) -> Path:
+    """Create a .sdd directory with non-default subdirectory names (reqs/specs/todos)."""
+    sdd = tmp_path / ".sdd"
+    for sub in ("reqs", "specs", "todos"):
+        (sdd / sub).mkdir(parents=True)
+    return sdd
+
+
+@pytest.fixture
 def index_db(tmp_path: Path) -> IndexDB:
     """Create an IndexDB backed by a temp-dir SQLite file."""
     db_path = tmp_path / "test_index.db"

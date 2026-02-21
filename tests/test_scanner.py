@@ -1,5 +1,6 @@
 """Tests for DocumentScanner."""
 
+import json
 from pathlib import Path
 
 from sdd_cli.indexer.scanner import DocumentScanner
@@ -158,3 +159,106 @@ class TestDirectoriesArgument:
         assert scanner.requirement_dir == sdd_root / "requirement"
         docs = scanner.scan_all()
         assert len(docs) == 1
+
+
+# ---------------------------------------------------------------------------
+# Config file / env integration (scanner uses resolve_config internally)
+# ---------------------------------------------------------------------------
+
+
+class TestConfigIntegration:
+    """Scanner + .sdd-config.json / env var integration tests."""
+
+    def _write_config(self, project_root, config):
+        (project_root / ".sdd-config.json").write_text(json.dumps(config))
+
+    def test_config_file_custom_dirs(self, custom_sdd_root):
+        """Scanner resolves custom dirs from .sdd-config.json."""
+        project_root = custom_sdd_root.parent
+        self._write_config(
+            project_root,
+            {
+                "directories": {"requirement": "reqs", "specification": "specs", "task": "todos"},
+            },
+        )
+        (custom_sdd_root / "reqs" / "auth.md").write_text("# Auth")
+        (custom_sdd_root / "todos" / "T-1").mkdir()
+        (custom_sdd_root / "todos" / "T-1" / "index.md").write_text("# Task")
+
+        scanner = DocumentScanner(custom_sdd_root)
+        assert scanner.requirement_dir == custom_sdd_root / "reqs"
+        assert scanner.specification_dir == custom_sdd_root / "specs"
+        assert scanner.task_dir == custom_sdd_root / "todos"
+
+        docs = scanner.scan_all()
+        dirs = {d["directory"] for d in docs}
+        assert dirs == {"requirement", "task"}
+
+    def test_config_file_partial(self, tmp_path):
+        """Partial .sdd-config.json: only requirement overridden, others default."""
+        sdd = tmp_path / ".sdd"
+        for sub in ("reqs", "specification", "task"):
+            (sdd / sub).mkdir(parents=True)
+        self._write_config(tmp_path, {"directories": {"requirement": "reqs"}})
+        (sdd / "reqs" / "a.md").write_text("# A")
+        (sdd / "specification" / "b.md").write_text("# B")
+
+        scanner = DocumentScanner(sdd)
+        assert scanner.requirement_dir == sdd / "reqs"
+        assert scanner.specification_dir == sdd / "specification"
+        assert scanner.task_dir == sdd / "task"
+
+        docs = scanner.scan_all()
+        assert len(docs) == 2
+
+    def test_env_overrides_config_file(self, custom_sdd_root, monkeypatch):
+        """Env vars take priority over .sdd-config.json."""
+        project_root = custom_sdd_root.parent
+        self._write_config(
+            project_root,
+            {
+                "directories": {"requirement": "reqs", "specification": "specs", "task": "todos"},
+            },
+        )
+        # env overrides "reqs" -> "env_reqs"
+        (custom_sdd_root / "env_reqs").mkdir()
+        (custom_sdd_root / "env_reqs" / "auth.md").write_text("# Auth")
+        monkeypatch.setenv("SDD_REQUIREMENT_DIR", "env_reqs")
+
+        scanner = DocumentScanner(custom_sdd_root)
+        assert scanner.requirement_dir == custom_sdd_root / "env_reqs"
+        # spec/task still from config file
+        assert scanner.specification_dir == custom_sdd_root / "specs"
+        assert scanner.task_dir == custom_sdd_root / "todos"
+
+        docs = scanner.scan_all()
+        assert len(docs) == 1
+        assert docs[0]["file_name"] == "auth"
+
+    def test_env_overrides_defaults(self, tmp_path, monkeypatch):
+        """Env vars override defaults when no config file exists."""
+        sdd = tmp_path / ".sdd"
+        for sub in ("env_reqs", "specification", "task"):
+            (sdd / sub).mkdir(parents=True)
+        (sdd / "env_reqs" / "a.md").write_text("# A")
+        monkeypatch.setenv("SDD_REQUIREMENT_DIR", "env_reqs")
+
+        scanner = DocumentScanner(sdd)
+        assert scanner.requirement_dir == sdd / "env_reqs"
+        assert scanner.specification_dir == sdd / "specification"
+
+        docs = scanner.scan_all()
+        assert len(docs) == 1
+
+    def test_no_config_no_env_uses_defaults(self, sdd_root):
+        """No config file, no env vars: scanner uses default directory names."""
+        (sdd_root / "requirement" / "a.md").write_text("# A")
+        (sdd_root / "specification" / "b.md").write_text("# B")
+
+        scanner = DocumentScanner(sdd_root)
+        assert scanner.requirement_dir == sdd_root / "requirement"
+        assert scanner.specification_dir == sdd_root / "specification"
+        assert scanner.task_dir == sdd_root / "task"
+
+        docs = scanner.scan_all()
+        assert len(docs) == 2
