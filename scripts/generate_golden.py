@@ -153,6 +153,9 @@ def generate_search(project_name: str, sdd_root_name: str) -> None:
             for scenario in scenarios:
                 results = db.search(**scenario.params())
                 cleaned = [_strip_snippet(dict(r)) for r in results]
+                # query ありの場合は file_path ソートで順序を安定させる
+                if scenario.query:
+                    cleaned.sort(key=lambda d: d["file_path"])
                 golden.append(
                     {
                         "name": scenario.name,

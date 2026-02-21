@@ -76,6 +76,10 @@ def test_search_regression(project_name, sdd_root_name, tmp_path):
             actual_raw = db.search(**params)
             actual = [_strip_snippet(dict(r)) for r in actual_raw]
 
+            # query ありの場合は file_path ソートで比較 (rank 順は SQLite バージョンで変動しうる)
+            if params.get("query"):
+                actual.sort(key=lambda d: d["file_path"])
+
             assert len(actual) == len(expected_results), (
                 f"{project_name}/{name}: result count mismatch: got {len(actual)}, expected {len(expected_results)}"
             )

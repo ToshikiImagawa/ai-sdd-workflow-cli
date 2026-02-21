@@ -264,6 +264,19 @@
     },
     "results": [
       {
+        "file_path": "requirement/dashboard.md",
+        "file_name": "dashboard",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Dashboard",
+        "feature_id": "dashboard",
+        "parent_feature_id": null,
+        "tags": [
+          "ui",
+          "analytics"
+        ]
+      },
+      {
         "file_path": "specification/dashboard_spec.md",
         "file_name": "dashboard_spec",
         "directory": "specification",
@@ -286,19 +299,6 @@
         "parent_feature_id": null,
         "tags": [
           "ui"
-        ]
-      },
-      {
-        "file_path": "requirement/dashboard.md",
-        "file_name": "dashboard",
-        "directory": "requirement",
-        "file_type": "requirement",
-        "title": "Dashboard",
-        "feature_id": "dashboard",
-        "parent_feature_id": null,
-        "tags": [
-          "ui",
-          "analytics"
         ]
       },
       {

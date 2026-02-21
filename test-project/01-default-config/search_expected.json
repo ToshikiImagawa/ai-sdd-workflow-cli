@@ -258,18 +258,6 @@
     },
     "results": [
       {
-        "file_path": "specification/payment_spec.md",
-        "file_name": "payment_spec",
-        "directory": "specification",
-        "file_type": "spec",
-        "title": "Payment Specification",
-        "feature_id": "payment",
-        "parent_feature_id": null,
-        "tags": [
-          "billing"
-        ]
-      },
-      {
         "file_path": "requirement/payment.md",
         "file_name": "payment",
         "directory": "requirement",
@@ -283,14 +271,16 @@
         ]
       },
       {
-        "file_path": "task/PAY-001/tasks.md",
-        "file_name": "tasks",
-        "directory": "task",
-        "file_type": "task",
-        "title": "Payment Tasks",
-        "feature_id": "PAY-001",
+        "file_path": "specification/payment_spec.md",
+        "file_name": "payment_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Payment Specification",
+        "feature_id": "payment",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "billing"
+        ]
       },
       {
         "file_path": "task/PAY-001/index.md",
@@ -303,6 +293,16 @@
         "tags": [
           "billing"
         ]
+      },
+      {
+        "file_path": "task/PAY-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Tasks",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": []
       }
     ]
   }
