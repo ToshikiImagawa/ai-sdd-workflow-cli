@@ -36,6 +36,19 @@
         ]
       },
       {
+        "file_path": "specification/auth_design.md",
+        "file_name": "auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Authentication Technical Design Document",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
         "file_path": "specification/auth_spec.md",
         "file_name": "auth_spec",
         "directory": "specification",
@@ -46,6 +59,19 @@
         "tags": [
           "security",
           "user"
+        ]
+      },
+      {
+        "file_path": "specification/payment_design.md",
+        "file_name": "payment_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Payment Technical Design Document",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
         ]
       },
       {
@@ -66,11 +92,12 @@
         "file_name": "index",
         "directory": "task",
         "file_type": "task",
-        "title": "Implement Login",
+        "title": "Authentication Feature Implementation",
         "feature_id": "AUTH-001",
         "parent_feature_id": null,
         "tags": [
-          "security"
+          "security",
+          "user"
         ]
       },
       {
@@ -78,7 +105,7 @@
         "file_name": "tasks",
         "directory": "task",
         "file_type": "task",
-        "title": "Auth Tasks",
+        "title": "Authentication Task Breakdown",
         "feature_id": "AUTH-001",
         "parent_feature_id": null,
         "tags": []
@@ -88,11 +115,12 @@
         "file_name": "index",
         "directory": "task",
         "file_type": "task",
-        "title": "Implement Payment",
+        "title": "Payment Feature Implementation",
         "feature_id": "PAY-001",
         "parent_feature_id": null,
         "tags": [
-          "billing"
+          "billing",
+          "commerce"
         ]
       },
       {
@@ -100,7 +128,7 @@
         "file_name": "tasks",
         "directory": "task",
         "file_type": "task",
-        "title": "Payment Tasks",
+        "title": "Payment Task Breakdown",
         "feature_id": "PAY-001",
         "parent_feature_id": null,
         "tags": []
@@ -123,6 +151,19 @@
         "directory": "requirement",
         "file_type": "requirement",
         "title": "Authentication Feature",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/auth_design.md",
+        "file_name": "auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Authentication Technical Design Document",
         "feature_id": "auth",
         "parent_feature_id": null,
         "tags": [
@@ -169,6 +210,19 @@
         ]
       },
       {
+        "file_path": "specification/auth_design.md",
+        "file_name": "auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Authentication Technical Design Document",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
         "file_path": "specification/auth_spec.md",
         "file_name": "auth_spec",
         "directory": "specification",
@@ -186,11 +240,12 @@
         "file_name": "index",
         "directory": "task",
         "file_type": "task",
-        "title": "Implement Login",
+        "title": "Authentication Feature Implementation",
         "feature_id": "AUTH-001",
         "parent_feature_id": null,
         "tags": [
-          "security"
+          "security",
+          "user"
         ]
       }
     ]
@@ -210,11 +265,12 @@
         "file_name": "index",
         "directory": "task",
         "file_type": "task",
-        "title": "Implement Login",
+        "title": "Authentication Feature Implementation",
         "feature_id": "AUTH-001",
         "parent_feature_id": null,
         "tags": [
-          "security"
+          "security",
+          "user"
         ]
       },
       {
@@ -222,7 +278,7 @@
         "file_name": "tasks",
         "directory": "task",
         "file_type": "task",
-        "title": "Auth Tasks",
+        "title": "Authentication Task Breakdown",
         "feature_id": "AUTH-001",
         "parent_feature_id": null,
         "tags": []
@@ -232,11 +288,12 @@
         "file_name": "index",
         "directory": "task",
         "file_type": "task",
-        "title": "Implement Payment",
+        "title": "Payment Feature Implementation",
         "feature_id": "PAY-001",
         "parent_feature_id": null,
         "tags": [
-          "billing"
+          "billing",
+          "commerce"
         ]
       },
       {
@@ -244,7 +301,7 @@
         "file_name": "tasks",
         "directory": "task",
         "file_type": "task",
-        "title": "Payment Tasks",
+        "title": "Payment Task Breakdown",
         "feature_id": "PAY-001",
         "parent_feature_id": null,
         "tags": []
@@ -275,6 +332,19 @@
         ]
       },
       {
+        "file_path": "specification/payment_design.md",
+        "file_name": "payment_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Payment Technical Design Document",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
         "file_path": "specification/payment_spec.md",
         "file_name": "payment_spec",
         "directory": "specification",
@@ -292,11 +362,12 @@
         "file_name": "index",
         "directory": "task",
         "file_type": "task",
-        "title": "Implement Payment",
+        "title": "Payment Feature Implementation",
         "feature_id": "PAY-001",
         "parent_feature_id": null,
         "tags": [
-          "billing"
+          "billing",
+          "commerce"
         ]
       },
       {
@@ -304,7 +375,7 @@
         "file_name": "tasks",
         "directory": "task",
         "file_type": "task",
-        "title": "Payment Tasks",
+        "title": "Payment Task Breakdown",
         "feature_id": "PAY-001",
         "parent_feature_id": null,
         "tags": []
