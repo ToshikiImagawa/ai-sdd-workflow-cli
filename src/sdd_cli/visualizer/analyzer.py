@@ -34,6 +34,15 @@ class DependencyAnalyzer:
         self.root = root
         self.dependencies: list[tuple[str, str, str]] = []
 
+        # Lookup dictionaries for O(1) access
+        self._doc_by_key: dict[tuple[str, str], DocumentRecord] = {
+            (doc["feature_id"], doc["file_type"]): doc for doc in documents
+        }
+        self._doc_paths: frozenset[str] = frozenset(doc["file_path"] for doc in documents)
+        self._first_path_by_feature: dict[str, str] = {}
+        for doc in documents:
+            self._first_path_by_feature.setdefault(doc["feature_id"], doc["file_path"])
+
     def analyze(self) -> list[tuple[str, str, str]]:
         """Analyze all dependencies.
 
@@ -152,10 +161,7 @@ class DependencyAnalyzer:
                     return doc["file_path"]
 
         # Fallback: first match (for same-level deps or unknown types)
-        for doc in self.documents:
-            if doc.get("feature_id") == feature_id:
-                return doc["file_path"]
-        return None
+        return self._first_path_by_feature.get(feature_id)
 
     def _infer_implicit_dependencies(self, doc: DocumentRecord) -> list[str]:
         """Infer implicit dependencies based on file type and feature ID.
@@ -225,7 +231,7 @@ class DependencyAnalyzer:
         Returns:
             True if document exists
         """
-        return any(doc["file_path"] == path for doc in self.documents)
+        return path in self._doc_paths
 
     def _find_document_by_feature_id(self, feature_id: str, file_type: str) -> Optional[DocumentRecord]:
         """Find document by feature ID and file type.
@@ -237,7 +243,4 @@ class DependencyAnalyzer:
         Returns:
             Document metadata or None if not found
         """
-        for doc in self.documents:
-            if doc.get("feature_id") == feature_id and doc.get("file_type") == file_type:
-                return doc
-        return None
+        return self._doc_by_key.get((feature_id, file_type))
