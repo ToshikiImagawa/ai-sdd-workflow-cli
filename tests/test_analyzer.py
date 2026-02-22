@@ -27,6 +27,38 @@ class TestExplicitDeps:
         explicit = [d for d in deps if d[2] == "explicit"]
         assert explicit == []
 
+    def test_design_depends_on_resolves_to_spec(self, tmp_path):
+        """design depends_on [auth] → auth spec (direct parent type)."""
+        docs = [
+            _doc("requirement/auth/index.md", "requirement", "auth"),
+            _doc("specification/auth_spec.md", "spec", "auth", "specification"),
+            _doc("specification/auth_design.md", "design", "auth", "specification"),
+            _doc("specification/pay_design.md", "design", "pay", "specification", depends_on=["auth"]),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("specification/pay_design.md", "specification/auth_spec.md") in explicit
+
+    def test_design_depends_on_skips_to_requirement(self, tmp_path):
+        """design depends_on [auth] → auth requirement when no spec exists."""
+        docs = [
+            _doc("requirement/auth/index.md", "requirement", "auth"),
+            _doc("specification/pay_design.md", "design", "pay", "specification", depends_on=["auth"]),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("specification/pay_design.md", "requirement/auth/index.md") in explicit
+
+    def test_task_depends_on_resolves_to_same_level(self, tmp_path):
+        """task depends_on [AUTH-001] → AUTH-001 task (fallback to first match)."""
+        docs = [
+            _doc("task/AUTH-001/index.md", "task", "AUTH-001", "task"),
+            _doc("task/PAY-001/index.md", "task", "PAY-001", "task", depends_on=["AUTH-001"]),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("task/PAY-001/index.md", "task/AUTH-001/index.md") in explicit
+
 
 # ---------------------------------------------------------------------------
 # analyze(): implicit dependencies

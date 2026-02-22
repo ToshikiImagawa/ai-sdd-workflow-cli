@@ -5,6 +5,20 @@ from typing import Optional
 
 from sdd_cli.types import DocumentRecord
 
+# --- File type constants ---
+FILE_TYPE_REQUIREMENT = "requirement"
+FILE_TYPE_SPEC = "spec"
+FILE_TYPE_DESIGN = "design"
+FILE_TYPE_TASK = "task"
+
+# --- Type hierarchy (upstream → downstream) ---
+TYPE_HIERARCHY = [FILE_TYPE_REQUIREMENT, FILE_TYPE_SPEC, FILE_TYPE_DESIGN, FILE_TYPE_TASK]
+
+# --- Edge type constants ---
+EDGE_EXPLICIT = "explicit"
+EDGE_IMPLICIT = "implicit"
+EDGE_LINK = "link"
+
 
 class DependencyAnalyzer:
     """Analyzes dependencies between SDD documents."""
@@ -36,27 +50,28 @@ class DependencyAnalyzer:
 
             # 1. Explicit dependencies from frontmatter
             if doc.get("depends_on"):
+                source_type = doc.get("file_type", "")
                 for dep in doc["depends_on"]:
-                    target = self._resolve_feature_id_to_path(dep)
+                    target = self._resolve_feature_id_to_path(dep, source_type)
                     if target:
-                        self.dependencies.append((file_path, target, "explicit"))
+                        self.dependencies.append((file_path, target, EDGE_EXPLICIT))
 
             # 2. Implicit dependencies based on naming convention
             implicit_deps = self._infer_implicit_dependencies(doc)
             for target in implicit_deps:
-                self.dependencies.append((file_path, target, "implicit"))
+                self.dependencies.append((file_path, target, EDGE_IMPLICIT))
 
             # 3. Parent-child nesting (parent -> child direction)
             parent_feature_id = doc.get("parent_feature_id")
             if parent_feature_id:
                 parent_doc = self._find_document_by_feature_id(parent_feature_id, doc.get("file_type", ""))
                 if parent_doc:
-                    self.dependencies.append((parent_doc["file_path"], file_path, "implicit"))
+                    self.dependencies.append((parent_doc["file_path"], file_path, EDGE_IMPLICIT))
 
             # 4. Dependencies from markdown links (task files only)
             # Task files use links to reference their parent spec/requirement docs.
             # Only keep edges to the deepest nodes in the dependency chain.
-            if doc.get("file_type") == "task" and doc.get("links"):
+            if doc.get("file_type") == FILE_TYPE_TASK and doc.get("links"):
                 targets = []
                 for link in doc["links"]:
                     target = self._resolve_relative_link(file_path, link)
@@ -65,7 +80,7 @@ class DependencyAnalyzer:
                 # Filter to leaf targets only
                 leaf_targets = self._filter_to_leaf_targets(targets)
                 for target in leaf_targets:
-                    self.dependencies.append((file_path, target, "link"))
+                    self.dependencies.append((file_path, target, EDGE_LINK))
 
         return self.dependencies
 
@@ -102,22 +117,41 @@ class DependencyAnalyzer:
                     continue
                 visited.add(current)
                 for src, tgt, link_type in self.dependencies:
-                    if src == current and link_type in ("implicit", "explicit"):
+                    if src == current and link_type in (EDGE_IMPLICIT, EDGE_EXPLICIT):
                         if tgt in target_set and tgt != target:
                             ancestors.add(target)
                         queue.append(tgt)
 
         return [t for t in set(targets) if t not in ancestors]
 
-    def _resolve_feature_id_to_path(self, feature_id: str) -> Optional[str]:
-        """Resolve feature ID to document path.
+    def _resolve_feature_id_to_path(self, feature_id: str, source_file_type: str = "") -> Optional[str]:
+        """Resolve feature ID to the nearest upstream document path.
+
+        Uses the type hierarchy (requirement → spec → design → task) to find
+        the closest ancestor type that has a document with the given feature_id.
+
+        For example, if source is "design" and depends_on "auth":
+          1. Look for auth spec (one level up) → found → return it
+          2. If not found, look for auth requirement (two levels up)
+
+        If source_file_type is not in the hierarchy, falls back to first match.
 
         Args:
             feature_id: Feature ID to resolve
+            source_file_type: File type of the source document
 
         Returns:
             Document path or None if not found
         """
+        if source_file_type in TYPE_HIERARCHY:
+            source_idx = TYPE_HIERARCHY.index(source_file_type)
+            # Search upward from direct parent type
+            for i in range(source_idx - 1, -1, -1):
+                doc = self._find_document_by_feature_id(feature_id, TYPE_HIERARCHY[i])
+                if doc:
+                    return doc["file_path"]
+
+        # Fallback: first match (for same-level deps or unknown types)
         for doc in self.documents:
             if doc.get("feature_id") == feature_id:
                 return doc["file_path"]
@@ -140,21 +174,21 @@ class DependencyAnalyzer:
         feature_id = doc.get("feature_id", "")
 
         # Pattern 1: requirement -> spec (if spec exists)
-        if file_type == "requirement":
-            spec_doc = self._find_document_by_feature_id(feature_id, "spec")
+        if file_type == FILE_TYPE_REQUIREMENT:
+            spec_doc = self._find_document_by_feature_id(feature_id, FILE_TYPE_SPEC)
             if spec_doc:
                 deps.append(spec_doc["file_path"])
 
         # Pattern 2: spec -> design (if design exists)
-        elif file_type == "spec":
-            design_doc = self._find_document_by_feature_id(feature_id, "design")
+        elif file_type == FILE_TYPE_SPEC:
+            design_doc = self._find_document_by_feature_id(feature_id, FILE_TYPE_DESIGN)
             if design_doc:
                 deps.append(design_doc["file_path"])
 
         # Pattern 3: design -> task (if task exists with same feature_id)
-        elif file_type == "design":
+        elif file_type == FILE_TYPE_DESIGN:
             for task_doc in self.documents:
-                if task_doc.get("file_type") == "task" and task_doc.get("feature_id") == feature_id:
+                if task_doc.get("file_type") == FILE_TYPE_TASK and task_doc.get("feature_id") == feature_id:
                     deps.append(task_doc["file_path"])
 
         return deps
