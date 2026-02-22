@@ -33,8 +33,8 @@ function getNodeColors() {
 }
 
 const EDGE_STYLES = {
-    "explicit": "-->",
-    "implicit": "--o",
+    "explicit": "--o",
+    "implicit": "-.-o",
     "link": "-->"
 };
 
@@ -99,26 +99,26 @@ function generateMermaidCode(graphData) {
             nodesWithIncomingEdge.add(edge.target);
         }
 
-        // top-level requirements --o CONSTITUTION (not nested under another requirement)
+        // top-level requirements -.-o CONSTITUTION (not nested under another requirement)
         const requirementNodes = nodes.filter(node => node.file_type === "requirement");
         for (const node of requirementNodes) {
             if (nodesWithIncomingEdge.has(node.id)) continue;
             const nodeId = sanitizeNodeId(node.id);
-            const edgeDef = `${nodeId} --o CONSTITUTION`;
+            const edgeDef = `${nodeId} -.-o CONSTITUTION`;
             if (!edgesAdded.has(edgeDef)) {
                 lines.push(`    ${edgeDef}`);
                 edgesAdded.add(edgeDef);
             }
         }
 
-        // spec --o CONSTITUTION (for specs without a corresponding requirement)
+        // spec -.-o CONSTITUTION (for specs without a corresponding requirement)
         const requirementFeatureIds = new Set(requirementNodes.map(n => n.feature_id).filter(Boolean));
         const specNodes = nodes.filter(node => node.file_type === "spec");
         for (const node of specNodes) {
             if (nodesWithIncomingEdge.has(node.id)) continue;
             if (!requirementFeatureIds.has(node.feature_id)) {
                 const nodeId = sanitizeNodeId(node.id);
-                const edgeDef = `${nodeId} --o CONSTITUTION`;
+                const edgeDef = `${nodeId} -.-o CONSTITUTION`;
                 if (!edgesAdded.has(edgeDef)) {
                     lines.push(`    ${edgeDef}`);
                     edgesAdded.add(edgeDef);

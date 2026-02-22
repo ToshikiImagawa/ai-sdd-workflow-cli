@@ -84,14 +84,15 @@ class TestImplicitDeps:
         implicit = [(s, t) for s, t, lt in deps if lt == "implicit"]
         assert ("specification/auth_spec.md", "specification/auth_design.md") in implicit
 
-    def test_design_to_task(self, tmp_path):
+    def test_no_implicit_design_to_task(self, tmp_path):
+        """Task is excluded from implicit dependencies (connected via link edges only)."""
         docs = [
             _doc("specification/auth_design.md", "design", "auth", "specification"),
             _doc("task/TICKET-1/index.md", "task", "auth", "task"),
         ]
         deps = DependencyAnalyzer(docs, tmp_path).analyze()
         implicit = [(s, t) for s, t, lt in deps if lt == "implicit"]
-        assert ("specification/auth_design.md", "task/TICKET-1/index.md") in implicit
+        assert ("specification/auth_design.md", "task/TICKET-1/index.md") not in implicit
 
     def test_no_implicit_for_unknown(self, tmp_path):
         docs = [_doc("other/x.md", "unknown", "x", "other")]

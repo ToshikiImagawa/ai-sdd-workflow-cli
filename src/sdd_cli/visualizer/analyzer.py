@@ -161,7 +161,8 @@ class DependencyAnalyzer:
         """Infer implicit dependencies based on file type and feature ID.
 
         Dependency flow:
-            CONSTITUTION -> requirement -> spec -> design -> task
+            CONSTITUTION -> requirement -> spec -> design
+        Note: task is excluded from implicit dependencies (connected via link edges only)
 
         Args:
             doc: Document metadata
@@ -184,12 +185,6 @@ class DependencyAnalyzer:
             design_doc = self._find_document_by_feature_id(feature_id, FILE_TYPE_DESIGN)
             if design_doc:
                 deps.append(design_doc["file_path"])
-
-        # Pattern 3: design -> task (if task exists with same feature_id)
-        elif file_type == FILE_TYPE_DESIGN:
-            for task_doc in self.documents:
-                if task_doc.get("file_type") == FILE_TYPE_TASK and task_doc.get("feature_id") == feature_id:
-                    deps.append(task_doc["file_path"])
 
         return deps
 
