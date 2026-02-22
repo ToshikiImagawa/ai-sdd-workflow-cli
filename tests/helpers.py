@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import Any, Optional
 
-from sdd_cli.types import DocumentInfo, ParsedDocument
+from sdd_cli.types import DocumentInfo, DocumentRecord, ParsedDocument
 
 
 def write_md(
@@ -73,4 +73,30 @@ def sample_parsed_data(
         depends_on=depends_on or [],
         content=content,
         links=links or [],
+    )
+
+
+def sample_doc_record(
+    file_path: str,
+    file_type: str = "requirement",
+    feature_id: str = "feat",
+    directory: str = "requirement",
+    depends_on: Optional[list[str]] = None,
+    links: Optional[list[str]] = None,
+    parent_feature_id: Optional[str] = None,
+    title: Optional[str] = None,
+    file_name: Optional[str] = None,
+) -> DocumentRecord:
+    """Create a DocumentRecord dict for analyzer / graph builder tests."""
+    return DocumentRecord(
+        file_path=file_path,
+        file_name=file_name or Path(file_path).stem,
+        directory=directory,
+        file_type=file_type,
+        feature_id=feature_id,
+        title=title or Path(file_path).stem,
+        depends_on=depends_on or [],
+        links=links or [],
+        parent_feature_id=parent_feature_id,
+        tags=[],
     )

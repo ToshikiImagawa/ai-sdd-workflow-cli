@@ -47,8 +47,8 @@ class GraphBuilder:
             filtered_docs = [d for d in filtered_docs if d["directory"] == filter_dir]
         if feature_id:
             filtered_docs = [d for d in filtered_docs if d.get("feature_id") == feature_id]
-        graph = self._build_graph_from_docs(filtered_docs, include_constitution=True)
-        self._add_constitution_edges(graph, filtered_docs, {"requirement", "spec"})
+        graph = self._build_graph_from_docs(filtered_docs)
+        self._attach_constitution(graph, filtered_docs, {"requirement", "spec"})
         return graph
 
     def build_split_dependency_graphs(
@@ -65,88 +65,79 @@ class GraphBuilder:
                 - prd_based_graph: Documents with requirements (PRD)
                 - direct_graph: Documents without requirements (direct from CONSTITUTION)
         """
-        # Filter documents
         filtered_docs = self.documents
         if filter_dir:
             filtered_docs = [d for d in filtered_docs if d["directory"] == filter_dir]
 
-        # Separate documents by PRD existence
-        prd_based_docs = []
-        direct_docs = []
+        prd_based_docs, direct_docs = self._classify_documents(filtered_docs)
 
-        # First pass: classify requirements and specs
+        prd_graph = self._build_graph_from_docs(prd_based_docs)
+        self._attach_constitution(prd_graph, prd_based_docs, {"requirement"})
+
+        direct_graph = self._build_graph_from_docs(direct_docs)
+        self._attach_constitution(direct_graph, direct_docs, {"spec"})
+
+        return prd_graph, direct_graph
+
+    def _classify_documents(self, docs: list[DocumentRecord]) -> tuple[list[DocumentRecord], list[DocumentRecord]]:
+        """Classify documents into PRD-based and direct groups.
+
+        First pass: requirement/spec/task are classified.
+        Second pass: design docs follow their spec's classification.
+
+        Args:
+            docs: Documents to classify
+
+        Returns:
+            Tuple of (prd_based_docs, direct_docs)
+        """
+        prd_based_docs: list[DocumentRecord] = []
+        direct_docs: list[DocumentRecord] = []
         spec_classification: dict[str, str] = {}  # feature_id -> "prd" or "direct"
 
-        for doc in filtered_docs:
+        # First pass: classify requirements, specs, and tasks
+        for doc in docs:
             file_type = doc.get("file_type", "")
             feat_id = doc.get("feature_id", "")
 
             if file_type == "requirement":
-                # All requirements go to PRD-based graph
                 prd_based_docs.append(doc)
             elif file_type == "spec":
-                # Spec docs: check if corresponding requirement exists
-                has_requirement = self._has_requirement(feat_id)
-                if has_requirement:
-                    # Has requirement -> PRD-based graph
+                if self._has_requirement(feat_id):
                     prd_based_docs.append(doc)
                     spec_classification[feat_id] = "prd"
                 else:
-                    # No requirement -> Direct graph (from CONSTITUTION)
                     direct_docs.append(doc)
                     spec_classification[feat_id] = "direct"
             elif file_type == "task":
-                # Task docs: classify based on link targets
-                # If any link resolves to a requirement or PRD-classified spec, it's PRD-based
-                task_is_prd = self._task_has_prd_link(doc, spec_classification)
-                if task_is_prd:
+                if self._task_has_prd_link(doc, spec_classification):
                     prd_based_docs.append(doc)
                 else:
                     direct_docs.append(doc)
 
         # Second pass: classify design docs based on their spec's classification
-        for doc in filtered_docs:
+        for doc in docs:
             file_type = doc.get("file_type", "")
             feat_id = doc.get("feature_id", "")
 
             if file_type == "design":
-                # Design docs: follow their spec's classification
-                # Check if we classified the corresponding spec
                 if feat_id in spec_classification:
                     if spec_classification[feat_id] == "prd":
                         prd_based_docs.append(doc)
                     else:
                         direct_docs.append(doc)
+                elif self._has_spec(feat_id):
+                    prd_based_docs.append(doc)
                 else:
-                    # No spec found, check if spec exists at all
-                    has_spec = self._has_spec(feat_id)
-                    if has_spec:
-                        # Spec exists but wasn't classified (shouldn't happen)
-                        prd_based_docs.append(doc)
-                    else:
-                        # No spec -> Direct graph (from CONSTITUTION)
-                        direct_docs.append(doc)
+                    direct_docs.append(doc)
 
-        # Build PRD-based graph
-        prd_graph = self._build_graph_from_docs(prd_based_docs, include_constitution=True)
-        self._add_constitution_edges(prd_graph, prd_based_docs, {"requirement"})
+        return prd_based_docs, direct_docs
 
-        # Build direct graph (CONSTITUTION -> specs without PRD)
-        direct_graph = self._build_graph_from_docs(direct_docs, include_constitution=True)
-        self._add_constitution_edges(direct_graph, direct_docs, {"spec"})
-
-        return prd_graph, direct_graph
-
-    def _build_graph_from_docs(
-        self,
-        docs: list[DocumentRecord],
-        include_constitution: bool = False,
-    ) -> DependencyGraph:
+    def _build_graph_from_docs(self, docs: list[DocumentRecord]) -> DependencyGraph:
         """Build graph from filtered documents.
 
         Args:
             docs: List of document metadata
-            include_constitution: Whether to include CONSTITUTION node
 
         Returns:
             Dictionary with nodes and edges
@@ -156,10 +147,6 @@ class GraphBuilder:
 
         # Extract filtered paths
         filtered_paths = {doc["file_path"] for doc in docs}
-
-        # Add CONSTITUTION if requested
-        if include_constitution:
-            filtered_paths.add("CONSTITUTION.md")
 
         # Filter dependencies
         filtered_deps = [
@@ -182,20 +169,6 @@ class GraphBuilder:
                 )
             )
 
-        # Add CONSTITUTION node if requested
-        if include_constitution:
-            nodes.insert(
-                0,
-                GraphNode(
-                    id="CONSTITUTION.md",
-                    title="CONSTITUTION.md",
-                    directory="",
-                    file_type="",
-                    feature_id="",
-                    links=[],
-                ),
-            )
-
         edges: list[GraphEdge] = []
         for src, tgt, link_type in filtered_deps:
             edges.append(
@@ -211,21 +184,36 @@ class GraphBuilder:
             edges=edges,
         )
 
-    def _add_constitution_edges(
+    def _attach_constitution(
         self,
         graph: DependencyGraph,
         docs: list[DocumentRecord],
         file_types: set[str],
     ) -> None:
-        """Add implicit CONSTITUTION edges for top-level nodes without incoming edges.
+        """Add CONSTITUTION node and implicit edges to the graph.
 
         Args:
             graph: Graph dict to modify in-place
             docs: Documents to check
             file_types: Set of file_type values eligible for CONSTITUTION edges
         """
-        # Only count implicit edges as hierarchy incoming
-        # Parent-Child or file-type-order implicit edges indicate the node already has a parent
+        if not docs:
+            return
+
+        # Insert CONSTITUTION node
+        graph["nodes"].insert(
+            0,
+            GraphNode(
+                id="CONSTITUTION.md",
+                title="CONSTITUTION.md",
+                directory="",
+                file_type="",
+                feature_id="",
+                links=[],
+            ),
+        )
+
+        # Add implicit edges for top-level nodes without incoming implicit edges
         nodes_with_incoming = {edge["target"] for edge in graph["edges"] if edge["type"] == "implicit"}
         for doc in docs:
             if doc.get("file_type") in file_types and doc["file_path"] not in nodes_with_incoming:
@@ -262,7 +250,7 @@ class GraphBuilder:
             True if any link target is a requirement or PRD-classified spec
         """
         for link in doc.get("links", []):
-            resolved = self.analyzer._resolve_relative_link(doc["file_path"], link)
+            resolved = self.analyzer.resolve_link(doc["file_path"], link)
             if not resolved:
                 continue
             target_doc = next((d for d in self.documents if d["file_path"] == resolved), None)

@@ -69,6 +69,18 @@ class DependencyAnalyzer:
 
         return self.dependencies
 
+    def resolve_link(self, source_path: str, link: str) -> Optional[str]:
+        """Resolve a relative markdown link to a document path.
+
+        Args:
+            source_path: Source document path
+            link: Relative link to resolve
+
+        Returns:
+            Resolved document path or None if not found
+        """
+        return self._resolve_relative_link(source_path, link)
+
     def _filter_to_leaf_targets(self, targets: list[str]) -> list[str]:
         """Filter targets to keep only leaf nodes (deepest in dependency chain).
 

@@ -1,37 +1,8 @@
 """Tests for DependencyAnalyzer."""
 
-from pathlib import Path
-from typing import Optional
+from helpers import sample_doc_record as _doc
 
-from sdd_cli.types import DocumentRecord
 from sdd_cli.visualizer.analyzer import DependencyAnalyzer
-
-
-def _doc(
-    file_path: str,
-    file_type: str = "requirement",
-    feature_id: str = "feat",
-    directory: str = "requirement",
-    depends_on: Optional[list[str]] = None,
-    links: Optional[list[str]] = None,
-    parent_feature_id: Optional[str] = None,
-    title: Optional[str] = None,
-    file_name: Optional[str] = None,
-) -> DocumentRecord:
-    """Helper to build a document dict for analyzer tests."""
-    return DocumentRecord(
-        file_path=file_path,
-        file_name=file_name or Path(file_path).stem,
-        directory=directory,
-        file_type=file_type,
-        feature_id=feature_id,
-        title=title or Path(file_path).stem,
-        depends_on=depends_on or [],
-        links=links or [],
-        parent_feature_id=parent_feature_id,
-        tags=[],
-    )
-
 
 # ---------------------------------------------------------------------------
 # analyze(): explicit dependencies
