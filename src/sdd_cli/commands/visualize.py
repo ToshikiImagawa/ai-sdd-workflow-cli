@@ -9,6 +9,7 @@ from sdd_cli.commands.index import build_index
 from sdd_cli.indexer.db import IndexDB
 from sdd_cli.types import DependencyGraph
 from sdd_cli.visualizer.analyzer import DependencyAnalyzer
+from sdd_cli.visualizer.graph_builder import GraphBuilder
 from sdd_cli.visualizer.server import start_server
 
 
@@ -48,10 +49,11 @@ def generate_visualization(
 
     # Analyze dependencies
     analyzer = DependencyAnalyzer(documents, root)
-    analyzer.analyze()
+    deps = analyzer.analyze()
+    builder = GraphBuilder(documents, deps, analyzer)
 
     # Get filtered dependency graph (single view)
-    graph = analyzer.get_dependency_graph(
+    graph = builder.build_dependency_graph(
         filter_dir=filter_dir,
         feature_id=feature_id,
     )
@@ -73,7 +75,7 @@ def generate_visualization(
         _write_graph_file(output, json_data["dependency-graph.json"])
 
     # Always generate split graphs (PRD-based and direct)
-    prd_graph, direct_graph = analyzer.get_split_dependency_graphs(filter_dir=filter_dir)
+    prd_graph, direct_graph = builder.build_split_dependency_graphs(filter_dir=filter_dir)
 
     json_data["prd-based-graph.json"] = _build_graph_data(
         prd_graph,
