@@ -1,12 +1,17 @@
 ---
-title: "Implement Payment"
+title: "Payment Feature Implementation"
 feature-id: PAY-001
-tags: [billing]
-depends_on: [payment]
+tags: [billing, commerce]
+depends_on: [AUTH-001]
 ---
 
-# Implement Payment
+# Payment Feature Implementation
 
-Implement the payment processing.
+Implement the payment feature including credit card payment processing, payment history, and refund operations.
 
-See [payment spec](../../specification/payment_spec.md) for details.
+## Reference Documents
+
+- PRD: [payment.md](../../requirement/payment.md)
+- Abstract Specification: [payment_spec.md](../../specification/payment_spec.md)
+- Technical Design: [payment_design.md](../../specification/payment_design.md)
+- Task Breakdown: [tasks.md](./tasks.md)
