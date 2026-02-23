@@ -1,0 +1,152 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/notification.md",
+        "title": "Notification System",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "notification",
+        "links": []
+      },
+      {
+        "id": "specification/notification_spec.md",
+        "title": "Notification Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "notification",
+        "links": []
+      },
+      {
+        "id": "task/NOTIF-001/index.md",
+        "title": "Implement Notification Service",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "NOTIF-001",
+        "links": [
+          "../../specification/notification_spec.md"
+        ]
+      },
+      {
+        "id": "task/NOTIF-001/tasks.md",
+        "title": "Notification Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "NOTIF-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/notification.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/notification_spec.md",
+        "target": "requirement/notification.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/NOTIF-001/index.md",
+        "target": "specification/notification_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/NOTIF-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/notification.md",
+        "title": "Notification System",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "notification",
+        "links": []
+      },
+      {
+        "id": "specification/notification_spec.md",
+        "title": "Notification Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "notification",
+        "links": []
+      },
+      {
+        "id": "task/NOTIF-001/index.md",
+        "title": "Implement Notification Service",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "NOTIF-001",
+        "links": [
+          "../../specification/notification_spec.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/notification.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/notification_spec.md",
+        "target": "requirement/notification.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/NOTIF-001/index.md",
+        "target": "specification/notification_spec.md",
+        "type": "explicit"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "task/NOTIF-001/tasks.md",
+        "title": "Notification Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "NOTIF-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "task/NOTIF-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "root": "docs",
+  "lang": "en",
+  "directories": {
+    "requirement": "requirement",
+    "specification": "specification",
+    "task": "task"
+  }
+}

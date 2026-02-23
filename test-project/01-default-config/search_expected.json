@@ -1,0 +1,385 @@
+[
+  {
+    "name": "all",
+    "params": {
+      "query": null,
+      "feature_id": null,
+      "tag": null,
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/auth.md",
+        "file_name": "auth",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Authentication Feature",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "requirement/payment.md",
+        "file_name": "payment",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Payment Feature",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "specification/auth_design.md",
+        "file_name": "auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Authentication Technical Design Document",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/auth_spec.md",
+        "file_name": "auth_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Authentication Specification",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/payment_design.md",
+        "file_name": "payment_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Payment Technical Design Document",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "specification/payment_spec.md",
+        "file_name": "payment_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Payment Specification",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "task/AUTH-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Authentication Feature Implementation",
+        "feature_id": "AUTH-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "task/AUTH-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Authentication Task Breakdown",
+        "feature_id": "AUTH-001",
+        "parent_feature_id": null,
+        "tags": []
+      },
+      {
+        "file_path": "task/PAY-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Feature Implementation",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "task/PAY-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Task Breakdown",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": []
+      }
+    ]
+  },
+  {
+    "name": "feature_id=auth",
+    "params": {
+      "query": null,
+      "feature_id": "auth",
+      "tag": null,
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/auth.md",
+        "file_name": "auth",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Authentication Feature",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/auth_design.md",
+        "file_name": "auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Authentication Technical Design Document",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/auth_spec.md",
+        "file_name": "auth_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Authentication Specification",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "tag=security",
+    "params": {
+      "query": null,
+      "feature_id": null,
+      "tag": "security",
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/auth.md",
+        "file_name": "auth",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Authentication Feature",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/auth_design.md",
+        "file_name": "auth_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Authentication Technical Design Document",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "specification/auth_spec.md",
+        "file_name": "auth_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Authentication Specification",
+        "feature_id": "auth",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "task/AUTH-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Authentication Feature Implementation",
+        "feature_id": "AUTH-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "directory=task",
+    "params": {
+      "query": null,
+      "feature_id": null,
+      "tag": null,
+      "directory": "task",
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "task/AUTH-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Authentication Feature Implementation",
+        "feature_id": "AUTH-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ]
+      },
+      {
+        "file_path": "task/AUTH-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Authentication Task Breakdown",
+        "feature_id": "AUTH-001",
+        "parent_feature_id": null,
+        "tags": []
+      },
+      {
+        "file_path": "task/PAY-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Feature Implementation",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "task/PAY-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Task Breakdown",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": []
+      }
+    ]
+  },
+  {
+    "name": "query=Payment",
+    "params": {
+      "query": "Payment",
+      "feature_id": null,
+      "tag": null,
+      "directory": null,
+      "limit": 10
+    },
+    "results": [
+      {
+        "file_path": "requirement/payment.md",
+        "file_name": "payment",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "title": "Payment Feature",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "specification/payment_design.md",
+        "file_name": "payment_design",
+        "directory": "specification",
+        "file_type": "design",
+        "title": "Payment Technical Design Document",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "specification/payment_spec.md",
+        "file_name": "payment_spec",
+        "directory": "specification",
+        "file_type": "spec",
+        "title": "Payment Specification",
+        "feature_id": "payment",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "task/PAY-001/index.md",
+        "file_name": "index",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Feature Implementation",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": [
+          "billing",
+          "commerce"
+        ]
+      },
+      {
+        "file_path": "task/PAY-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Payment Task Breakdown",
+        "feature_id": "PAY-001",
+        "parent_feature_id": null,
+        "tags": []
+      }
+    ]
+  }
+]

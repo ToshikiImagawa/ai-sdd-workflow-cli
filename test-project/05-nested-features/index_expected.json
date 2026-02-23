@@ -1,0 +1,155 @@
+[
+  {
+    "file_path": "requirement/e-commerce/cart/index.md",
+    "file_name": "index",
+    "directory": "requirement",
+    "file_type": "requirement",
+    "title": "Shopping Cart",
+    "feature_id": "cart",
+    "parent_feature_id": "e-commerce",
+    "tags": [
+      "commerce",
+      "cart"
+    ],
+    "depends_on": [
+      "e-commerce"
+    ],
+    "links": []
+  },
+  {
+    "file_path": "requirement/e-commerce/checkout/index.md",
+    "file_name": "index",
+    "directory": "requirement",
+    "file_type": "requirement",
+    "title": "Checkout Flow",
+    "feature_id": "checkout",
+    "parent_feature_id": "e-commerce",
+    "tags": [
+      "commerce",
+      "checkout"
+    ],
+    "depends_on": [
+      "e-commerce",
+      "cart"
+    ],
+    "links": []
+  },
+  {
+    "file_path": "requirement/e-commerce/index.md",
+    "file_name": "index",
+    "directory": "requirement",
+    "file_type": "requirement",
+    "title": "E-Commerce Platform",
+    "feature_id": "e-commerce",
+    "parent_feature_id": null,
+    "tags": [
+      "commerce",
+      "platform"
+    ],
+    "depends_on": [],
+    "links": []
+  },
+  {
+    "file_path": "requirement/index.md",
+    "file_name": "index",
+    "directory": "requirement",
+    "file_type": "requirement",
+    "title": "Project Requirements",
+    "feature_id": "root",
+    "parent_feature_id": null,
+    "tags": [
+      "overview"
+    ],
+    "depends_on": [],
+    "links": []
+  },
+  {
+    "file_path": "specification/e-commerce/cart_spec.md",
+    "file_name": "cart_spec",
+    "directory": "specification",
+    "file_type": "spec",
+    "title": "Cart Specification",
+    "feature_id": "cart",
+    "parent_feature_id": "e-commerce",
+    "tags": [
+      "commerce"
+    ],
+    "depends_on": [
+      "cart"
+    ],
+    "links": []
+  },
+  {
+    "file_path": "specification/e-commerce/checkout_spec.md",
+    "file_name": "checkout_spec",
+    "directory": "specification",
+    "file_type": "spec",
+    "title": "Checkout Specification",
+    "feature_id": "checkout",
+    "parent_feature_id": "e-commerce",
+    "tags": [
+      "commerce"
+    ],
+    "depends_on": [
+      "checkout",
+      "cart"
+    ],
+    "links": []
+  },
+  {
+    "file_path": "task/CART-001/index.md",
+    "file_name": "index",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Implement Cart",
+    "feature_id": "CART-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [
+      "cart"
+    ],
+    "links": [
+      "../../specification/e-commerce/cart_spec.md"
+    ]
+  },
+  {
+    "file_path": "task/CART-001/tasks.md",
+    "file_name": "tasks",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Cart Tasks",
+    "feature_id": "CART-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [],
+    "links": []
+  },
+  {
+    "file_path": "task/CHECKOUT-001/index.md",
+    "file_name": "index",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Implement Checkout",
+    "feature_id": "CHECKOUT-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [
+      "checkout"
+    ],
+    "links": [
+      "../../specification/e-commerce/checkout_spec.md"
+    ]
+  },
+  {
+    "file_path": "task/CHECKOUT-001/tasks.md",
+    "file_name": "tasks",
+    "directory": "task",
+    "file_type": "task",
+    "title": "Checkout Tasks",
+    "feature_id": "CHECKOUT-001",
+    "parent_feature_id": null,
+    "tags": [],
+    "depends_on": [],
+    "links": []
+  }
+]

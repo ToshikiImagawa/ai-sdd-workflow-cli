@@ -1,0 +1,152 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "reqs/user-management.md",
+        "title": "User Management",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "user-management",
+        "links": []
+      },
+      {
+        "id": "specs/user-management_spec.md",
+        "title": "User Management Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "user-management",
+        "links": []
+      },
+      {
+        "id": "todos/UM-001/index.md",
+        "title": "Implement User CRUD",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UM-001",
+        "links": [
+          "../../specs/user-management_spec.md"
+        ]
+      },
+      {
+        "id": "todos/UM-001/tasks.md",
+        "title": "User CRUD Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UM-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "reqs/user-management.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specs/user-management_spec.md",
+        "target": "reqs/user-management.md",
+        "type": "explicit"
+      },
+      {
+        "source": "todos/UM-001/index.md",
+        "target": "specs/user-management_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "todos/UM-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "reqs/user-management.md",
+        "title": "User Management",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "user-management",
+        "links": []
+      },
+      {
+        "id": "specs/user-management_spec.md",
+        "title": "User Management Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "user-management",
+        "links": []
+      },
+      {
+        "id": "todos/UM-001/index.md",
+        "title": "Implement User CRUD",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UM-001",
+        "links": [
+          "../../specs/user-management_spec.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "reqs/user-management.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specs/user-management_spec.md",
+        "target": "reqs/user-management.md",
+        "type": "explicit"
+      },
+      {
+        "source": "todos/UM-001/index.md",
+        "target": "specs/user-management_spec.md",
+        "type": "explicit"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "todos/UM-001/tasks.md",
+        "title": "User CRUD Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UM-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "todos/UM-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  }
+}

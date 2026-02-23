@@ -1,0 +1,370 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/auth.md",
+        "title": "Authentication Feature",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "auth",
+        "links": []
+      },
+      {
+        "id": "requirement/payment.md",
+        "title": "Payment Feature",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "payment",
+        "links": []
+      },
+      {
+        "id": "specification/auth_design.md",
+        "title": "Authentication Technical Design Document",
+        "directory": "specification",
+        "file_type": "design",
+        "feature_id": "auth",
+        "links": [
+          "./auth_spec.md",
+          "../requirement/auth.md"
+        ]
+      },
+      {
+        "id": "specification/auth_spec.md",
+        "title": "Authentication Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "auth",
+        "links": [
+          "../requirement/auth.md"
+        ]
+      },
+      {
+        "id": "specification/payment_design.md",
+        "title": "Payment Technical Design Document",
+        "directory": "specification",
+        "file_type": "design",
+        "feature_id": "payment",
+        "links": [
+          "./payment_spec.md",
+          "../requirement/payment.md"
+        ]
+      },
+      {
+        "id": "specification/payment_spec.md",
+        "title": "Payment Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "payment",
+        "links": [
+          "../requirement/payment.md"
+        ]
+      },
+      {
+        "id": "task/AUTH-001/index.md",
+        "title": "Authentication Feature Implementation",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "AUTH-001",
+        "links": [
+          "../../requirement/auth.md",
+          "../../specification/auth_spec.md",
+          "../../specification/auth_design.md",
+          "./tasks.md"
+        ]
+      },
+      {
+        "id": "task/AUTH-001/tasks.md",
+        "title": "Authentication Task Breakdown",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "AUTH-001",
+        "links": [
+          "specification/auth_design.md",
+          "specification/auth_spec.md",
+          "requirement/auth.md"
+        ]
+      },
+      {
+        "id": "task/PAY-001/index.md",
+        "title": "Payment Feature Implementation",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "PAY-001",
+        "links": [
+          "../../requirement/payment.md",
+          "../../specification/payment_spec.md",
+          "../../specification/payment_design.md",
+          "./tasks.md"
+        ]
+      },
+      {
+        "id": "task/PAY-001/tasks.md",
+        "title": "Payment Task Breakdown",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "PAY-001",
+        "links": [
+          "specification/payment_design.md",
+          "specification/payment_spec.md",
+          "requirement/payment.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/auth.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "requirement/payment.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/auth_design.md",
+        "target": "specification/auth_spec.md",
+        "type": "implicit"
+      },
+      {
+        "source": "specification/auth_spec.md",
+        "target": "requirement/auth.md",
+        "type": "implicit"
+      },
+      {
+        "source": "specification/payment_design.md",
+        "target": "specification/auth_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/payment_design.md",
+        "target": "specification/payment_spec.md",
+        "type": "implicit"
+      },
+      {
+        "source": "specification/payment_spec.md",
+        "target": "requirement/payment.md",
+        "type": "implicit"
+      },
+      {
+        "source": "task/AUTH-001/index.md",
+        "target": "task/AUTH-001/tasks.md",
+        "type": "link"
+      },
+      {
+        "source": "task/AUTH-001/tasks.md",
+        "target": "specification/auth_design.md",
+        "type": "link"
+      },
+      {
+        "source": "task/PAY-001/index.md",
+        "target": "task/AUTH-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/PAY-001/index.md",
+        "target": "task/PAY-001/tasks.md",
+        "type": "link"
+      },
+      {
+        "source": "task/PAY-001/tasks.md",
+        "target": "specification/payment_design.md",
+        "type": "link"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/auth.md",
+        "title": "Authentication Feature",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "auth",
+        "links": []
+      },
+      {
+        "id": "requirement/payment.md",
+        "title": "Payment Feature",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "payment",
+        "links": []
+      },
+      {
+        "id": "specification/auth_design.md",
+        "title": "Authentication Technical Design Document",
+        "directory": "specification",
+        "file_type": "design",
+        "feature_id": "auth",
+        "links": [
+          "./auth_spec.md",
+          "../requirement/auth.md"
+        ]
+      },
+      {
+        "id": "specification/auth_spec.md",
+        "title": "Authentication Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "auth",
+        "links": [
+          "../requirement/auth.md"
+        ]
+      },
+      {
+        "id": "specification/payment_design.md",
+        "title": "Payment Technical Design Document",
+        "directory": "specification",
+        "file_type": "design",
+        "feature_id": "payment",
+        "links": [
+          "./payment_spec.md",
+          "../requirement/payment.md"
+        ]
+      },
+      {
+        "id": "specification/payment_spec.md",
+        "title": "Payment Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "payment",
+        "links": [
+          "../requirement/payment.md"
+        ]
+      },
+      {
+        "id": "task/AUTH-001/index.md",
+        "title": "Authentication Feature Implementation",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "AUTH-001",
+        "links": [
+          "../../requirement/auth.md",
+          "../../specification/auth_spec.md",
+          "../../specification/auth_design.md",
+          "./tasks.md"
+        ]
+      },
+      {
+        "id": "task/AUTH-001/tasks.md",
+        "title": "Authentication Task Breakdown",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "AUTH-001",
+        "links": [
+          "specification/auth_design.md",
+          "specification/auth_spec.md",
+          "requirement/auth.md"
+        ]
+      },
+      {
+        "id": "task/PAY-001/index.md",
+        "title": "Payment Feature Implementation",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "PAY-001",
+        "links": [
+          "../../requirement/payment.md",
+          "../../specification/payment_spec.md",
+          "../../specification/payment_design.md",
+          "./tasks.md"
+        ]
+      },
+      {
+        "id": "task/PAY-001/tasks.md",
+        "title": "Payment Task Breakdown",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "PAY-001",
+        "links": [
+          "specification/payment_design.md",
+          "specification/payment_spec.md",
+          "requirement/payment.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/auth.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "requirement/payment.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/auth_design.md",
+        "target": "specification/auth_spec.md",
+        "type": "implicit"
+      },
+      {
+        "source": "specification/auth_spec.md",
+        "target": "requirement/auth.md",
+        "type": "implicit"
+      },
+      {
+        "source": "specification/payment_design.md",
+        "target": "specification/auth_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/payment_design.md",
+        "target": "specification/payment_spec.md",
+        "type": "implicit"
+      },
+      {
+        "source": "specification/payment_spec.md",
+        "target": "requirement/payment.md",
+        "type": "implicit"
+      },
+      {
+        "source": "task/AUTH-001/index.md",
+        "target": "task/AUTH-001/tasks.md",
+        "type": "link"
+      },
+      {
+        "source": "task/AUTH-001/tasks.md",
+        "target": "specification/auth_design.md",
+        "type": "link"
+      },
+      {
+        "source": "task/PAY-001/index.md",
+        "target": "task/AUTH-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/PAY-001/index.md",
+        "target": "task/PAY-001/tasks.md",
+        "type": "link"
+      },
+      {
+        "source": "task/PAY-001/tasks.md",
+        "target": "specification/payment_design.md",
+        "type": "link"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [],
+    "edges": []
+  }
+}

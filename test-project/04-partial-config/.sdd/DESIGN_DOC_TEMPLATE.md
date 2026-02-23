@@ -1,0 +1,1 @@
+../../.sdd/DESIGN_DOC_TEMPLATE.md

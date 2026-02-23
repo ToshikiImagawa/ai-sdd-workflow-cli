@@ -1,0 +1,21 @@
+{
+  "config": {
+    "root": ".sdd",
+    "lang": "en",
+    "directories": {
+      "requirement": "prd",
+      "specification": "specification",
+      "task": "task"
+    }
+  },
+  "env_lines": [
+    "export SDD_ROOT=\".sdd\"",
+    "export SDD_REQUIREMENT_DIR=\"prd\"",
+    "export SDD_SPECIFICATION_DIR=\"specification\"",
+    "export SDD_TASK_DIR=\"task\"",
+    "export SDD_REQUIREMENT_PATH=\".sdd/prd\"",
+    "export SDD_SPECIFICATION_PATH=\".sdd/specification\"",
+    "export SDD_TASK_PATH=\".sdd/task\"",
+    "export SDD_LANG=\"en\""
+  ]
+}

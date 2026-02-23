@@ -1,0 +1,332 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/e-commerce/cart/index.md",
+        "title": "Shopping Cart",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "cart",
+        "links": []
+      },
+      {
+        "id": "requirement/e-commerce/checkout/index.md",
+        "title": "Checkout Flow",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "checkout",
+        "links": []
+      },
+      {
+        "id": "requirement/e-commerce/index.md",
+        "title": "E-Commerce Platform",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "e-commerce",
+        "links": []
+      },
+      {
+        "id": "requirement/index.md",
+        "title": "Project Requirements",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "root",
+        "links": []
+      },
+      {
+        "id": "specification/e-commerce/cart_spec.md",
+        "title": "Cart Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "cart",
+        "links": []
+      },
+      {
+        "id": "specification/e-commerce/checkout_spec.md",
+        "title": "Checkout Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "checkout",
+        "links": []
+      },
+      {
+        "id": "task/CART-001/index.md",
+        "title": "Implement Cart",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CART-001",
+        "links": [
+          "../../specification/e-commerce/cart_spec.md"
+        ]
+      },
+      {
+        "id": "task/CART-001/tasks.md",
+        "title": "Cart Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CART-001",
+        "links": []
+      },
+      {
+        "id": "task/CHECKOUT-001/index.md",
+        "title": "Implement Checkout",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CHECKOUT-001",
+        "links": [
+          "../../specification/e-commerce/checkout_spec.md"
+        ]
+      },
+      {
+        "id": "task/CHECKOUT-001/tasks.md",
+        "title": "Checkout Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CHECKOUT-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/e-commerce/cart/index.md",
+        "target": "requirement/e-commerce/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/checkout/index.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/checkout/index.md",
+        "target": "requirement/e-commerce/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/index.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "requirement/index.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/e-commerce/cart_spec.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/e-commerce/checkout_spec.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/e-commerce/checkout_spec.md",
+        "target": "requirement/e-commerce/checkout/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/CART-001/index.md",
+        "target": "specification/e-commerce/cart_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/CART-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "task/CHECKOUT-001/index.md",
+        "target": "specification/e-commerce/checkout_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/CHECKOUT-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/e-commerce/cart/index.md",
+        "title": "Shopping Cart",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "cart",
+        "links": []
+      },
+      {
+        "id": "requirement/e-commerce/checkout/index.md",
+        "title": "Checkout Flow",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "checkout",
+        "links": []
+      },
+      {
+        "id": "requirement/e-commerce/index.md",
+        "title": "E-Commerce Platform",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "e-commerce",
+        "links": []
+      },
+      {
+        "id": "requirement/index.md",
+        "title": "Project Requirements",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "root",
+        "links": []
+      },
+      {
+        "id": "specification/e-commerce/cart_spec.md",
+        "title": "Cart Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "cart",
+        "links": []
+      },
+      {
+        "id": "specification/e-commerce/checkout_spec.md",
+        "title": "Checkout Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "checkout",
+        "links": []
+      },
+      {
+        "id": "task/CART-001/index.md",
+        "title": "Implement Cart",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CART-001",
+        "links": [
+          "../../specification/e-commerce/cart_spec.md"
+        ]
+      },
+      {
+        "id": "task/CHECKOUT-001/index.md",
+        "title": "Implement Checkout",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CHECKOUT-001",
+        "links": [
+          "../../specification/e-commerce/checkout_spec.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/e-commerce/cart/index.md",
+        "target": "requirement/e-commerce/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/checkout/index.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/checkout/index.md",
+        "target": "requirement/e-commerce/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/index.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "requirement/index.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/e-commerce/cart_spec.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/e-commerce/checkout_spec.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/e-commerce/checkout_spec.md",
+        "target": "requirement/e-commerce/checkout/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/CART-001/index.md",
+        "target": "specification/e-commerce/cart_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/CHECKOUT-001/index.md",
+        "target": "specification/e-commerce/checkout_spec.md",
+        "type": "explicit"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "task/CART-001/tasks.md",
+        "title": "Cart Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CART-001",
+        "links": []
+      },
+      {
+        "id": "task/CHECKOUT-001/tasks.md",
+        "title": "Checkout Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "CHECKOUT-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "task/CART-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "task/CHECKOUT-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  }
+}

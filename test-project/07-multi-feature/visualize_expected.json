@@ -1,0 +1,436 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/dashboard.md",
+        "title": "Dashboard",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "dashboard",
+        "links": []
+      },
+      {
+        "id": "requirement/user-auth.md",
+        "title": "User Authentication",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "user-auth",
+        "links": []
+      },
+      {
+        "id": "requirement/user-profile.md",
+        "title": "User Profile",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "user-profile",
+        "links": []
+      },
+      {
+        "id": "specification/dashboard_spec.md",
+        "title": "Dashboard Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "dashboard",
+        "links": []
+      },
+      {
+        "id": "specification/user-auth_design.md",
+        "title": "User Auth Design",
+        "directory": "specification",
+        "file_type": "design",
+        "feature_id": "user-auth",
+        "links": []
+      },
+      {
+        "id": "specification/user-auth_spec.md",
+        "title": "User Auth Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "user-auth",
+        "links": []
+      },
+      {
+        "id": "specification/user-profile_spec.md",
+        "title": "User Profile Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "user-profile",
+        "links": []
+      },
+      {
+        "id": "task/DASH-001/index.md",
+        "title": "Implement Dashboard",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "DASH-001",
+        "links": [
+          "../../specification/dashboard_spec.md"
+        ]
+      },
+      {
+        "id": "task/DASH-001/tasks.md",
+        "title": "Dashboard Implementation Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "DASH-001",
+        "links": []
+      },
+      {
+        "id": "task/UA-001/index.md",
+        "title": "Implement Authentication",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UA-001",
+        "links": [
+          "../../specification/user-auth_spec.md",
+          "../../specification/user-auth_design.md"
+        ]
+      },
+      {
+        "id": "task/UA-001/tasks.md",
+        "title": "Auth Implementation Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UA-001",
+        "links": []
+      },
+      {
+        "id": "task/UP-001/index.md",
+        "title": "Implement User Profile",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UP-001",
+        "links": [
+          "../../specification/user-profile_spec.md"
+        ]
+      },
+      {
+        "id": "task/UP-001/tasks.md",
+        "title": "Profile Implementation Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UP-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/dashboard.md",
+        "target": "requirement/user-auth.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/dashboard.md",
+        "target": "requirement/user-profile.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/user-auth.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "requirement/user-profile.md",
+        "target": "requirement/user-auth.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/dashboard_spec.md",
+        "target": "requirement/dashboard.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/user-auth_design.md",
+        "target": "specification/user-auth_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/user-auth_spec.md",
+        "target": "requirement/user-auth.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/user-profile_spec.md",
+        "target": "requirement/user-profile.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/index.md",
+        "target": "specification/dashboard_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/index.md",
+        "target": "task/UA-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/index.md",
+        "target": "task/UP-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "task/UA-001/index.md",
+        "target": "specification/user-auth_design.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/UA-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "task/UP-001/index.md",
+        "target": "specification/user-profile_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/UP-001/index.md",
+        "target": "task/UA-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/UP-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/dashboard.md",
+        "title": "Dashboard",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "dashboard",
+        "links": []
+      },
+      {
+        "id": "requirement/user-auth.md",
+        "title": "User Authentication",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "user-auth",
+        "links": []
+      },
+      {
+        "id": "requirement/user-profile.md",
+        "title": "User Profile",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "user-profile",
+        "links": []
+      },
+      {
+        "id": "specification/dashboard_spec.md",
+        "title": "Dashboard Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "dashboard",
+        "links": []
+      },
+      {
+        "id": "specification/user-auth_design.md",
+        "title": "User Auth Design",
+        "directory": "specification",
+        "file_type": "design",
+        "feature_id": "user-auth",
+        "links": []
+      },
+      {
+        "id": "specification/user-auth_spec.md",
+        "title": "User Auth Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "user-auth",
+        "links": []
+      },
+      {
+        "id": "specification/user-profile_spec.md",
+        "title": "User Profile Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "user-profile",
+        "links": []
+      },
+      {
+        "id": "task/DASH-001/index.md",
+        "title": "Implement Dashboard",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "DASH-001",
+        "links": [
+          "../../specification/dashboard_spec.md"
+        ]
+      },
+      {
+        "id": "task/UA-001/index.md",
+        "title": "Implement Authentication",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UA-001",
+        "links": [
+          "../../specification/user-auth_spec.md",
+          "../../specification/user-auth_design.md"
+        ]
+      },
+      {
+        "id": "task/UP-001/index.md",
+        "title": "Implement User Profile",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UP-001",
+        "links": [
+          "../../specification/user-profile_spec.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/dashboard.md",
+        "target": "requirement/user-auth.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/dashboard.md",
+        "target": "requirement/user-profile.md",
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/user-auth.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "requirement/user-profile.md",
+        "target": "requirement/user-auth.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/dashboard_spec.md",
+        "target": "requirement/dashboard.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/user-auth_design.md",
+        "target": "specification/user-auth_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/user-auth_spec.md",
+        "target": "requirement/user-auth.md",
+        "type": "explicit"
+      },
+      {
+        "source": "specification/user-profile_spec.md",
+        "target": "requirement/user-profile.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/index.md",
+        "target": "specification/dashboard_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/index.md",
+        "target": "task/UA-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/DASH-001/index.md",
+        "target": "task/UP-001/index.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/UA-001/index.md",
+        "target": "specification/user-auth_design.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/UP-001/index.md",
+        "target": "specification/user-profile_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/UP-001/index.md",
+        "target": "task/UA-001/index.md",
+        "type": "explicit"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "task/DASH-001/tasks.md",
+        "title": "Dashboard Implementation Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "DASH-001",
+        "links": []
+      },
+      {
+        "id": "task/UA-001/tasks.md",
+        "title": "Auth Implementation Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UA-001",
+        "links": []
+      },
+      {
+        "id": "task/UP-001/tasks.md",
+        "title": "Profile Implementation Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "UP-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "task/DASH-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "task/UA-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "task/UP-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  }
+}

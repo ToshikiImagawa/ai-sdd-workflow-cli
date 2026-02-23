@@ -1,0 +1,152 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "prd/search-feature.md",
+        "title": "Search Feature",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "search-feature",
+        "links": []
+      },
+      {
+        "id": "specification/search-feature_spec.md",
+        "title": "Search Feature Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "search-feature",
+        "links": []
+      },
+      {
+        "id": "task/SEARCH-001/index.md",
+        "title": "Implement Search",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "SEARCH-001",
+        "links": [
+          "../../specification/search-feature_spec.md"
+        ]
+      },
+      {
+        "id": "task/SEARCH-001/tasks.md",
+        "title": "Search Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "SEARCH-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "prd/search-feature.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/search-feature_spec.md",
+        "target": "prd/search-feature.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/SEARCH-001/index.md",
+        "target": "specification/search-feature_spec.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/SEARCH-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "prd/search-feature.md",
+        "title": "Search Feature",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "search-feature",
+        "links": []
+      },
+      {
+        "id": "specification/search-feature_spec.md",
+        "title": "Search Feature Specification",
+        "directory": "specification",
+        "file_type": "spec",
+        "feature_id": "search-feature",
+        "links": []
+      },
+      {
+        "id": "task/SEARCH-001/index.md",
+        "title": "Implement Search",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "SEARCH-001",
+        "links": [
+          "../../specification/search-feature_spec.md"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "prd/search-feature.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      },
+      {
+        "source": "specification/search-feature_spec.md",
+        "target": "prd/search-feature.md",
+        "type": "explicit"
+      },
+      {
+        "source": "task/SEARCH-001/index.md",
+        "target": "specification/search-feature_spec.md",
+        "type": "explicit"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "task/SEARCH-001/tasks.md",
+        "title": "Search Tasks",
+        "directory": "task",
+        "file_type": "task",
+        "feature_id": "SEARCH-001",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "task/SEARCH-001/tasks.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  }
+}

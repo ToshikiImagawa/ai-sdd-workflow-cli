@@ -1,0 +1,60 @@
+{
+  "dependency_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/hello-world.md",
+        "title": "Hello World",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "hello-world",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/hello-world.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "prd_based_graph": {
+    "nodes": [
+      {
+        "id": "CONSTITUTION.md",
+        "title": "CONSTITUTION.md",
+        "directory": "",
+        "file_type": "",
+        "feature_id": "",
+        "links": []
+      },
+      {
+        "id": "requirement/hello-world.md",
+        "title": "Hello World",
+        "directory": "requirement",
+        "file_type": "requirement",
+        "feature_id": "hello-world",
+        "links": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "requirement/hello-world.md",
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
+      }
+    ]
+  },
+  "direct_graph": {
+    "nodes": [],
+    "edges": []
+  }
+}

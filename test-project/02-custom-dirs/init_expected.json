@@ -1,0 +1,21 @@
+{
+  "config": {
+    "root": ".sdd",
+    "lang": "ja",
+    "directories": {
+      "requirement": "reqs",
+      "specification": "specs",
+      "task": "todos"
+    }
+  },
+  "env_lines": [
+    "export SDD_ROOT=\".sdd\"",
+    "export SDD_REQUIREMENT_DIR=\"reqs\"",
+    "export SDD_SPECIFICATION_DIR=\"specs\"",
+    "export SDD_TASK_DIR=\"todos\"",
+    "export SDD_REQUIREMENT_PATH=\".sdd/reqs\"",
+    "export SDD_SPECIFICATION_PATH=\".sdd/specs\"",
+    "export SDD_TASK_PATH=\".sdd/todos\"",
+    "export SDD_LANG=\"ja\""
+  ]
+}
