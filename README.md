@@ -1,21 +1,25 @@
 # SDD CLI
 
-AI-SDD Workflow のドキュメント管理 CLI ツール。
+Document management CLI tool for the AI-SDD Workflow.
 
-[AI-SDD Workflow プラグイン](https://github.com/ToshikiImagawa/ai-sdd-workflow) と連携して、仕様書の全文検索・依存関係可視化を提供します。
+Works with the [AI-SDD Workflow Plugin](https://github.com/ToshikiImagawa/ai-sdd-workflow) to provide full-text search
+and dependency visualization for specification documents.
 
-## 機能
+[日本語版 README](README.ja.md)
 
-- **インデックス構築**: `.sdd/` 配下のドキュメントを SQLite FTS5 でインデックス化
-- **全文検索**: キーワード、feature ID、タグによる高速検索
-- **依存関係可視化**: ドキュメント間の依存関係をインタラクティブ HTML ビューアで表示
-- **キャッシュ管理**: プロジェクト別キャッシュの一覧・削除
+## Features
 
-## 動作要件
+- **Project Init**: Generate `.sdd-config.json` and export SDD environment variables
+- **Index Building**: Index documents under `.sdd/` with SQLite FTS5
+- **Full-Text Search**: Fast search by keyword, feature ID, or tag
+- **Dependency Visualization**: Interactive HTML viewer for document dependencies
+- **Cache Management**: List and clean per-project caches
 
-- Python 3.9 以上
+## Requirements
 
-## インストール
+- Python 3.9+
+
+## Installation
 
 ### pip
 
@@ -29,92 +33,186 @@ pip install git+https://github.com/ToshikiImagawa/ai-sdd-workflow-cli.git
 uv tool install --from git+https://github.com/ToshikiImagawa/ai-sdd-workflow-cli.git sdd-cli
 ```
 
-### uvx (インストールなしで実行)
+### uvx (run without installing)
 
 ```bash
 uvx --from git+https://github.com/ToshikiImagawa/ai-sdd-workflow-cli.git sdd-cli --help
 ```
 
-## 使用方法
+## Usage
 
-### インデックス構築
+### Project Initialization
 
 ```bash
-sdd-cli index --root .sdd
+# Generate .sdd-config.json with default settings
+sdd-cli init
+
+# Specify project root
+sdd-cli init --root /path/to/project
+
+# Export SDD environment variables (for shell eval)
+eval $(sdd-cli init --env)
 ```
 
-### ドキュメント検索
+When `CLAUDE_ENV_FILE` is set, `--env` writes export statements to that file instead of stdout.
+
+### Build Index
 
 ```bash
-# キーワード検索
-sdd-cli search "ログイン機能"
+sdd-cli index
 
-# Feature ID で検索
+# Suppress output
+sdd-cli index --quiet
+```
+
+### Search Documents
+
+```bash
+# Keyword search
+sdd-cli search "login feature"
+
+# Filter by feature ID
 sdd-cli search --feature-id user-login
 
-# タグで検索
+# Filter by tag
 sdd-cli search --tag authentication
 
-# ディレクトリで絞り込み
-sdd-cli search "認証" --dir specification
+# Filter by directory type
+sdd-cli search "auth" --dir specification
 
-# JSON 形式で出力
-sdd-cli search "ログイン" --format json --output results.json
+# JSON output
+sdd-cli search "login" --format json --output results.json
+
+# Limit results
+sdd-cli search "login" --limit 5
 ```
 
-### 依存関係可視化
+### Dependency Visualization
 
 ```bash
-# 依存関係をHTMLビューアで表示（ブラウザが自動的に開きます）
+# Open interactive HTML viewer in browser
 sdd-cli visualize
 
-# 特定ディレクトリのみ
+# Filter by directory
 sdd-cli visualize --filter-dir specification
 
-# 特定機能のみ
+# Filter by feature
 sdd-cli visualize --feature-id user-login
+
+# Export graph as JSON
+sdd-cli visualize --output graph.json
 ```
 
-### キャッシュ管理
+### Cache Management
 
 ```bash
-# キャッシュ一覧表示
+# List cached projects
 sdd-cli cache list
 
-# JSON形式で表示
+# List in JSON format
 sdd-cli cache list --format json
 
-# 特定プロジェクトのキャッシュを削除
+# Delete specific project cache
 sdd-cli cache clean --project slide-presentation-app
 
-# すべてのキャッシュを削除
+# Delete caches matching pattern
+sdd-cli cache clean --project 'test-*'
+
+# Preview what would be deleted
+sdd-cli cache clean --all --dry-run
+
+# Delete all caches
 sdd-cli cache clean --all
 ```
 
-## キャッシュディレクトリ
+## CLI Reference
 
-インデックスと可視化結果は **XDG Base Directory** 仕様に従い、以下のディレクトリに保存されます：
+### `sdd-cli init`
+
+| Option             | Description                                            |
+|--------------------|--------------------------------------------------------|
+| `--root DIRECTORY` | Project root directory (default: current directory)    |
+| `--env`            | Output export statements for SDD environment variables |
+
+### `sdd-cli index`
+
+| Option             | Description                                         |
+|--------------------|-----------------------------------------------------|
+| `--root DIRECTORY` | Project root directory (default: current directory) |
+| `--quiet`          | Suppress output messages                            |
+
+### `sdd-cli search [QUERY]`
+
+| Option                                     | Description                                         |
+|--------------------------------------------|-----------------------------------------------------|
+| `--root DIRECTORY`                         | Project root directory (default: current directory) |
+| `--feature-id TEXT`                        | Filter by feature ID                                |
+| `--tag TEXT`                               | Filter by tag                                       |
+| `--dir [requirement\|specification\|task]` | Filter by directory type                            |
+| `--format [text\|json]`                    | Output format (default: text)                       |
+| `--output PATH`                            | Output file path (default: stdout)                  |
+| `--limit INTEGER`                          | Maximum number of results (default: 10)             |
+
+### `sdd-cli visualize`
+
+| Option                                            | Description                                         |
+|---------------------------------------------------|-----------------------------------------------------|
+| `--root DIRECTORY`                                | Project root directory (default: current directory) |
+| `--output PATH`                                   | Export graph as JSON file                           |
+| `--filter-dir [requirement\|specification\|task]` | Filter by directory type                            |
+| `--feature-id TEXT`                               | Filter by feature ID                                |
+
+### `sdd-cli cache list`
+
+| Option                  | Description                   |
+|-------------------------|-------------------------------|
+| `--format [text\|json]` | Output format (default: text) |
+
+### `sdd-cli cache clean`
+
+| Option           | Description                                 |
+|------------------|---------------------------------------------|
+| `--project TEXT` | Project name pattern (supports wildcards)   |
+| `--all`          | Delete all cached projects                  |
+| `--dry-run`      | Show what would be deleted without deleting |
+
+## Environment Variables
+
+| Variable                | Description                  | Default         |
+|-------------------------|------------------------------|-----------------|
+| `SDD_ROOT`              | SDD root directory name      | `.sdd`          |
+| `SDD_REQUIREMENT_DIR`   | Requirement directory name   | `requirement`   |
+| `SDD_SPECIFICATION_DIR` | Specification directory name | `specification` |
+| `SDD_TASK_DIR`          | Task directory name          | `task`          |
+
+Environment variables take priority over `.sdd-config.json` settings.
+
+## Cache Directory
+
+Indexes and visualization results are stored following the **XDG Base Directory** specification:
 
 ```
 ~/.cache/sdd-cli/
-├── my-project.a1b2c3d4/          # プロジェクト別キャッシュ
-│   ├── index.db                  # SQLite FTS5 インデックス
-│   ├── metadata.json             # インデックスメタデータ
-│   ├── dependency-graph.json      # 依存関係グラフデータ
-│   └── search-results.json       # 検索結果（スキル実行時）
+├── my-project.a1b2c3d4/
+│   ├── index.db                  # SQLite FTS5 index
+│   ├── metadata.json             # Index metadata
+│   ├── dependency-graph.json     # Dependency graph data
+│   └── search-results.json      # Search results (from plugin skills)
 └── another-project.e5f6g7h8/
     └── ...
 ```
 
-## AI-SDD プラグインとの連携
+## AI-SDD Plugin Integration
 
-このツールは [AI-SDD Workflow プラグイン](https://github.com/ToshikiImagawa/ai-sdd-workflow) のスキル（`/sdd-index`, `/sdd-search`, `/sdd-visualize`）から自動的に呼び出されます。
+This tool is called automatically by the [AI-SDD Workflow Plugin](https://github.com/ToshikiImagawa/ai-sdd-workflow)
+skills (`/sdd-index`, `/sdd-search`, `/sdd-visualize`).
 
-プラグインをインストールしている場合、セッション開始時に `sdd-cli` が自動インストールされ、インデックスの初期構築も自動的に行われます。
+When the plugin is installed, `sdd-cli` is automatically installed at session start and the initial index build runs
+automatically.
 
-## 開発
+## Development
 
-### セットアップ
+### Setup
 
 ```bash
 git clone https://github.com/ToshikiImagawa/ai-sdd-workflow-cli.git
@@ -122,24 +220,31 @@ cd ai-sdd-workflow-cli
 uv sync --dev
 ```
 
-### テスト実行
+### Test
 
 ```bash
 uv run pytest
 ```
 
-### Lint
+### Lint & Format
 
 ```bash
 uv run ruff check .
+uv run ruff format --check .
 ```
 
-### パッケージビルド
+### Type Check
+
+```bash
+uv run mypy src/sdd_cli/
+```
+
+### Build
 
 ```bash
 uv build
 ```
 
-## ライセンス
+## License
 
-MIT License - [LICENSE](LICENSE) を参照してください。
+MIT License - See [LICENSE](LICENSE) for details.
