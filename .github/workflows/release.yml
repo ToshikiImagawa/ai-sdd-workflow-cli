@@ -1,0 +1,88 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Check version consistency
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          ERRORS=()
+
+          # 1. pyproject.toml version
+          PYPROJECT_VER=$(grep -Po '(?<=^version = ")[^"]+' pyproject.toml)
+          if [ "$PYPROJECT_VER" != "$VERSION" ]; then
+            ERRORS+=("pyproject.toml version: expected $VERSION, got $PYPROJECT_VER")
+          fi
+
+          # 2. src/sdd_cli/__init__.py __version__
+          INIT_VER=$(grep -Po '(?<=^__version__ = ")[^"]+' src/sdd_cli/__init__.py)
+          if [ "$INIT_VER" != "$VERSION" ]; then
+            ERRORS+=("src/sdd_cli/__init__.py __version__: expected $VERSION, got $INIT_VER")
+          fi
+
+          if [ ${#ERRORS[@]} -gt 0 ]; then
+            echo "::error::Version mismatch detected between tag v$VERSION and manifest files:"
+            for err in "${ERRORS[@]}"; do
+              echo "  - $err"
+            done
+            exit 1
+          fi
+
+          echo "All version checks passed: $VERSION"
+
+      - name: Extract release notes from CHANGELOG
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          CHANGELOG="CHANGELOG.md"
+
+          awk -v ver="$VERSION" '
+            /^## \[/ {
+              if (found) exit
+              if ($0 ~ "\\[" ver "\\]") found=1
+              next
+            }
+            found { print }
+          ' "$CHANGELOG" > /tmp/release-notes.md
+
+          if [ ! -s /tmp/release-notes.md ]; then
+            echo "::error::No CHANGELOG entry found for version $VERSION in $CHANGELOG"
+            exit 1
+          fi
+
+      - name: Determine prerelease
+        id: prerelease
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          if [[ "$VERSION" == *-* ]]; then
+            echo "flag=--prerelease" >> "$GITHUB_OUTPUT"
+          else
+            echo "flag=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file /tmp/release-notes.md \
+            ${{ steps.prerelease.outputs.flag }}
