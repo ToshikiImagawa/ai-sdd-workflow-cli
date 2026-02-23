@@ -1,7 +1,7 @@
 # SDD CLI
 
 [![CI](https://github.com/ToshikiImagawa/ai-sdd-workflow-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/ToshikiImagawa/ai-sdd-workflow-cli/actions/workflows/ci.yml)
-[![Python](https://img.shields.io/badge/python-3.9%20%7C%203.11%20%7C%203.13-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![mypy](https://img.shields.io/badge/type--check-mypy-blue)](https://mypy-lang.org/)
