@@ -107,7 +107,4 @@ def test_visualize_regression(project_name, sdd_root_name, tmp_path):
         )
 
         for i, (act, exp) in enumerate(zip(actual_graph["edges"], expected_graph["edges"])):
-            assert act == exp, (
-                f"{project_name}/{graph_key}: edge #{i} mismatch: "
-                f"got {act}, expected {exp}"
-            )
+            assert act == exp, f"{project_name}/{graph_key}: edge #{i} mismatch: got {act}, expected {exp}"
