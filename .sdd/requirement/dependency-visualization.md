@@ -241,9 +241,9 @@ requirementDiagram
     Dependency_Analysis - derives -> Graph_Building
     Graph_Building - derives -> HTTP_Server
     Graph_Building - derives -> Document_Classification
-    NFR_001 - traces -> HTTP_Server
-    NFR_002 - traces -> Dependency_Analysis
-    NFR_003 - traces -> HTTP_Server
+    Mermaid_Rendering - traces -> HTTP_Server
+    Python_Compat - traces -> Dependency_Analysis
+    No_External_Frontend_Deps - traces -> HTTP_Server
 ```
 
 ## 3.2. 依存関係分析 詳細図

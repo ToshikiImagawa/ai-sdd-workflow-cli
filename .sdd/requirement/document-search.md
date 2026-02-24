@@ -236,8 +236,8 @@ requirementDiagram
     FTS5_Match_Query - derives -> Feature_Id_Filter
     FTS5_Match_Query - derives -> Tag_Filter
     FTS5_Match_Query - derives -> Directory_Filter
-    NFR_001 - traces -> FTS5_Match_Query
-    NFR_002 - traces -> FTS5_Match_Query
+    FTS5_Trigram_Dependency - traces -> FTS5_Match_Query
+    Python_Compat - traces -> FTS5_Match_Query
 ```
 
 ## 3.2. 全文検索 詳細図

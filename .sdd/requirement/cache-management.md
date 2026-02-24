@@ -229,9 +229,9 @@ requirementDiagram
     Directory_Scan - derives -> Metadata_Read
     Metadata_Read - derives -> Size_Calculation
     All_Delete - derives -> Pattern_Match
-    NFR_001 - traces -> All_Delete
-    NFR_001 - traces -> Pattern_Match
-    NFR_002 - traces -> Directory_Scan
+    Error_Resilience - traces -> All_Delete
+    Error_Resilience - traces -> Pattern_Match
+    XDG_Compliance - traces -> Directory_Scan
 ```
 
 ## 3.2. キャッシュ一覧表示 詳細図

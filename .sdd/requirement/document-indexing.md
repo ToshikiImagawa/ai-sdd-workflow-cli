@@ -234,8 +234,8 @@ requirementDiagram
     Generate_Config - derives -> Config_Priority_Resolution
     Recursive_Scan - derives -> Frontmatter_Parse
     Frontmatter_Parse - derives -> FTS5_Registration
-    NFR_001 - traces -> FTS5_Registration
-    NFR_002 - traces -> Frontmatter_Parse
+    Python_Compat - traces -> FTS5_Registration
+    Minimal_Dependencies - traces -> Frontmatter_Parse
 ```
 
 ## 3.2. プロジェクト初期化 詳細図
