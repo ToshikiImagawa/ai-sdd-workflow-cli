@@ -8,7 +8,7 @@ from sdd_cli.cache import get_cache_dir, get_project_hash
 
 def test_version():
     """Package version is set."""
-    assert __version__ == "0.1.0"
+    assert __version__ == "0.2.0"
 
 
 def test_get_project_hash():

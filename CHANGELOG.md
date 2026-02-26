@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-02-26
+
+### Added
+
+- **AI-SDD Workflow standard frontmatter support**: Added support for common frontmatter fields
+  - New fields: `id`, `type`, `status`, `created`, `updated`, `category`
+  - Automatic prefix removal from `id` field (e.g., `prd-feature` → `feature` as `feature_id`)
+  - Supported prefixes: `prd-`, `spec-`, `design-`, `task-`, `impl-`
+
+### Changed
+
+- **Standardized dependency field**: Now only supports `depends-on` (AI-SDD standard)
+  - Removed support for legacy field names: `depends_on`, `dependencies`
+- **Database schema**: Extended `documents_meta` table with new AI-SDD common fields
+- **Codebase internationalization**: Converted all Japanese comments and docstrings to English
+
+### Fixed
+
+- Improved backward compatibility by maintaining `feature_id` field alongside new `id` field
+
 ## [0.1.0] - 2026-02-21
 
 ### Added
