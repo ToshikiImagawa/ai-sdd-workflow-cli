@@ -29,21 +29,25 @@ class TestExtractTitle:
 
 
 class TestExtractFeatureId:
-    def test_from_feature_dash_id(self):
-        meta = {"feature-id": "auth-login"}
+    def test_from_id_with_prd_prefix(self):
+        meta = {"id": "prd-auth-login"}
         assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "auth-login"
 
-    def test_from_feature_underscore_id(self):
-        meta = {"feature_id": "auth-login"}
+    def test_from_id_with_spec_prefix(self):
+        meta = {"id": "spec-auth-login"}
         assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "auth-login"
 
-    def test_from_id_key(self):
-        meta = {"id": "feat-01"}
-        assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "feat-01"
+    def test_from_id_with_design_prefix(self):
+        meta = {"id": "design-auth-login"}
+        assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "auth-login"
 
-    def test_priority_order(self):
-        meta = {"feature-id": "first", "feature_id": "second", "id": "third"}
-        assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "first"
+    def test_from_id_with_task_prefix(self):
+        meta = {"id": "task-auth-login"}
+        assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "auth-login"
+
+    def test_from_id_without_prefix(self):
+        meta = {"id": "auth-login"}
+        assert DocumentParser._extract_feature_id(meta, Path("x.md")) == "auth-login"
 
     def test_infer_from_filename(self):
         assert DocumentParser._extract_feature_id({}, Path("user-login.md")) == "user-login"
@@ -82,19 +86,94 @@ class TestExtractTags:
 
 
 # ---------------------------------------------------------------------------
+# _extract_id
+# ---------------------------------------------------------------------------
+
+
+class TestExtractId:
+    def test_with_id(self):
+        assert DocumentParser._extract_id({"id": "prd-document-indexing"}) == "prd-document-indexing"
+
+    def test_without_id(self):
+        assert DocumentParser._extract_id({}) == ""
+
+
+# ---------------------------------------------------------------------------
+# _extract_type
+# ---------------------------------------------------------------------------
+
+
+class TestExtractType:
+    def test_with_type(self):
+        assert DocumentParser._extract_type({"type": "prd"}) == "prd"
+
+    def test_without_type(self):
+        assert DocumentParser._extract_type({}) is None
+
+
+# ---------------------------------------------------------------------------
+# _extract_status
+# ---------------------------------------------------------------------------
+
+
+class TestExtractStatus:
+    def test_with_status(self):
+        assert DocumentParser._extract_status({"status": "approved"}) == "approved"
+
+    def test_without_status(self):
+        assert DocumentParser._extract_status({}) is None
+
+
+# ---------------------------------------------------------------------------
+# _extract_created
+# ---------------------------------------------------------------------------
+
+
+class TestExtractCreated:
+    def test_with_created(self):
+        assert DocumentParser._extract_created({"created": "2026-02-24"}) == "2026-02-24"
+
+    def test_without_created(self):
+        assert DocumentParser._extract_created({}) is None
+
+
+# ---------------------------------------------------------------------------
+# _extract_updated
+# ---------------------------------------------------------------------------
+
+
+class TestExtractUpdated:
+    def test_with_updated(self):
+        assert DocumentParser._extract_updated({"updated": "2026-02-24"}) == "2026-02-24"
+
+    def test_without_updated(self):
+        assert DocumentParser._extract_updated({}) is None
+
+
+# ---------------------------------------------------------------------------
+# _extract_category
+# ---------------------------------------------------------------------------
+
+
+class TestExtractCategory:
+    def test_with_category(self):
+        assert DocumentParser._extract_category({"category": "feature"}) == "feature"
+
+    def test_without_category(self):
+        assert DocumentParser._extract_category({}) is None
+
+
+# ---------------------------------------------------------------------------
 # _extract_dependencies
 # ---------------------------------------------------------------------------
 
 
 class TestExtractDependencies:
-    def test_depends_on_list(self):
-        assert DocumentParser._extract_dependencies({"depends_on": ["a", "b"]}) == ["a", "b"]
+    def test_depends_dash_on_list(self):
+        assert DocumentParser._extract_dependencies({"depends-on": ["a", "b"]}) == ["a", "b"]
 
     def test_depends_dash_on_csv(self):
         assert DocumentParser._extract_dependencies({"depends-on": "x, y"}) == ["x", "y"]
-
-    def test_dependencies_key(self):
-        assert DocumentParser._extract_dependencies({"dependencies": ["z"]}) == ["z"]
 
     def test_no_deps(self):
         assert DocumentParser._extract_dependencies({}) == []
@@ -228,12 +307,27 @@ class TestParse:
     def test_full_frontmatter(self, tmp_path):
         md = write_md(
             tmp_path / "requirement" / "auth" / "index.md",
-            frontmatter={"title": "Auth", "feature-id": "auth", "tags": ["security", "core"]},
+            frontmatter={
+                "id": "prd-auth",
+                "title": "Auth",
+                "type": "prd",
+                "status": "approved",
+                "created": "2026-02-24",
+                "updated": "2026-02-24",
+                "tags": ["security", "core"],
+                "category": "feature",
+            },
             body="# Auth\nContent here.",
         )
         result = DocumentParser.parse(md)
         assert result["title"] == "Auth"
         assert result["feature_id"] == "auth"
+        assert result["id"] == "prd-auth"
+        assert result["type"] == "prd"
+        assert result["status"] == "approved"
+        assert result["created"] == "2026-02-24"
+        assert result["updated"] == "2026-02-24"
+        assert result["category"] == "feature"
         assert result["tags"] == ["security", "core"]
         assert result["file_type"] == "requirement"
 
@@ -245,6 +339,12 @@ class TestParse:
         result = DocumentParser.parse(md)
         assert result["title"] == "Login Feature"
         assert result["feature_id"] == "login"
+        assert result["id"] == ""
+        assert result["type"] is None
+        assert result["status"] is None
+        assert result["created"] is None
+        assert result["updated"] is None
+        assert result["category"] is None
 
     def test_error_fallback(self, tmp_path):
         bad_file = tmp_path / "bad.md"
@@ -253,6 +353,12 @@ class TestParse:
         assert result["title"] == "bad"
         assert result["feature_id"] == "bad"
         assert result["file_type"] == "unknown"
+        assert result["id"] == ""
+        assert result["type"] is None
+        assert result["status"] is None
+        assert result["created"] is None
+        assert result["updated"] is None
+        assert result["category"] is None
 
     def test_parse_with_custom_directory(self, tmp_path):
         md = write_md(
@@ -385,7 +491,7 @@ class TestExtractFeatureIdWithDirectory:
 
     def test_frontmatter_overrides(self):
         result = DocumentParser._extract_feature_id(
-            {"feature-id": "my-feat"},
+            {"id": "prd-my-feat"},
             Path("/abs/reqs/auth/index.md"),
             directory="requirement",
             rel_path="reqs/auth/index.md",

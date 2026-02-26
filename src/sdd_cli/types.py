@@ -5,7 +5,7 @@ from typing import Optional, TypedDict
 
 
 class DocumentInfo(TypedDict):
-    """Scanner → DB に渡すドキュメント基本情報"""
+    """Basic document information passed from Scanner to DB"""
 
     file_path: str
     file_name: str
@@ -13,16 +13,17 @@ class DocumentInfo(TypedDict):
 
 
 class ScanResult(DocumentInfo):
-    """Scanner が返す結果。full_path を含む拡張型"""
+    """Result returned by Scanner. Extended type that includes full_path"""
 
     full_path: Path
 
 
 class ParsedDocument(TypedDict):
-    """Parser.parse() の戻り値"""
+    """Return value of Parser.parse()"""
 
+    # Existing fields
     title: str
-    feature_id: str
+    feature_id: str  # "document-indexing" (for backward compatibility)
     file_type: str
     parent_feature_id: Optional[str]
     tags: list[str]
@@ -30,38 +31,64 @@ class ParsedDocument(TypedDict):
     content: str
     links: list[str]
 
+    # New fields (AI-SDD common fields)
+    id: str  # "prd-document-indexing"
+    type: Optional[str]  # "prd" | "spec" | "design" | "task"
+    status: Optional[str]  # "draft" | "review" | "approved" | "deprecated"
+    created: Optional[str]  # "YYYY-MM-DD"
+    updated: Optional[str]  # "YYYY-MM-DD"
+    category: Optional[str]
+
 
 class DocumentRecord(TypedDict):
-    """DB.get_all_documents() の戻り値。analyzer にも渡される"""
+    """Return value of DB.get_all_documents(). Also passed to analyzer."""
 
+    # Existing fields
     file_path: str
     file_name: str
     directory: str
     file_type: str
     title: str
-    feature_id: str
+    feature_id: str  # "document-indexing" (for backward compatibility)
     parent_feature_id: Optional[str]
     tags: list[str]
     depends_on: list[str]
     links: list[str]
 
+    # New fields (AI-SDD common fields)
+    id: str  # "prd-document-indexing"
+    type: Optional[str]
+    status: Optional[str]
+    created: Optional[str]
+    updated: Optional[str]
+    category: Optional[str]
+
 
 class SearchResult(TypedDict):
-    """DB.search() の戻り値"""
+    """Return value of DB.search()"""
 
+    # Existing fields
     file_path: str
     file_name: str
     directory: str
     file_type: str
     title: str
-    feature_id: str
+    feature_id: str  # "document-indexing" (for backward compatibility)
     parent_feature_id: Optional[str]
     tags: list[str]
     snippet: Optional[str]
 
+    # New fields (AI-SDD common fields)
+    id: str  # "prd-document-indexing"
+    type: Optional[str]
+    status: Optional[str]
+    created: Optional[str]
+    updated: Optional[str]
+    category: Optional[str]
+
 
 class GraphNode(TypedDict):
-    """依存グラフのノード"""
+    """Node in dependency graph"""
 
     id: str
     title: str
@@ -72,7 +99,7 @@ class GraphNode(TypedDict):
 
 
 class GraphEdge(TypedDict):
-    """依存グラフのエッジ"""
+    """Edge in dependency graph"""
 
     source: str
     target: str
@@ -80,14 +107,14 @@ class GraphEdge(TypedDict):
 
 
 class DependencyGraph(TypedDict):
-    """依存グラフ全体"""
+    """Complete dependency graph"""
 
     nodes: list[GraphNode]
     edges: list[GraphEdge]
 
 
 class SDDDirectories(TypedDict):
-    """SDD ディレクトリ設定"""
+    """SDD directory configuration"""
 
     requirement: str
     specification: str
@@ -95,7 +122,7 @@ class SDDDirectories(TypedDict):
 
 
 class SDDConfig(TypedDict):
-    """SDD 設定 (.sdd-config.json schema)"""
+    """SDD configuration (.sdd-config.json schema)"""
 
     root: str
     lang: str

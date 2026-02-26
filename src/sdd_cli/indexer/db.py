@@ -53,6 +53,12 @@ class IndexDB:
                 tags TEXT,
                 depends_on TEXT,
                 links TEXT,
+                id TEXT,
+                type TEXT,
+                status TEXT,
+                created TEXT,
+                updated TEXT,
+                category TEXT,
                 indexed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
@@ -108,8 +114,9 @@ class IndexDB:
         cursor.execute(
             """
             INSERT OR REPLACE INTO documents_meta (
-                file_path, file_type, feature_id, parent_feature_id, tags, depends_on, links
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                file_path, file_type, feature_id, parent_feature_id, tags, depends_on, links,
+                id, type, status, created, updated, category
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
             (
                 doc_info["file_path"],
@@ -119,6 +126,12 @@ class IndexDB:
                 json.dumps(parsed_data["tags"]),
                 json.dumps(parsed_data["depends_on"]),
                 json.dumps(parsed_data["links"]),
+                parsed_data.get("id"),
+                parsed_data.get("type"),
+                parsed_data.get("status"),
+                parsed_data.get("created"),
+                parsed_data.get("updated"),
+                parsed_data.get("category"),
             ),
         )
 
@@ -161,6 +174,12 @@ class IndexDB:
                     fts.feature_id,
                     meta.parent_feature_id,
                     meta.tags,
+                    meta.id,
+                    meta.type,
+                    meta.status,
+                    meta.created,
+                    meta.updated,
+                    meta.category,
                     snippet(documents_fts, 7, '...', '...', '', 50) as snippet,
                     rank
                 FROM documents_fts fts
@@ -180,6 +199,12 @@ class IndexDB:
                     fts.feature_id,
                     meta.parent_feature_id,
                     meta.tags,
+                    meta.id,
+                    meta.type,
+                    meta.status,
+                    meta.created,
+                    meta.updated,
+                    meta.category,
                     substr(fts.content, 1, 150) as snippet
                 FROM documents_fts fts
                 LEFT JOIN documents_meta meta ON fts.file_path = meta.file_path
@@ -243,7 +268,13 @@ class IndexDB:
                 meta.parent_feature_id,
                 meta.tags,
                 meta.depends_on,
-                meta.links
+                meta.links,
+                meta.id,
+                meta.type,
+                meta.status,
+                meta.created,
+                meta.updated,
+                meta.category
             FROM documents_fts fts
             LEFT JOIN documents_meta meta ON fts.file_path = meta.file_path
             ORDER BY fts.file_path

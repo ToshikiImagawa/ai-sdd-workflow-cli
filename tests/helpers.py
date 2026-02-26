@@ -62,6 +62,12 @@ def sample_parsed_data(
     depends_on: Optional[list[str]] = None,
     content: str = "Authentication feature content.",
     links: Optional[list[str]] = None,
+    doc_id: str = "",
+    doc_type: Optional[str] = None,
+    status: Optional[str] = None,
+    created: Optional[str] = None,
+    updated: Optional[str] = None,
+    category: Optional[str] = None,
 ) -> ParsedDocument:
     """Create a parsed_data dict expected by IndexDB.index_document."""
     return ParsedDocument(
@@ -73,6 +79,12 @@ def sample_parsed_data(
         depends_on=depends_on or [],
         content=content,
         links=links or [],
+        id=doc_id,
+        type=doc_type,
+        status=status,
+        created=created,
+        updated=updated,
+        category=category,
     )
 
 
@@ -86,6 +98,12 @@ def sample_doc_record(
     parent_feature_id: Optional[str] = None,
     title: Optional[str] = None,
     file_name: Optional[str] = None,
+    doc_id: str = "",
+    doc_type: Optional[str] = None,
+    status: Optional[str] = None,
+    created: Optional[str] = None,
+    updated: Optional[str] = None,
+    category: Optional[str] = None,
 ) -> DocumentRecord:
     """Create a DocumentRecord dict for analyzer / graph builder tests."""
     return DocumentRecord(
@@ -99,4 +117,10 @@ def sample_doc_record(
         links=links or [],
         parent_feature_id=parent_feature_id,
         tags=[],
+        id=doc_id,
+        type=doc_type,
+        status=status,
+        created=created,
+        updated=updated,
+        category=category,
     )

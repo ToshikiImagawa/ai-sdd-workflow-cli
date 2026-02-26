@@ -122,9 +122,9 @@ def search(query, root, feature_id, tag, directory, output_format, output, limit
     filtering by feature ID, tags, or directory type.
 
     Examples:
-        sdd-cli search "ログイン機能"
+        sdd-cli search "authentication"
         sdd-cli search --feature-id user-login
-        sdd-cli search "認証" --tag security --dir specification
+        sdd-cli search "login" --tag security --dir specification
     """
     from sdd_cli.commands.search import search_documents
 

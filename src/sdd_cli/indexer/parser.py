@@ -28,13 +28,19 @@ class DocumentParser:
         Returns:
             Dictionary with keys:
                 - title: str (from frontmatter or first heading)
-                - feature_id: str (from frontmatter or inferred from filename)
+                - feature_id: str (extracted from id field with prefix removed, or inferred from filename)
                 - file_type: str (requirement/spec/design/task)
                 - parent_feature_id: str or None (inferred from directory nesting)
                 - tags: List[str] (from frontmatter)
-                - depends_on: List[str] (from frontmatter)
+                - depends_on: List[str] (from frontmatter 'depends-on' field)
                 - content: str (Markdown body without code blocks)
                 - links: List[str] (relative links to other documents)
+                - id: str (full id value from frontmatter, e.g., 'prd-document-indexing')
+                - type: str or None (from frontmatter 'type' field)
+                - status: str or None (from frontmatter 'status' field)
+                - created: str or None (from frontmatter 'created' field, format: 'YYYY-MM-DD')
+                - updated: str or None (from frontmatter 'updated' field, format: 'YYYY-MM-DD')
+                - category: str or None (from frontmatter 'category' field)
         """
         try:
             with open(file_path, encoding="utf-8") as f:
@@ -67,6 +73,14 @@ class DocumentParser:
             # Extract relative links
             links = DocumentParser._extract_links(content)
 
+            # Extract AI-SDD common fields
+            doc_id = DocumentParser._extract_id(metadata)
+            doc_type = DocumentParser._extract_type(metadata)
+            status = DocumentParser._extract_status(metadata)
+            created = DocumentParser._extract_created(metadata)
+            updated = DocumentParser._extract_updated(metadata)
+            category = DocumentParser._extract_category(metadata)
+
             return {
                 "title": title,
                 "feature_id": feature_id,
@@ -76,6 +90,12 @@ class DocumentParser:
                 "depends_on": depends_on,
                 "content": clean_content,
                 "links": links,
+                "id": doc_id,
+                "type": doc_type,
+                "status": status,
+                "created": created,
+                "updated": updated,
+                "category": category,
             }
 
         except Exception:
@@ -89,6 +109,12 @@ class DocumentParser:
                 "depends_on": [],
                 "content": "",
                 "links": [],
+                "id": "",
+                "type": None,
+                "status": None,
+                "created": None,
+                "updated": None,
+                "category": None,
             }
 
     @staticmethod
@@ -112,11 +138,21 @@ class DocumentParser:
         directory: Optional[str] = None,
         rel_path: Optional[str] = None,
     ) -> str:
-        """Extract feature ID from frontmatter or infer from filename."""
-        # Try frontmatter variants
-        for key in ["feature-id", "feature_id", "id"]:
-            if key in metadata:
-                return str(metadata[key])
+        """Extract feature ID from frontmatter id field or infer from filename.
+
+        If frontmatter contains 'id' field with format '{prefix}-{name}',
+        extracts the name part by removing the prefix.
+        Common prefixes: prd-, spec-, design-, task-, impl-
+        """
+        # Try frontmatter id field
+        if "id" in metadata:
+            id_value = str(metadata["id"])
+            # Remove common AI-SDD prefixes
+            for prefix in ["prd-", "spec-", "design-", "task-", "impl-"]:
+                if id_value.startswith(prefix):
+                    return id_value[len(prefix) :]
+            # If no prefix matches, return the id as-is
+            return id_value
 
         # Infer from filename (remove _spec or _design suffix)
         name = file_path.stem
@@ -149,15 +185,82 @@ class DocumentParser:
         return []
 
     @staticmethod
+    def _extract_id(metadata: dict[str, Any]) -> str:
+        """Extract document ID from frontmatter.
+
+        Returns the full id value (e.g., 'prd-document-indexing').
+        Returns empty string if not present.
+        """
+        if "id" in metadata:
+            return str(metadata["id"])
+        return ""
+
+    @staticmethod
+    def _extract_type(metadata: dict[str, Any]) -> Optional[str]:
+        """Extract document type from frontmatter.
+
+        Returns 'prd', 'spec', 'design', 'task', or other custom types.
+        Returns None if not present.
+        """
+        if "type" in metadata:
+            return str(metadata["type"])
+        return None
+
+    @staticmethod
+    def _extract_status(metadata: dict[str, Any]) -> Optional[str]:
+        """Extract document status from frontmatter.
+
+        Common values: 'draft', 'review', 'approved', 'deprecated'.
+        Returns None if not present.
+        """
+        if "status" in metadata:
+            return str(metadata["status"])
+        return None
+
+    @staticmethod
+    def _extract_created(metadata: dict[str, Any]) -> Optional[str]:
+        """Extract creation date from frontmatter.
+
+        Expected format: 'YYYY-MM-DD'.
+        Returns None if not present.
+        """
+        if "created" in metadata:
+            return str(metadata["created"])
+        return None
+
+    @staticmethod
+    def _extract_updated(metadata: dict[str, Any]) -> Optional[str]:
+        """Extract update date from frontmatter.
+
+        Expected format: 'YYYY-MM-DD'.
+        Returns None if not present.
+        """
+        if "updated" in metadata:
+            return str(metadata["updated"])
+        return None
+
+    @staticmethod
+    def _extract_category(metadata: dict[str, Any]) -> Optional[str]:
+        """Extract category from frontmatter.
+
+        Returns None if not present.
+        """
+        if "category" in metadata:
+            return str(metadata["category"])
+        return None
+
+    @staticmethod
     def _extract_dependencies(metadata: dict[str, Any]) -> list[str]:
-        """Extract dependencies from frontmatter."""
-        for key in ["depends-on", "depends_on", "dependencies"]:
-            if key in metadata:
-                deps = metadata[key]
-                if isinstance(deps, str):
-                    return [d.strip() for d in deps.split(",")]
-                elif isinstance(deps, list):
-                    return [str(d) for d in deps]
+        """Extract dependencies from frontmatter.
+
+        Only supports the AI-SDD standard field name 'depends-on'.
+        """
+        if "depends-on" in metadata:
+            deps = metadata["depends-on"]
+            if isinstance(deps, str):
+                return [d.strip() for d in deps.split(",")]
+            elif isinstance(deps, list):
+                return [str(d) for d in deps]
         return []
 
     @staticmethod

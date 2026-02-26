@@ -58,12 +58,28 @@ class TestIndexDocument:
         assert docs[0]["title"] == "Auth Feature"
 
     def test_json_fields_stored(self, index_db):
-        parsed = sample_parsed_data(tags=["a", "b"], depends_on=["x"], links=["y.md"])
+        parsed = sample_parsed_data(
+            tags=["a", "b"],
+            depends_on=["x"],
+            links=["y.md"],
+            doc_id="prd-auth",
+            doc_type="prd",
+            status="approved",
+            created="2026-02-24",
+            updated="2026-02-24",
+            category="feature",
+        )
         index_db.index_document(sample_doc_info(), parsed)
         docs = index_db.get_all_documents()
         assert docs[0]["tags"] == ["a", "b"]
         assert docs[0]["depends_on"] == ["x"]
         assert docs[0]["links"] == ["y.md"]
+        assert docs[0]["id"] == "prd-auth"
+        assert docs[0]["type"] == "prd"
+        assert docs[0]["status"] == "approved"
+        assert docs[0]["created"] == "2026-02-24"
+        assert docs[0]["updated"] == "2026-02-24"
+        assert docs[0]["category"] == "feature"
 
     def test_upsert_meta(self, index_db):
         doc = sample_doc_info()
@@ -154,6 +170,12 @@ class TestGetAllDocuments:
                 tags=["t1"],
                 depends_on=["d1"],
                 links=["l.md"],
+                doc_id="prd-auth",
+                doc_type="prd",
+                status="approved",
+                created="2026-02-24",
+                updated="2026-02-24",
+                category="feature",
             ),
         )
         doc = index_db.get_all_documents()[0]
@@ -161,6 +183,12 @@ class TestGetAllDocuments:
         assert doc["tags"] == ["t1"]
         assert doc["depends_on"] == ["d1"]
         assert doc["links"] == ["l.md"]
+        assert doc["id"] == "prd-auth"
+        assert doc["type"] == "prd"
+        assert doc["status"] == "approved"
+        assert doc["created"] == "2026-02-24"
+        assert doc["updated"] == "2026-02-24"
+        assert doc["category"] == "feature"
 
     def test_invalid_json_fallback(self, index_db):
         index_db.index_document(sample_doc_info(), sample_parsed_data())

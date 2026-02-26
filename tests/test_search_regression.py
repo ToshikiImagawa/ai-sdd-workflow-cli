@@ -80,7 +80,7 @@ def test_search_regression(project_name, sdd_root_name, tmp_path):
             actual_raw = db.search(**params)
             actual = [_strip_snippet(dict(r)) for r in actual_raw]
 
-            # query ありの場合は file_path ソートで比較 (rank 順は SQLite バージョンで変動しうる)
+            # Sort by file_path when query is present (rank order may vary by SQLite version)
             if params.get("query"):
                 actual.sort(key=lambda d: d["file_path"])
 
@@ -91,7 +91,7 @@ def test_search_regression(project_name, sdd_root_name, tmp_path):
             for i, (act, exp) in enumerate(zip(actual, expected_results)):
                 assert act == exp, f"{project_name}/{name}: result #{i} mismatch at file_path={exp.get('file_path')}"
 
-            # snippet が存在することを検証 (query ありの場合は snippet が返るはず)
+            # Verify that snippet exists (snippet should be returned when query is present)
             if params.get("query"):
                 for r in actual_raw:
                     assert r.get("snippet") is not None, (
