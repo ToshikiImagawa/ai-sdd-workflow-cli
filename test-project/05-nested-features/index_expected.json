@@ -12,9 +12,15 @@
       "cart"
     ],
     "depends_on": [
-      "e-commerce"
+      "prd-e-commerce"
     ],
-    "links": []
+    "links": [],
+    "id": "prd-cart",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "requirement/e-commerce/checkout/index.md",
@@ -29,10 +35,16 @@
       "checkout"
     ],
     "depends_on": [
-      "e-commerce",
-      "cart"
+      "prd-e-commerce",
+      "prd-cart"
     ],
-    "links": []
+    "links": [],
+    "id": "prd-checkout",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "requirement/e-commerce/index.md",
@@ -47,7 +59,13 @@
       "platform"
     ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "prd-e-commerce",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "requirement/index.md",
@@ -61,7 +79,13 @@
       "overview"
     ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "prd-root",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "specification/e-commerce/cart_spec.md",
@@ -75,9 +99,15 @@
       "commerce"
     ],
     "depends_on": [
-      "cart"
+      "prd-cart"
     ],
-    "links": []
+    "links": [],
+    "id": "spec-cart",
+    "type": "spec",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "specification/e-commerce/checkout_spec.md",
@@ -91,10 +121,16 @@
       "commerce"
     ],
     "depends_on": [
-      "checkout",
-      "cart"
+      "prd-checkout",
+      "spec-cart"
     ],
-    "links": []
+    "links": [],
+    "id": "spec-checkout",
+    "type": "spec",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "task/CART-001/index.md",
@@ -105,12 +141,16 @@
     "feature_id": "CART-001",
     "parent_feature_id": null,
     "tags": [],
-    "depends_on": [
-      "cart"
-    ],
+    "depends_on": [],
     "links": [
       "../../specification/e-commerce/cart_spec.md"
-    ]
+    ],
+    "id": "task-CART-001",
+    "type": "task",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "task/CART-001/tasks.md",
@@ -118,11 +158,20 @@
     "directory": "task",
     "file_type": "task",
     "title": "Cart Tasks",
-    "feature_id": "CART-001",
+    "feature_id": "tasks-CART-001",
     "parent_feature_id": null,
-    "tags": [],
+    "tags": [
+      "commerce",
+      "cart"
+    ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "tasks-CART-001",
+    "type": "implementation-log",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "task/CHECKOUT-001/index.md",
@@ -133,12 +182,16 @@
     "feature_id": "CHECKOUT-001",
     "parent_feature_id": null,
     "tags": [],
-    "depends_on": [
-      "checkout"
-    ],
+    "depends_on": [],
     "links": [
       "../../specification/e-commerce/checkout_spec.md"
-    ]
+    ],
+    "id": "task-CHECKOUT-001",
+    "type": "task",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "task/CHECKOUT-001/tasks.md",
@@ -146,10 +199,19 @@
     "directory": "task",
     "file_type": "task",
     "title": "Checkout Tasks",
-    "feature_id": "CHECKOUT-001",
+    "feature_id": "tasks-CHECKOUT-001",
     "parent_feature_id": null,
-    "tags": [],
+    "tags": [
+      "commerce",
+      "checkout"
+    ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "tasks-CHECKOUT-001",
+    "type": "implementation-log",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   }
 ]

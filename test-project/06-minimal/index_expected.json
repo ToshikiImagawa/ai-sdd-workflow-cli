@@ -9,6 +9,12 @@
     "parent_feature_id": null,
     "tags": [],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "prd-hello-world",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   }
 ]

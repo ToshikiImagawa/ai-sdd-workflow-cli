@@ -53,12 +53,12 @@
       {
         "source": "specification/notification_spec.md",
         "target": "requirement/notification.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/NOTIF-001/index.md",
         "target": "specification/notification_spec.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/NOTIF-001/tasks.md",
@@ -113,12 +113,12 @@
       {
         "source": "specification/notification_spec.md",
         "target": "requirement/notification.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/NOTIF-001/index.md",
         "target": "specification/notification_spec.md",
-        "type": "explicit"
+        "type": "link"
       }
     ]
   },

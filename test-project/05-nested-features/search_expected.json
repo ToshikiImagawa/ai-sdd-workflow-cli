@@ -20,7 +20,13 @@
         "tags": [
           "commerce",
           "cart"
-        ]
+        ],
+        "id": "prd-cart",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/e-commerce/checkout/index.md",
@@ -33,7 +39,13 @@
         "tags": [
           "commerce",
           "checkout"
-        ]
+        ],
+        "id": "prd-checkout",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/e-commerce/index.md",
@@ -46,7 +58,13 @@
         "tags": [
           "commerce",
           "platform"
-        ]
+        ],
+        "id": "prd-e-commerce",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/index.md",
@@ -58,7 +76,13 @@
         "parent_feature_id": null,
         "tags": [
           "overview"
-        ]
+        ],
+        "id": "prd-root",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/e-commerce/cart_spec.md",
@@ -70,7 +94,13 @@
         "parent_feature_id": "e-commerce",
         "tags": [
           "commerce"
-        ]
+        ],
+        "id": "spec-cart",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/e-commerce/checkout_spec.md",
@@ -82,7 +112,13 @@
         "parent_feature_id": "e-commerce",
         "tags": [
           "commerce"
-        ]
+        ],
+        "id": "spec-checkout",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/CART-001/index.md",
@@ -92,7 +128,13 @@
         "title": "Implement Cart",
         "feature_id": "CART-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [],
+        "id": "task-CART-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/CART-001/tasks.md",
@@ -100,9 +142,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Cart Tasks",
-        "feature_id": "CART-001",
+        "feature_id": "tasks-CART-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "commerce",
+          "cart"
+        ],
+        "id": "tasks-CART-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/CHECKOUT-001/index.md",
@@ -112,7 +163,13 @@
         "title": "Implement Checkout",
         "feature_id": "CHECKOUT-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [],
+        "id": "task-CHECKOUT-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/CHECKOUT-001/tasks.md",
@@ -120,9 +177,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Checkout Tasks",
-        "feature_id": "CHECKOUT-001",
+        "feature_id": "tasks-CHECKOUT-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "commerce",
+          "checkout"
+        ],
+        "id": "tasks-CHECKOUT-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -147,7 +213,13 @@
         "tags": [
           "commerce",
           "cart"
-        ]
+        ],
+        "id": "prd-cart",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/e-commerce/cart_spec.md",
@@ -159,7 +231,13 @@
         "parent_feature_id": "e-commerce",
         "tags": [
           "commerce"
-        ]
+        ],
+        "id": "spec-cart",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -183,7 +261,13 @@
         "parent_feature_id": "e-commerce",
         "tags": [
           "commerce"
-        ]
+        ],
+        "id": "spec-cart",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/e-commerce/checkout_spec.md",
@@ -195,7 +279,13 @@
         "parent_feature_id": "e-commerce",
         "tags": [
           "commerce"
-        ]
+        ],
+        "id": "spec-checkout",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   }

@@ -40,7 +40,7 @@
         "title": "Search Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "SEARCH-001",
+        "feature_id": "tasks-SEARCH-001",
         "links": []
       }
     ],
@@ -53,12 +53,12 @@
       {
         "source": "specification/search-feature_spec.md",
         "target": "prd/search-feature.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/SEARCH-001/index.md",
         "target": "specification/search-feature_spec.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/SEARCH-001/tasks.md",
@@ -113,12 +113,12 @@
       {
         "source": "specification/search-feature_spec.md",
         "target": "prd/search-feature.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/SEARCH-001/index.md",
         "target": "specification/search-feature_spec.md",
-        "type": "explicit"
+        "type": "link"
       }
     ]
   },
@@ -137,7 +137,7 @@
         "title": "Search Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "SEARCH-001",
+        "feature_id": "tasks-SEARCH-001",
         "links": []
       }
     ],

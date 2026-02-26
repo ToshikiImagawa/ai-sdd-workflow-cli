@@ -80,7 +80,7 @@
         "title": "Dashboard Implementation Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "DASH-001",
+        "feature_id": "tasks-DASH-001",
         "links": []
       },
       {
@@ -99,7 +99,7 @@
         "title": "Auth Implementation Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "UA-001",
+        "feature_id": "tasks-UA-001",
         "links": []
       },
       {
@@ -117,20 +117,15 @@
         "title": "Profile Implementation Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "UP-001",
+        "feature_id": "tasks-UP-001",
         "links": []
       }
     ],
     "edges": [
       {
         "source": "requirement/dashboard.md",
-        "target": "requirement/user-auth.md",
-        "type": "explicit"
-      },
-      {
-        "source": "requirement/dashboard.md",
-        "target": "requirement/user-profile.md",
-        "type": "explicit"
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
       },
       {
         "source": "requirement/user-auth.md",
@@ -139,43 +134,33 @@
       },
       {
         "source": "requirement/user-profile.md",
-        "target": "requirement/user-auth.md",
-        "type": "explicit"
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
       },
       {
         "source": "specification/dashboard_spec.md",
         "target": "requirement/dashboard.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/user-auth_design.md",
         "target": "specification/user-auth_spec.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/user-auth_spec.md",
         "target": "requirement/user-auth.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/user-profile_spec.md",
         "target": "requirement/user-profile.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/DASH-001/index.md",
         "target": "specification/dashboard_spec.md",
-        "type": "explicit"
-      },
-      {
-        "source": "task/DASH-001/index.md",
-        "target": "task/UA-001/index.md",
-        "type": "explicit"
-      },
-      {
-        "source": "task/DASH-001/index.md",
-        "target": "task/UP-001/index.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/DASH-001/tasks.md",
@@ -185,7 +170,7 @@
       {
         "source": "task/UA-001/index.md",
         "target": "specification/user-auth_design.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/UA-001/tasks.md",
@@ -195,12 +180,7 @@
       {
         "source": "task/UP-001/index.md",
         "target": "specification/user-profile_spec.md",
-        "type": "explicit"
-      },
-      {
-        "source": "task/UP-001/index.md",
-        "target": "task/UA-001/index.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/UP-001/tasks.md",
@@ -310,13 +290,8 @@
     "edges": [
       {
         "source": "requirement/dashboard.md",
-        "target": "requirement/user-auth.md",
-        "type": "explicit"
-      },
-      {
-        "source": "requirement/dashboard.md",
-        "target": "requirement/user-profile.md",
-        "type": "explicit"
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
       },
       {
         "source": "requirement/user-auth.md",
@@ -325,58 +300,43 @@
       },
       {
         "source": "requirement/user-profile.md",
-        "target": "requirement/user-auth.md",
-        "type": "explicit"
+        "target": "CONSTITUTION.md",
+        "type": "constitution"
       },
       {
         "source": "specification/dashboard_spec.md",
         "target": "requirement/dashboard.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/user-auth_design.md",
         "target": "specification/user-auth_spec.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/user-auth_spec.md",
         "target": "requirement/user-auth.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/user-profile_spec.md",
         "target": "requirement/user-profile.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/DASH-001/index.md",
         "target": "specification/dashboard_spec.md",
-        "type": "explicit"
-      },
-      {
-        "source": "task/DASH-001/index.md",
-        "target": "task/UA-001/index.md",
-        "type": "explicit"
-      },
-      {
-        "source": "task/DASH-001/index.md",
-        "target": "task/UP-001/index.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/UA-001/index.md",
         "target": "specification/user-auth_design.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/UP-001/index.md",
         "target": "specification/user-profile_spec.md",
-        "type": "explicit"
-      },
-      {
-        "source": "task/UP-001/index.md",
-        "target": "task/UA-001/index.md",
-        "type": "explicit"
+        "type": "link"
       }
     ]
   },
@@ -395,7 +355,7 @@
         "title": "Dashboard Implementation Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "DASH-001",
+        "feature_id": "tasks-DASH-001",
         "links": []
       },
       {
@@ -403,7 +363,7 @@
         "title": "Auth Implementation Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "UA-001",
+        "feature_id": "tasks-UA-001",
         "links": []
       },
       {
@@ -411,7 +371,7 @@
         "title": "Profile Implementation Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "UP-001",
+        "feature_id": "tasks-UP-001",
         "links": []
       }
     ],

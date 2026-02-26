@@ -20,7 +20,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "prd-auth",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/payment.md",
@@ -33,7 +39,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "prd-payment",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/auth_design.md",
@@ -46,7 +58,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "design-auth",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/auth_spec.md",
@@ -59,7 +77,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "spec-auth",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/payment_design.md",
@@ -72,7 +96,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "design-payment",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/payment_spec.md",
@@ -85,7 +115,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "spec-payment",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/AUTH-001/index.md",
@@ -98,7 +134,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "task-AUTH-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/AUTH-001/tasks.md",
@@ -106,9 +148,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Authentication Task Breakdown",
-        "feature_id": "AUTH-001",
+        "feature_id": "tasks-AUTH-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "security",
+          "user"
+        ],
+        "id": "tasks-AUTH-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/PAY-001/index.md",
@@ -121,7 +172,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "task-PAY-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/PAY-001/tasks.md",
@@ -129,9 +186,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Payment Task Breakdown",
-        "feature_id": "PAY-001",
+        "feature_id": "tasks-PAY-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "billing",
+          "commerce"
+        ],
+        "id": "tasks-PAY-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -156,7 +222,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "prd-auth",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/auth_design.md",
@@ -169,7 +241,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "design-auth",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/auth_spec.md",
@@ -182,7 +260,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "spec-auth",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -207,7 +291,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "prd-auth",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/auth_design.md",
@@ -220,7 +310,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "design-auth",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/auth_spec.md",
@@ -233,7 +329,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "spec-auth",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/AUTH-001/index.md",
@@ -246,7 +348,32 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "task-AUTH-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
+      },
+      {
+        "file_path": "task/AUTH-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Authentication Task Breakdown",
+        "feature_id": "tasks-AUTH-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security",
+          "user"
+        ],
+        "id": "tasks-AUTH-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -271,7 +398,13 @@
         "tags": [
           "security",
           "user"
-        ]
+        ],
+        "id": "task-AUTH-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/AUTH-001/tasks.md",
@@ -279,9 +412,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Authentication Task Breakdown",
-        "feature_id": "AUTH-001",
+        "feature_id": "tasks-AUTH-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "security",
+          "user"
+        ],
+        "id": "tasks-AUTH-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/PAY-001/index.md",
@@ -294,7 +436,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "task-PAY-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/PAY-001/tasks.md",
@@ -302,9 +450,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Payment Task Breakdown",
-        "feature_id": "PAY-001",
+        "feature_id": "tasks-PAY-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "billing",
+          "commerce"
+        ],
+        "id": "tasks-PAY-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -329,7 +486,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "prd-payment",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/payment_design.md",
@@ -342,7 +505,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "design-payment",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/payment_spec.md",
@@ -355,7 +524,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "spec-payment",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/PAY-001/index.md",
@@ -368,7 +543,13 @@
         "tags": [
           "billing",
           "commerce"
-        ]
+        ],
+        "id": "task-PAY-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/PAY-001/tasks.md",
@@ -376,9 +557,18 @@
         "directory": "task",
         "file_type": "task",
         "title": "Payment Task Breakdown",
-        "feature_id": "PAY-001",
+        "feature_id": "tasks-PAY-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "billing",
+          "commerce"
+        ],
+        "id": "tasks-PAY-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   }

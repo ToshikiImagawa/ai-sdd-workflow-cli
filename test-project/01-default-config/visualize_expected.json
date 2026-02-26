@@ -85,7 +85,7 @@
         "title": "Authentication Task Breakdown",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "AUTH-001",
+        "feature_id": "tasks-AUTH-001",
         "links": [
           "specification/auth_design.md",
           "specification/auth_spec.md",
@@ -110,7 +110,7 @@
         "title": "Payment Task Breakdown",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "PAY-001",
+        "feature_id": "tasks-PAY-001",
         "links": [
           "specification/payment_design.md",
           "specification/payment_spec.md",
@@ -141,11 +141,6 @@
       },
       {
         "source": "specification/payment_design.md",
-        "target": "specification/auth_spec.md",
-        "type": "explicit"
-      },
-      {
-        "source": "specification/payment_design.md",
         "target": "specification/payment_spec.md",
         "type": "implicit"
       },
@@ -163,11 +158,6 @@
         "source": "task/AUTH-001/tasks.md",
         "target": "specification/auth_design.md",
         "type": "link"
-      },
-      {
-        "source": "task/PAY-001/index.md",
-        "target": "task/AUTH-001/index.md",
-        "type": "explicit"
       },
       {
         "source": "task/PAY-001/index.md",
@@ -267,7 +257,7 @@
         "title": "Authentication Task Breakdown",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "AUTH-001",
+        "feature_id": "tasks-AUTH-001",
         "links": [
           "specification/auth_design.md",
           "specification/auth_spec.md",
@@ -292,7 +282,7 @@
         "title": "Payment Task Breakdown",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "PAY-001",
+        "feature_id": "tasks-PAY-001",
         "links": [
           "specification/payment_design.md",
           "specification/payment_spec.md",
@@ -323,11 +313,6 @@
       },
       {
         "source": "specification/payment_design.md",
-        "target": "specification/auth_spec.md",
-        "type": "explicit"
-      },
-      {
-        "source": "specification/payment_design.md",
         "target": "specification/payment_spec.md",
         "type": "implicit"
       },
@@ -345,11 +330,6 @@
         "source": "task/AUTH-001/tasks.md",
         "target": "specification/auth_design.md",
         "type": "link"
-      },
-      {
-        "source": "task/PAY-001/index.md",
-        "target": "task/AUTH-001/index.md",
-        "type": "explicit"
       },
       {
         "source": "task/PAY-001/index.md",

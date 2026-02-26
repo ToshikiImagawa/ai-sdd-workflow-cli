@@ -12,7 +12,13 @@
       "ux"
     ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "prd-search-feature",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "specification/search-feature_spec.md",
@@ -26,9 +32,15 @@
       "search"
     ],
     "depends_on": [
-      "search-feature"
+      "prd-search-feature"
     ],
-    "links": []
+    "links": [],
+    "id": "spec-search-feature",
+    "type": "spec",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "task/SEARCH-001/index.md",
@@ -39,12 +51,16 @@
     "feature_id": "SEARCH-001",
     "parent_feature_id": null,
     "tags": [],
-    "depends_on": [
-      "search-feature"
-    ],
+    "depends_on": [],
     "links": [
       "../../specification/search-feature_spec.md"
-    ]
+    ],
+    "id": "task-SEARCH-001",
+    "type": "task",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "task/SEARCH-001/tasks.md",
@@ -52,10 +68,18 @@
     "directory": "task",
     "file_type": "task",
     "title": "Search Tasks",
-    "feature_id": "SEARCH-001",
+    "feature_id": "tasks-SEARCH-001",
     "parent_feature_id": null,
-    "tags": [],
+    "tags": [
+      "search"
+    ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "tasks-SEARCH-001",
+    "type": "implementation-log",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   }
 ]

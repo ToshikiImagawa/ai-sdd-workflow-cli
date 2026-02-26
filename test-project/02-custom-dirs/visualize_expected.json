@@ -40,7 +40,7 @@
         "title": "User CRUD Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "UM-001",
+        "feature_id": "tasks-UM-001",
         "links": []
       }
     ],
@@ -53,12 +53,12 @@
       {
         "source": "specs/user-management_spec.md",
         "target": "reqs/user-management.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "todos/UM-001/index.md",
         "target": "specs/user-management_spec.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "todos/UM-001/tasks.md",
@@ -113,12 +113,12 @@
       {
         "source": "specs/user-management_spec.md",
         "target": "reqs/user-management.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "todos/UM-001/index.md",
         "target": "specs/user-management_spec.md",
-        "type": "explicit"
+        "type": "link"
       }
     ]
   },
@@ -137,7 +137,7 @@
         "title": "User CRUD Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "UM-001",
+        "feature_id": "tasks-UM-001",
         "links": []
       }
     ],

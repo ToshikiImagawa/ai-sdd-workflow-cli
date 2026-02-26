@@ -72,7 +72,7 @@
         "title": "Cart Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "CART-001",
+        "feature_id": "tasks-CART-001",
         "links": []
       },
       {
@@ -90,7 +90,7 @@
         "title": "Checkout Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "CHECKOUT-001",
+        "feature_id": "tasks-CHECKOUT-001",
         "links": []
       }
     ],
@@ -98,17 +98,12 @@
       {
         "source": "requirement/e-commerce/cart/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "explicit"
-      },
-      {
-        "source": "requirement/e-commerce/checkout/index.md",
-        "target": "requirement/e-commerce/cart/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "requirement/e-commerce/checkout/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "requirement/e-commerce/index.md",
@@ -123,22 +118,17 @@
       {
         "source": "specification/e-commerce/cart_spec.md",
         "target": "requirement/e-commerce/cart/index.md",
-        "type": "explicit"
-      },
-      {
-        "source": "specification/e-commerce/checkout_spec.md",
-        "target": "requirement/e-commerce/cart/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/e-commerce/checkout_spec.md",
         "target": "requirement/e-commerce/checkout/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/CART-001/index.md",
         "target": "specification/e-commerce/cart_spec.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/CART-001/tasks.md",
@@ -148,7 +138,7 @@
       {
         "source": "task/CHECKOUT-001/index.md",
         "target": "specification/e-commerce/checkout_spec.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/CHECKOUT-001/tasks.md",
@@ -240,17 +230,12 @@
       {
         "source": "requirement/e-commerce/cart/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "explicit"
-      },
-      {
-        "source": "requirement/e-commerce/checkout/index.md",
-        "target": "requirement/e-commerce/cart/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "requirement/e-commerce/checkout/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "requirement/e-commerce/index.md",
@@ -265,27 +250,22 @@
       {
         "source": "specification/e-commerce/cart_spec.md",
         "target": "requirement/e-commerce/cart/index.md",
-        "type": "explicit"
-      },
-      {
-        "source": "specification/e-commerce/checkout_spec.md",
-        "target": "requirement/e-commerce/cart/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "specification/e-commerce/checkout_spec.md",
         "target": "requirement/e-commerce/checkout/index.md",
-        "type": "explicit"
+        "type": "implicit"
       },
       {
         "source": "task/CART-001/index.md",
         "target": "specification/e-commerce/cart_spec.md",
-        "type": "explicit"
+        "type": "link"
       },
       {
         "source": "task/CHECKOUT-001/index.md",
         "target": "specification/e-commerce/checkout_spec.md",
-        "type": "explicit"
+        "type": "link"
       }
     ]
   },
@@ -304,7 +284,7 @@
         "title": "Cart Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "CART-001",
+        "feature_id": "tasks-CART-001",
         "links": []
       },
       {
@@ -312,7 +292,7 @@
         "title": "Checkout Tasks",
         "directory": "task",
         "file_type": "task",
-        "feature_id": "CHECKOUT-001",
+        "feature_id": "tasks-CHECKOUT-001",
         "links": []
       }
     ],

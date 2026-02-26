@@ -12,7 +12,13 @@
       "admin"
     ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "prd-user-management",
+    "type": "prd",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "specs/user-management_spec.md",
@@ -26,9 +32,15 @@
       "user"
     ],
     "depends_on": [
-      "user-management"
+      "prd-user-management"
     ],
-    "links": []
+    "links": [],
+    "id": "spec-user-management",
+    "type": "spec",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "todos/UM-001/index.md",
@@ -39,12 +51,16 @@
     "feature_id": "UM-001",
     "parent_feature_id": null,
     "tags": [],
-    "depends_on": [
-      "user-management"
-    ],
+    "depends_on": [],
     "links": [
       "../../specs/user-management_spec.md"
-    ]
+    ],
+    "id": "task-UM-001",
+    "type": "task",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   },
   {
     "file_path": "todos/UM-001/tasks.md",
@@ -52,10 +68,18 @@
     "directory": "task",
     "file_type": "task",
     "title": "User CRUD Tasks",
-    "feature_id": "UM-001",
+    "feature_id": "tasks-UM-001",
     "parent_feature_id": null,
-    "tags": [],
+    "tags": [
+      "user"
+    ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "tasks-UM-001",
+    "type": "implementation-log",
+    "status": "draft",
+    "created": "2026-02-26",
+    "updated": "2026-02-26",
+    "category": null
   }
 ]

@@ -20,7 +20,13 @@
         "tags": [
           "ui",
           "analytics"
-        ]
+        ],
+        "id": "prd-dashboard",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/user-auth.md",
@@ -34,7 +40,13 @@
           "security",
           "user",
           "core"
-        ]
+        ],
+        "id": "prd-user-auth",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/user-profile.md",
@@ -47,7 +59,13 @@
         "tags": [
           "user",
           "profile"
-        ]
+        ],
+        "id": "prd-user-profile",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/dashboard_spec.md",
@@ -60,7 +78,13 @@
         "tags": [
           "ui",
           "api"
-        ]
+        ],
+        "id": "spec-dashboard",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/user-auth_design.md",
@@ -73,7 +97,13 @@
         "tags": [
           "security",
           "architecture"
-        ]
+        ],
+        "id": "design-user-auth",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/user-auth_spec.md",
@@ -86,7 +116,13 @@
         "tags": [
           "security",
           "api"
-        ]
+        ],
+        "id": "spec-user-auth",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/user-profile_spec.md",
@@ -99,7 +135,13 @@
         "tags": [
           "user",
           "api"
-        ]
+        ],
+        "id": "spec-user-profile",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/DASH-001/index.md",
@@ -111,7 +153,13 @@
         "parent_feature_id": null,
         "tags": [
           "ui"
-        ]
+        ],
+        "id": "task-DASH-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/DASH-001/tasks.md",
@@ -119,9 +167,17 @@
         "directory": "task",
         "file_type": "task",
         "title": "Dashboard Implementation Tasks",
-        "feature_id": "DASH-001",
+        "feature_id": "tasks-DASH-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "ui"
+        ],
+        "id": "tasks-DASH-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/UA-001/index.md",
@@ -133,7 +189,13 @@
         "parent_feature_id": null,
         "tags": [
           "security"
-        ]
+        ],
+        "id": "task-UA-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -159,7 +221,13 @@
           "security",
           "user",
           "core"
-        ]
+        ],
+        "id": "prd-user-auth",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/user-auth_design.md",
@@ -172,7 +240,13 @@
         "tags": [
           "security",
           "architecture"
-        ]
+        ],
+        "id": "design-user-auth",
+        "type": "design",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/user-auth_spec.md",
@@ -185,7 +259,13 @@
         "tags": [
           "security",
           "api"
-        ]
+        ],
+        "id": "spec-user-auth",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/UA-001/index.md",
@@ -197,7 +277,31 @@
         "parent_feature_id": null,
         "tags": [
           "security"
-        ]
+        ],
+        "id": "task-UA-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
+      },
+      {
+        "file_path": "task/UA-001/tasks.md",
+        "file_name": "tasks",
+        "directory": "task",
+        "file_type": "task",
+        "title": "Auth Implementation Tasks",
+        "feature_id": "tasks-UA-001",
+        "parent_feature_id": null,
+        "tags": [
+          "security"
+        ],
+        "id": "tasks-UA-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -222,7 +326,13 @@
         "tags": [
           "ui",
           "analytics"
-        ]
+        ],
+        "id": "prd-dashboard",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/user-auth.md",
@@ -236,7 +346,13 @@
           "security",
           "user",
           "core"
-        ]
+        ],
+        "id": "prd-user-auth",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "requirement/user-profile.md",
@@ -249,7 +365,13 @@
         "tags": [
           "user",
           "profile"
-        ]
+        ],
+        "id": "prd-user-profile",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   },
@@ -274,7 +396,13 @@
         "tags": [
           "ui",
           "analytics"
-        ]
+        ],
+        "id": "prd-dashboard",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "specification/dashboard_spec.md",
@@ -287,7 +415,13 @@
         "tags": [
           "ui",
           "api"
-        ]
+        ],
+        "id": "spec-dashboard",
+        "type": "spec",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/DASH-001/index.md",
@@ -299,7 +433,13 @@
         "parent_feature_id": null,
         "tags": [
           "ui"
-        ]
+        ],
+        "id": "task-DASH-001",
+        "type": "task",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       },
       {
         "file_path": "task/DASH-001/tasks.md",
@@ -307,9 +447,17 @@
         "directory": "task",
         "file_type": "task",
         "title": "Dashboard Implementation Tasks",
-        "feature_id": "DASH-001",
+        "feature_id": "tasks-DASH-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [
+          "ui"
+        ],
+        "id": "tasks-DASH-001",
+        "type": "implementation-log",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   }

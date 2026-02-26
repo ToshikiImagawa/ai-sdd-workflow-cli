@@ -17,7 +17,13 @@
         "title": "Hello World",
         "feature_id": "hello-world",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [],
+        "id": "prd-hello-world",
+        "type": "prd",
+        "status": "draft",
+        "created": "2026-02-26",
+        "updated": "2026-02-26",
+        "category": null
       }
     ]
   }

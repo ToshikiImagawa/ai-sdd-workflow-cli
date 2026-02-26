@@ -20,7 +20,13 @@
         "tags": [
           "messaging",
           "realtime"
-        ]
+        ],
+        "id": "",
+        "type": null,
+        "status": null,
+        "created": null,
+        "updated": null,
+        "category": null
       },
       {
         "file_path": "specification/notification_spec.md",
@@ -32,7 +38,13 @@
         "parent_feature_id": null,
         "tags": [
           "messaging"
-        ]
+        ],
+        "id": "",
+        "type": null,
+        "status": null,
+        "created": null,
+        "updated": null,
+        "category": null
       },
       {
         "file_path": "task/NOTIF-001/index.md",
@@ -42,7 +54,13 @@
         "title": "Implement Notification Service",
         "feature_id": "NOTIF-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [],
+        "id": "",
+        "type": null,
+        "status": null,
+        "created": null,
+        "updated": null,
+        "category": null
       },
       {
         "file_path": "task/NOTIF-001/tasks.md",
@@ -52,7 +70,13 @@
         "title": "Notification Tasks",
         "feature_id": "NOTIF-001",
         "parent_feature_id": null,
-        "tags": []
+        "tags": [],
+        "id": "",
+        "type": null,
+        "status": null,
+        "created": null,
+        "updated": null,
+        "category": null
       }
     ]
   }

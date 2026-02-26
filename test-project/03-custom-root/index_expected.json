@@ -12,7 +12,13 @@
       "realtime"
     ],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "",
+    "type": null,
+    "status": null,
+    "created": null,
+    "updated": null,
+    "category": null
   },
   {
     "file_path": "specification/notification_spec.md",
@@ -25,10 +31,14 @@
     "tags": [
       "messaging"
     ],
-    "depends_on": [
-      "notification"
-    ],
-    "links": []
+    "depends_on": [],
+    "links": [],
+    "id": "",
+    "type": null,
+    "status": null,
+    "created": null,
+    "updated": null,
+    "category": null
   },
   {
     "file_path": "task/NOTIF-001/index.md",
@@ -39,12 +49,16 @@
     "feature_id": "NOTIF-001",
     "parent_feature_id": null,
     "tags": [],
-    "depends_on": [
-      "notification"
-    ],
+    "depends_on": [],
     "links": [
       "../../specification/notification_spec.md"
-    ]
+    ],
+    "id": "",
+    "type": null,
+    "status": null,
+    "created": null,
+    "updated": null,
+    "category": null
   },
   {
     "file_path": "task/NOTIF-001/tasks.md",
@@ -56,6 +70,12 @@
     "parent_feature_id": null,
     "tags": [],
     "depends_on": [],
-    "links": []
+    "links": [],
+    "id": "",
+    "type": null,
+    "status": null,
+    "created": null,
+    "updated": null,
+    "category": null
   }
 ]
