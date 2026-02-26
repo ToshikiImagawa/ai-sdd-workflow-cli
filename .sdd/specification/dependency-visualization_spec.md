@@ -1,8 +1,7 @@
 ---
 id: spec-dependency-visualization
-type: spec
-feature-id: dependency-visualization
 title: 依存関係可視化機能 抽象仕様書
+type: spec
 status: approved
 created: 2026-02-24
 updated: 2026-02-24

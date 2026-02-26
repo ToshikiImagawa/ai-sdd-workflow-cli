@@ -1,8 +1,7 @@
 ---
 id: spec-cache-management
-type: spec
-feature-id: cache-management
 title: キャッシュ管理機能 抽象仕様書
+type: spec
 status: approved
 created: 2026-02-24
 updated: 2026-02-24

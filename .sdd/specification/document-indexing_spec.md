@@ -1,8 +1,7 @@
 ---
 id: spec-document-indexing
-type: spec
-feature-id: document-indexing
 title: ドキュメントインデックス機能 抽象仕様書
+type: spec
 status: approved
 created: 2026-02-24
 updated: 2026-02-24

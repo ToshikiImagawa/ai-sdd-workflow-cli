@@ -1,8 +1,7 @@
 ---
 id: design-document-indexing
-type: design
-feature-id: document-indexing
 title: ドキュメントインデックス機能 技術設計書
+type: design
 status: approved
 created: 2026-02-24
 updated: 2026-02-24

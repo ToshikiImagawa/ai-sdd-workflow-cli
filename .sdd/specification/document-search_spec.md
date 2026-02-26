@@ -1,8 +1,7 @@
 ---
 id: spec-document-search
-type: spec
-feature-id: document-search
 title: ドキュメント検索機能 抽象仕様書
+type: spec
 status: approved
 created: 2026-02-24
 updated: 2026-02-24

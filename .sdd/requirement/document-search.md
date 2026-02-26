@@ -1,12 +1,11 @@
 ---
 id: prd-document-search
-type: prd
-feature-id: document-search
 title: ドキュメント検索機能 要求仕様書
+type: prd
 status: approved
 created: 2026-02-24
 updated: 2026-02-24
-tags: [ search, cli, fts5, query ]
+tags: [search, cli, fts5, query]
 ---
 
 # ドキュメント検索機能 要求仕様書

@@ -1,12 +1,11 @@
 ---
 id: prd-cache-management
-type: prd
-feature-id: cache-management
 title: キャッシュ管理機能 要求仕様書
+type: prd
 status: approved
 created: 2026-02-24
 updated: 2026-02-24
-tags: [ cache, cli, cleanup ]
+tags: [cache, cli, cleanup]
 ---
 
 # キャッシュ管理機能 要求仕様書

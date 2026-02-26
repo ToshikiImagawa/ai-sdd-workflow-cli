@@ -1,8 +1,7 @@
 ---
 id: design-cache-management
-type: design
-feature-id: cache-management
 title: キャッシュ管理機能 技術設計書
+type: design
 status: approved
 created: 2026-02-24
 updated: 2026-02-24

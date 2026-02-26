@@ -1,8 +1,7 @@
 ---
 id: design-dependency-visualization
-type: design
-feature-id: dependency-visualization
 title: 依存関係可視化機能 技術設計書
+type: design
 status: approved
 created: 2026-02-24
 updated: 2026-02-24
