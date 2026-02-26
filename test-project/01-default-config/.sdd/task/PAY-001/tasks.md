@@ -1,3 +1,14 @@
+---
+id: tasks-PAY-001
+type: implementation-log
+title: "Payment Task Breakdown"
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
+tags: [billing, commerce]
+---
+
 # Payment Task Breakdown
 
 ## Metadata

@@ -1,8 +1,14 @@
 ---
+id: design-auth
+type: design
 title: "Authentication Technical Design Document"
-feature-id: auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: plan
+impl-status: not-implemented
+depends-on: [spec-auth]
 tags: [security, user]
-depends_on: []
 ---
 
 # Authentication Technical Design Document

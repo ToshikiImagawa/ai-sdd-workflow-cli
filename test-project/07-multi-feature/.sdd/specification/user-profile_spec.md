@@ -1,8 +1,14 @@
 ---
+id: spec-user-profile
+type: spec
 title: "User Profile Specification"
 feature-id: user-profile
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-user-profile]
 tags: [user, api]
-depends_on: [user-profile]
 ---
 
 # User Profile Specification

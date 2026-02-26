@@ -1,8 +1,13 @@
 ---
+id: spec-payment
+type: spec
 title: "Payment Specification"
-feature-id: payment
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-payment]
 tags: [billing, commerce]
-depends_on: []
 ---
 
 # Payment Specification

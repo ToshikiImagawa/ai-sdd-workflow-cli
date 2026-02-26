@@ -1,6 +1,13 @@
 ---
+id: tasks-UA-001
+type: implementation-log
 title: "Auth Implementation Tasks"
-feature-id: UA-001
+feature-id: user-auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
+tags: [security]
 ---
 
 # Auth Implementation Tasks

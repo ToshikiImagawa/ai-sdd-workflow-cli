@@ -1,6 +1,13 @@
 ---
+id: tasks-DASH-001
+type: implementation-log
 title: "Dashboard Implementation Tasks"
-feature-id: DASH-001
+feature-id: dashboard
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
+tags: [ui]
 ---
 
 # Dashboard Implementation Tasks

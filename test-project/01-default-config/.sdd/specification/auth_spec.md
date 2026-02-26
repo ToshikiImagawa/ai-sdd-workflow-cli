@@ -1,8 +1,13 @@
 ---
+id: spec-auth
+type: spec
 title: "Authentication Specification"
-feature-id: auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-auth]
 tags: [security, user]
-depends_on: []
 ---
 
 # Authentication Specification

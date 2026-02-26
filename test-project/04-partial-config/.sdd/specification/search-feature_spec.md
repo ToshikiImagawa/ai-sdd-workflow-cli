@@ -1,8 +1,14 @@
 ---
+id: spec-search-feature
+type: spec
 title: "Search Feature Specification"
 feature-id: search-feature
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-search-feature]
 tags: [search]
-depends_on: [search-feature]
 ---
 
 # Search Feature Specification

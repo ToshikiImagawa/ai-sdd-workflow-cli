@@ -1,8 +1,13 @@
 ---
+id: task-DASH-001
+type: task
 title: "Implement Dashboard"
-feature-id: DASH-001
+feature-id: dashboard
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 tags: [ui]
-depends_on: [dashboard, UA-001, UP-001]
 ---
 
 # Implement Dashboard

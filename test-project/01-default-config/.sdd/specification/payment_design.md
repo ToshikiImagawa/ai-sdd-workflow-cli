@@ -1,8 +1,14 @@
 ---
+id: design-payment
+type: design
 title: "Payment Technical Design Document"
-feature-id: payment
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: plan
+impl-status: not-implemented
+depends-on: [spec-payment, design-auth]
 tags: [billing, commerce]
-depends_on: [auth]
 ---
 
 # Payment Technical Design Document

@@ -1,8 +1,12 @@
 ---
+id: task-PAY-001
+type: task
 title: "Payment Feature Implementation"
-feature-id: PAY-001
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 tags: [billing, commerce]
-depends_on: [AUTH-001]
 ---
 
 # Payment Feature Implementation

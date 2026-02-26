@@ -1,6 +1,13 @@
 ---
+id: tasks-UP-001
+type: implementation-log
 title: "Profile Implementation Tasks"
-feature-id: UP-001
+feature-id: user-profile
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
+tags: [user]
 ---
 
 # Profile Implementation Tasks

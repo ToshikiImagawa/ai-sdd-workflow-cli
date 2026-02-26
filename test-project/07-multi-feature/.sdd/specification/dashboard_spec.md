@@ -1,8 +1,14 @@
 ---
+id: spec-dashboard
+type: spec
 title: "Dashboard Specification"
 feature-id: dashboard
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-dashboard]
 tags: [ui, api]
-depends_on: [dashboard]
 ---
 
 # Dashboard Specification

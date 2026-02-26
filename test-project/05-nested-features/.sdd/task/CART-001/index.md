@@ -1,7 +1,12 @@
 ---
+id: task-CART-001
+type: task
 title: "Implement Cart"
-feature-id: CART-001
-depends_on: [cart]
+feature-id: cart
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 ---
 
 # Implement Cart

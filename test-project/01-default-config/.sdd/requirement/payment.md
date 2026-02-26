@@ -1,6 +1,10 @@
 ---
+id: prd-payment
+type: prd
 title: "Payment Feature"
-feature-id: payment
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
 tags: [billing, commerce]
 ---
 

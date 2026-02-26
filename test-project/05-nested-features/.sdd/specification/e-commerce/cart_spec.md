@@ -1,8 +1,14 @@
 ---
+id: spec-cart
+type: spec
 title: "Cart Specification"
 feature-id: cart
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-cart]
 tags: [commerce]
-depends_on: [cart]
 ---
 
 # Cart Specification

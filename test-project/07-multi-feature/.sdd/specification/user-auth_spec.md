@@ -1,8 +1,14 @@
 ---
+id: spec-user-auth
+type: spec
 title: "User Auth Specification"
 feature-id: user-auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-user-auth]
 tags: [security, api]
-depends_on: [user-auth]
 ---
 
 # User Auth Specification

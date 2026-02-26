@@ -1,8 +1,14 @@
 ---
+id: spec-checkout
+type: spec
 title: "Checkout Specification"
 feature-id: checkout
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: specify
+depends-on: [prd-checkout, spec-cart]
 tags: [commerce]
-depends_on: [checkout, cart]
 ---
 
 # Checkout Specification

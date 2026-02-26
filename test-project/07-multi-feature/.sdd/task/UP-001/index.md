@@ -1,8 +1,13 @@
 ---
+id: task-UP-001
+type: task
 title: "Implement User Profile"
-feature-id: UP-001
+feature-id: user-profile
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 tags: [user]
-depends_on: [user-profile, UA-001]
 ---
 
 # Implement User Profile

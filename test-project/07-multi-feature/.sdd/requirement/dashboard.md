@@ -1,8 +1,13 @@
 ---
+id: prd-dashboard
+type: prd
 title: "Dashboard"
 feature-id: dashboard
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+depends-on: [prd-user-auth, prd-user-profile]
 tags: [ui, analytics]
-depends_on: [user-auth, user-profile]
 ---
 
 # Dashboard

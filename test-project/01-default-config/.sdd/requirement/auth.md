@@ -1,6 +1,10 @@
 ---
+id: prd-auth
+type: prd
 title: "Authentication Feature"
-feature-id: auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
 tags: [security, user]
 ---
 

@@ -1,8 +1,12 @@
 ---
+id: task-AUTH-001
+type: task
 title: "Authentication Feature Implementation"
-feature-id: AUTH-001
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 tags: [security, user]
-depends_on: []
 ---
 
 # Authentication Feature Implementation

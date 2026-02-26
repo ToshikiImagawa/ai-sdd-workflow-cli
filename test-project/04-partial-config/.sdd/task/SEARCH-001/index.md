@@ -1,7 +1,12 @@
 ---
+id: task-SEARCH-001
+type: task
 title: "Implement Search"
-feature-id: SEARCH-001
-depends_on: [search-feature]
+feature-id: search-feature
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 ---
 
 # Implement Search

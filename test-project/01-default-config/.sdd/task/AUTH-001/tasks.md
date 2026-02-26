@@ -1,3 +1,14 @@
+---
+id: tasks-AUTH-001
+type: implementation-log
+title: "Authentication Task Breakdown"
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
+tags: [security, user]
+---
+
 # Authentication Task Breakdown
 
 ## Metadata

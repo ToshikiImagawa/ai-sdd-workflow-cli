@@ -1,7 +1,12 @@
 ---
+id: task-UM-001
+type: task
 title: "Implement User CRUD"
-feature-id: UM-001
-depends_on: [user-management]
+feature-id: user-management
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 ---
 
 # Implement User CRUD

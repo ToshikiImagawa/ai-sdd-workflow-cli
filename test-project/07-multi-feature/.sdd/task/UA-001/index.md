@@ -1,8 +1,13 @@
 ---
+id: task-UA-001
+type: task
 title: "Implement Authentication"
-feature-id: UA-001
+feature-id: user-auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: tasks
 tags: [security]
-depends_on: [user-auth]
 ---
 
 # Implement Authentication

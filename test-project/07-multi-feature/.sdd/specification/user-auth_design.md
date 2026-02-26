@@ -1,8 +1,15 @@
 ---
+id: design-user-auth
+type: design
 title: "User Auth Design"
 feature-id: user-auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
+sdd-phase: plan
+impl-status: not-implemented
+depends-on: [spec-user-auth]
 tags: [security, architecture]
-depends_on: [user-auth]
 ---
 
 # User Auth Design

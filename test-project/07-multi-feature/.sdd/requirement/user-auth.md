@@ -1,6 +1,11 @@
 ---
+id: prd-user-auth
+type: prd
 title: "User Authentication"
 feature-id: user-auth
+status: draft
+created: 2026-02-26
+updated: 2026-02-26
 tags: [security, user, core]
 ---
 
