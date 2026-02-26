@@ -1,6 +1,13 @@
 ---
+id: spec-document-search
+type: spec
 feature-id: document-search
 title: ドキュメント検索機能 抽象仕様書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
+sdd-phase: specify
+depends-on: [prd-document-search]
 tags: [search, cli, fts5, query, filter]
 ---
 

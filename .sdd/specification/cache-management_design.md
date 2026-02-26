@@ -1,6 +1,14 @@
 ---
+id: design-cache-management
+type: design
 feature-id: cache-management
 title: キャッシュ管理機能 技術設計書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
+sdd-phase: plan
+impl-status: implemented
+depends-on: [spec-cache-management]
 tags: [cache, cli, cleanup]
 ---
 

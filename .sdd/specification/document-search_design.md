@@ -1,6 +1,14 @@
 ---
+id: design-document-search
+type: design
 feature-id: document-search
 title: ドキュメント検索機能 技術設計書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
+sdd-phase: plan
+impl-status: implemented
+depends-on: [spec-document-search]
 tags: [search, cli, fts5, query, filter]
 ---
 

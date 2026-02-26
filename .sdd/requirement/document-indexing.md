@@ -1,6 +1,11 @@
 ---
+id: prd-document-indexing
+type: prd
 feature-id: document-indexing
 title: ドキュメントインデックス機能 要求仕様書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
 tags: [ indexing, cli, fts5, scanner, parser ]
 ---
 

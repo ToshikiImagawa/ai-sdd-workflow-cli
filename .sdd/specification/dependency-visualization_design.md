@@ -1,6 +1,14 @@
 ---
+id: design-dependency-visualization
+type: design
 feature-id: dependency-visualization
 title: 依存関係可視化機能 技術設計書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
+sdd-phase: plan
+impl-status: implemented
+depends-on: [spec-dependency-visualization]
 tags: [visualization, dependency, graph, mermaid, server]
 ---
 

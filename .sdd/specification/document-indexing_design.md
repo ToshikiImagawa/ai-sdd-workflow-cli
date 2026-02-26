@@ -1,6 +1,14 @@
 ---
+id: design-document-indexing
+type: design
 feature-id: document-indexing
 title: ドキュメントインデックス機能 技術設計書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
+sdd-phase: plan
+impl-status: implemented
+depends-on: [spec-document-indexing]
 tags: [indexing, cli, fts5, scanner, parser]
 ---
 

@@ -1,6 +1,13 @@
 ---
+id: spec-cache-management
+type: spec
 feature-id: cache-management
 title: キャッシュ管理機能 抽象仕様書
+status: approved
+created: 2026-02-24
+updated: 2026-02-24
+sdd-phase: specify
+depends-on: [prd-cache-management]
 tags: [cache, cli, cleanup]
 ---
 

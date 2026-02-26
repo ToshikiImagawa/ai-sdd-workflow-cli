@@ -112,98 +112,98 @@ GitHub Actions (`.github/workflows/ci.yml`):
 - mypy: `check_untyped_defs = true`, `disallow_untyped_defs = false`（段階的導入）
 - Python 3.9〜3.13 互換性を維持する（`importlib.resources` の互換処理あり）
 
-## AI-SDD Instructions (v3.1.1)
+## AI-SDD Instructions (v3.2.0)
 
-<!-- sdd-workflow version: "3.1.1" -->
+<!-- sdd-workflow version: "3.2.0" -->
 
-This project follows AI-SDD (AI-driven Specification-Driven Development) workflow.
+このプロジェクトは AI-SDD（AI駆動仕様駆動開発）ワークフローに従います。
 
-### Document Operations
+### ドキュメント操作
 
-When operating files under `.sdd/` directory, refer to `.sdd/AI-SDD-PRINCIPLES.md` to ensure proper AI-SDD workflow compliance.
+`.sdd/` ディレクトリ配下のファイルを操作する際は、`.sdd/AI-SDD-PRINCIPLES.md` を参照し、AI-SDDワークフローに準拠してください。
 
-**Trigger Conditions**:
+**トリガー条件**:
 
-- Reading or modifying files under `.sdd/`
-- Creating new specifications, design docs, or requirement docs
-- Implementing features that reference `.sdd/` documents
+- `.sdd/` 配下のファイルの読み取りまたは変更
+- 新しい仕様書、設計書、要求仕様書の作成
+- `.sdd/` ドキュメントを参照する機能の実装
 
-### Directory Structure
+### ディレクトリ構造
 
-Supports both flat and hierarchical structures.
+フラット構造と階層構造の両方をサポートしています。
 
-**Flat Structure (for small to medium projects)**:
+**フラット構造（小〜中規模プロジェクト向け）**:
 
     .sdd/
-    |- CONSTITUTION.md               # Project principles (top-level)
-    |- PRD_TEMPLATE.md               # PRD template for this project
-    |- SPECIFICATION_TEMPLATE.md     # Abstract specification template
-    |- DESIGN_DOC_TEMPLATE.md        # Technical design template
-    |- requirement/                  # PRD (Product Requirements Documents)
+    |- CONSTITUTION.md               # プロジェクト原則（最上位）
+    |- PRD_TEMPLATE.md               # PRDテンプレート
+    |- SPECIFICATION_TEMPLATE.md     # 抽象仕様書テンプレート
+    |- DESIGN_DOC_TEMPLATE.md        # 技術設計書テンプレート
+    |- requirement/                  # PRD（要求仕様書）
     |   |- {feature-name}.md
-    |- specification/                # Specifications and designs
-    |   |- {feature-name}_spec.md    # Abstract specification
-    |   |- {feature-name}_design.md  # Technical design
-    |- task/                         # Temporary task logs
+    |- specification/                # 仕様書・設計書
+    |   |- {feature-name}_spec.md    # 抽象仕様書
+    |   |- {feature-name}_design.md  # 技術設計書
+    |- task/                         # 一時タスクログ
         |- {ticket-number}/
 
-**Hierarchical Structure (for medium to large projects)**:
+**階層構造（中〜大規模プロジェクト向け）**:
 
     .sdd/
-    |- CONSTITUTION.md               # Project principles (top-level)
-    |- PRD_TEMPLATE.md               # PRD template for this project
-    |- SPECIFICATION_TEMPLATE.md     # Abstract specification template
-    |- DESIGN_DOC_TEMPLATE.md        # Technical design template
-    |- requirement/                  # PRD (Product Requirements Documents)
-    |   |- {feature-name}.md         # Top-level feature
-    |   |- {parent-feature}/         # Parent feature directory
-    |       |- index.md              # Parent feature overview & requirements list
-    |       |- {child-feature}.md    # Child feature requirements
-    |- specification/                # Specifications and designs
-    |   |- {feature-name}_spec.md    # Top-level feature
+    |- CONSTITUTION.md               # プロジェクト原則（最上位）
+    |- PRD_TEMPLATE.md               # PRDテンプレート
+    |- SPECIFICATION_TEMPLATE.md     # 抽象仕様書テンプレート
+    |- DESIGN_DOC_TEMPLATE.md        # 技術設計書テンプレート
+    |- requirement/                  # PRD（要求仕様書）
+    |   |- {feature-name}.md         # トップレベル機能
+    |   |- {parent-feature}/         # 親機能ディレクトリ
+    |       |- index.md              # 親機能概要・要求一覧
+    |       |- {child-feature}.md    # 子機能要求仕様
+    |- specification/                # 仕様書・設計書
+    |   |- {feature-name}_spec.md    # トップレベル機能
     |   |- {feature-name}_design.md
-    |   |- {parent-feature}/         # Parent feature directory
-    |       |- index_spec.md         # Parent feature abstract spec
-    |       |- index_design.md       # Parent feature technical design
-    |       |- {child-feature}_spec.md   # Child feature abstract spec
-    |       |- {child-feature}_design.md # Child feature technical design
-    |- task/                         # Temporary task logs
+    |   |- {parent-feature}/         # 親機能ディレクトリ
+    |       |- index_spec.md         # 親機能抽象仕様書
+    |       |- index_design.md       # 親機能技術設計書
+    |       |- {child-feature}_spec.md   # 子機能抽象仕様書
+    |       |- {child-feature}_design.md # 子機能技術設計書
+    |- task/                         # 一時タスクログ
         |- {ticket-number}/
 
-### File Naming Convention (Important)
+### ファイル命名規則（重要）
 
-**Warning: The presence of suffixes differs between requirement and specification. Do not confuse them.**
+**注意: requirement と specification でサフィックスの有無が異なります。混同しないでください。**
 
-| Directory         | File Type        | Naming Pattern                                 | Example                                   |
-|:------------------|:-----------------|:-----------------------------------------------|:------------------------------------------|
-| **requirement**   | All files        | `{name}.md` (no suffix)                        | `user-login.md`, `index.md`               |
-| **specification** | Abstract spec    | `{name}_spec.md` (`_spec` suffix required)     | `user-login_spec.md`, `index_spec.md`     |
-| **specification** | Technical design | `{name}_design.md` (`_design` suffix required) | `user-login_design.md`, `index_design.md` |
+| ディレクトリ            | ファイル種別 | 命名パターン                                 | 例                                         |
+|:------------------|:-------|:---------------------------------------|:------------------------------------------|
+| **requirement**   | 全ファイル  | `{name}.md`（サフィックスなし）                  | `user-login.md`, `index.md`               |
+| **specification** | 抽象仕様書  | `{name}_spec.md`（`_spec` サフィックス必須）     | `user-login_spec.md`, `index_spec.md`     |
+| **specification** | 技術設計書  | `{name}_design.md`（`_design` サフィックス必須） | `user-login_design.md`, `index_design.md` |
 
-#### Naming Pattern Quick Reference
+#### 命名パターン早見表
 
 ```
-# Correct Naming
-requirement/auth/index.md              # Parent feature overview (no suffix)
-requirement/auth/user-login.md         # Child feature requirements (no suffix)
-specification/auth/index_spec.md       # Parent feature abstract spec (_spec required)
-specification/auth/index_design.md     # Parent feature technical design (_design required)
-specification/auth/user-login_spec.md  # Child feature abstract spec (_spec required)
-specification/auth/user-login_design.md # Child feature technical design (_design required)
+# 正しい命名
+requirement/auth/index.md              # 親機能概要（サフィックスなし）
+requirement/auth/user-login.md         # 子機能要求仕様（サフィックスなし）
+specification/auth/index_spec.md       # 親機能抽象仕様書（_spec 必須）
+specification/auth/index_design.md     # 親機能技術設計書（_design 必須）
+specification/auth/user-login_spec.md  # 子機能抽象仕様書（_spec 必須）
+specification/auth/user-login_design.md # 子機能技術設計書（_design 必須）
 
-# Incorrect Naming (never use these)
-requirement/auth/index_spec.md         # requirement doesn't need _spec
-specification/auth/user-login.md       # specification requires _spec/_design
-specification/auth/index.md            # specification requires _spec/_design
+# 誤った命名（使用しないこと）
+requirement/auth/index_spec.md         # requirement に _spec は不要
+specification/auth/user-login.md       # specification には _spec/_design が必須
+specification/auth/index.md            # specification には _spec/_design が必須
 ```
 
-### Document Link Convention
+### ドキュメントリンク規約
 
-Follow these formats for markdown links within documents:
+ドキュメント内のマークダウンリンクは以下の形式に従ってください:
 
-| Link Target    | Format                                     | Link Text             | Example                                              |
-|:---------------|:-------------------------------------------|:----------------------|:-----------------------------------------------------|
-| **File**       | `[filename.md](path or URL)`               | Include filename      | `[user-login.md](../requirement/auth/user-login.md)` |
-| **Directory**  | `[directory-name](path or URL/index.md)`   | Directory name only   | `[auth](../requirement/auth/index.md)`               |
+| リンク先       | 形式                                    | リンクテキスト   | 例                                                    |
+|:-----------|:--------------------------------------|:----------|:-----------------------------------------------------|
+| **ファイル**   | `[filename.md](パスまたはURL)`             | ファイル名を含める | `[user-login.md](../requirement/auth/user-login.md)` |
+| **ディレクトリ** | `[directory-name](パスまたはURL/index.md)` | ディレクトリ名のみ | `[auth](../requirement/auth/index.md)`               |
 
-This convention makes it visually clear whether the link target is a file or directory.
+この規約により、リンク先がファイルかディレクトリかが視覚的に明確になります。
