@@ -132,22 +132,27 @@
       {
         "source": "specification/auth_design.md",
         "target": "specification/auth_spec.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "specification/auth_spec.md",
         "target": "requirement/auth.md",
-        "type": "implicit"
+        "type": "explicit"
+      },
+      {
+        "source": "specification/payment_design.md",
+        "target": "specification/auth_spec.md",
+        "type": "explicit"
       },
       {
         "source": "specification/payment_design.md",
         "target": "specification/payment_spec.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "specification/payment_spec.md",
         "target": "requirement/payment.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "task/AUTH-001/index.md",
@@ -304,22 +309,27 @@
       {
         "source": "specification/auth_design.md",
         "target": "specification/auth_spec.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "specification/auth_spec.md",
         "target": "requirement/auth.md",
-        "type": "implicit"
+        "type": "explicit"
+      },
+      {
+        "source": "specification/payment_design.md",
+        "target": "specification/auth_spec.md",
+        "type": "explicit"
       },
       {
         "source": "specification/payment_design.md",
         "target": "specification/payment_spec.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "specification/payment_spec.md",
         "target": "requirement/payment.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "task/AUTH-001/index.md",

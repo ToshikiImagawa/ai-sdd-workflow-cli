@@ -112,9 +112,9 @@ GitHub Actions (`.github/workflows/ci.yml`):
 - mypy: `check_untyped_defs = true`, `disallow_untyped_defs = false`（段階的導入）
 - Python 3.9〜3.13 互換性を維持する（`importlib.resources` の互換処理あり）
 
-## AI-SDD Instructions (v3.2.0)
+## AI-SDD Instructions (v3.3.0)
 
-<!-- sdd-workflow version: "3.2.0" -->
+<!-- sdd-workflow version: "3.3.0" -->
 
 このプロジェクトは AI-SDD（AI駆動仕様駆動開発）ワークフローに従います。
 

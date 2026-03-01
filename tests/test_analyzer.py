@@ -202,3 +202,80 @@ class TestFilterToLeafTargets:
         )
         assert "specification/a_spec.md" in result
         assert "requirement/a.md" not in result
+
+
+# ---------------------------------------------------------------------------
+# analyze(): depends-on with full document ID (prefixed)
+# ---------------------------------------------------------------------------
+
+
+class TestFullIdDependsOn:
+    """depends-on に prd-xxx / spec-xxx 等のフルIDが記載された場合のテスト."""
+
+    def test_spec_depends_on_prd_prefixed_id(self, tmp_path):
+        """spec depends_on ["prd-auth"] → requirement/auth.md に解決される."""
+        docs = [
+            _doc("requirement/auth.md", "requirement", "auth", doc_id="prd-auth"),
+            _doc(
+                "specification/auth_spec.md",
+                "spec",
+                "auth",
+                "specification",
+                depends_on=["prd-auth"],
+                doc_id="spec-auth",
+            ),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("specification/auth_spec.md", "requirement/auth.md") in explicit
+
+    def test_design_depends_on_spec_prefixed_id(self, tmp_path):
+        """design depends_on ["spec-auth"] → specification/auth_spec.md に解決される."""
+        docs = [
+            _doc("requirement/auth.md", "requirement", "auth", doc_id="prd-auth"),
+            _doc("specification/auth_spec.md", "spec", "auth", "specification", doc_id="spec-auth"),
+            _doc(
+                "specification/auth_design.md",
+                "design",
+                "auth",
+                "specification",
+                depends_on=["spec-auth"],
+                doc_id="design-auth",
+            ),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("specification/auth_design.md", "specification/auth_spec.md") in explicit
+
+    def test_prd_depends_on_prd_prefixed_id(self, tmp_path):
+        """requirement depends_on ["prd-overview"] → requirement 同士の依存."""
+        docs = [
+            _doc("requirement/overview.md", "requirement", "overview", doc_id="prd-overview"),
+            _doc(
+                "requirement/auth.md",
+                "requirement",
+                "auth",
+                depends_on=["prd-overview"],
+                doc_id="prd-auth",
+            ),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("requirement/auth.md", "requirement/overview.md") in explicit
+
+    def test_cross_feature_with_prefixed_id(self, tmp_path):
+        """design depends_on ["spec-sale-state"] (cross-feature, prefixed ID)."""
+        docs = [
+            _doc("specification/sale-state_spec.md", "spec", "sale-state", "specification", doc_id="spec-sale-state"),
+            _doc(
+                "specification/sale-state-display_design.md",
+                "design",
+                "sale-state-display",
+                "specification",
+                depends_on=["spec-sale-state"],
+                doc_id="design-sale-state-display",
+            ),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("specification/sale-state-display_design.md", "specification/sale-state_spec.md") in explicit

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-03-02
+
+### Fixed
+
+- **Dependency graph visualization** - `depends-on` with full document IDs (e.g., `prd-auth`, `spec-login`) now correctly resolved to target documents
+  - Previously, prefixed IDs in `depends-on` frontmatter failed to match internal `feature_id` (which has prefixes stripped), resulting in missing edges in the dependency graph
+  - Added `_normalize_to_feature_id()` to handle both bare feature IDs and full document IDs with AI-SDD prefixes (`prd-`, `spec-`, `design-`, `task-`, `impl-`)
+
 ## [0.2.0] - 2026-02-26
 
 ### Added

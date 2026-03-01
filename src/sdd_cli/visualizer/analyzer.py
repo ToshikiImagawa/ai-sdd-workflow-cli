@@ -1,5 +1,6 @@
 """Dependency analyzer for SDD documents."""
 
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -43,6 +44,13 @@ class DependencyAnalyzer:
         self._first_path_by_feature: dict[str, str] = {}
         for doc in documents:
             self._first_path_by_feature.setdefault(doc["feature_id"], doc["file_path"])
+
+        # Full ID → feature_id mapping (e.g. "prd-auth" → "auth")
+        self._full_id_to_feature_id: dict[str, str] = {}
+        for doc in documents:
+            full_id = doc.get("id", "")
+            if full_id and full_id != doc["feature_id"]:
+                self._full_id_to_feature_id[full_id] = doc["feature_id"]
 
     def analyze(self) -> list[tuple[str, str, str]]:
         """Analyze all dependencies.
@@ -192,8 +200,9 @@ class DependencyAnalyzer:
         return [t for t in set(targets) if t not in ancestors]
 
     def _resolve_feature_id_to_path(self, feature_id: str, source_file_type: str = "") -> Optional[str]:
-        """Resolve feature ID to the nearest upstream document path.
+        """Resolve feature ID or full document ID to the nearest upstream document path.
 
+        Accepts both feature_id (e.g. "auth") and full ID with prefix (e.g. "prd-auth").
         Uses the type hierarchy (requirement → spec → design → task) to find
         the closest ancestor type that has a document with the given feature_id.
 
@@ -204,22 +213,25 @@ class DependencyAnalyzer:
         If source_file_type is not in the hierarchy, falls back to first match.
 
         Args:
-            feature_id: Feature ID to resolve
+            feature_id: Feature ID or full document ID to resolve
             source_file_type: File type of the source document
 
         Returns:
             Document path or None if not found
         """
+        # Normalize: if given a full ID (e.g. "prd-auth"), convert to feature_id
+        resolved_id = self._normalize_to_feature_id(feature_id)
+
         if source_file_type in TYPE_HIERARCHY:
             source_idx = TYPE_HIERARCHY.index(source_file_type)
             # Search upward from direct parent type
             for i in range(source_idx - 1, -1, -1):
-                doc = self._find_document_by_feature_id(feature_id, TYPE_HIERARCHY[i])
+                doc = self._find_document_by_feature_id(resolved_id, TYPE_HIERARCHY[i])
                 if doc:
                     return doc["file_path"]
 
         # Fallback: first match (for same-level deps or unknown types)
-        return self._first_path_by_feature.get(feature_id)
+        return self._first_path_by_feature.get(resolved_id)
 
     def _infer_implicit_dependencies(self, doc: DocumentRecord) -> list[str]:
         """Infer implicit dependencies based on file type and feature ID.
@@ -302,3 +314,34 @@ class DependencyAnalyzer:
             Document metadata or None if not found
         """
         return self._doc_by_key.get((feature_id, file_type))
+
+    # Common AI-SDD ID prefixes (same as parser._extract_feature_id)
+    _ID_PREFIX_PATTERN = re.compile(r"^(prd|spec|design|task|impl)-")
+
+    def _normalize_to_feature_id(self, raw_id: str) -> str:
+        """Normalize a full document ID or feature_id to a feature_id.
+
+        First checks the full_id→feature_id mapping built from actual documents.
+        Falls back to stripping known AI-SDD prefixes (prd-, spec-, design-, task-, impl-).
+
+        Args:
+            raw_id: Full document ID (e.g. "prd-auth") or feature_id (e.g. "auth")
+
+        Returns:
+            Normalized feature_id
+        """
+        # 1. Try exact mapping from existing documents
+        if raw_id in self._full_id_to_feature_id:
+            return self._full_id_to_feature_id[raw_id]
+
+        # 2. If already a known feature_id, return as-is
+        if raw_id in self._first_path_by_feature:
+            return raw_id
+
+        # 3. Try stripping common prefixes
+        stripped = self._ID_PREFIX_PATTERN.sub("", raw_id)
+        if stripped != raw_id and stripped in self._first_path_by_feature:
+            return stripped
+
+        # 4. Return as-is (may not resolve)
+        return raw_id
