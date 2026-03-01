@@ -98,12 +98,17 @@
       {
         "source": "requirement/e-commerce/cart/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "implicit"
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/checkout/index.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
       },
       {
         "source": "requirement/e-commerce/checkout/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "requirement/e-commerce/index.md",
@@ -118,12 +123,17 @@
       {
         "source": "specification/e-commerce/cart_spec.md",
         "target": "requirement/e-commerce/cart/index.md",
-        "type": "implicit"
+        "type": "explicit"
+      },
+      {
+        "source": "specification/e-commerce/checkout_spec.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
       },
       {
         "source": "specification/e-commerce/checkout_spec.md",
         "target": "requirement/e-commerce/checkout/index.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "task/CART-001/index.md",
@@ -230,12 +240,17 @@
       {
         "source": "requirement/e-commerce/cart/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "implicit"
+        "type": "explicit"
+      },
+      {
+        "source": "requirement/e-commerce/checkout/index.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
       },
       {
         "source": "requirement/e-commerce/checkout/index.md",
         "target": "requirement/e-commerce/index.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "requirement/e-commerce/index.md",
@@ -250,12 +265,17 @@
       {
         "source": "specification/e-commerce/cart_spec.md",
         "target": "requirement/e-commerce/cart/index.md",
-        "type": "implicit"
+        "type": "explicit"
+      },
+      {
+        "source": "specification/e-commerce/checkout_spec.md",
+        "target": "requirement/e-commerce/cart/index.md",
+        "type": "explicit"
       },
       {
         "source": "specification/e-commerce/checkout_spec.md",
         "target": "requirement/e-commerce/checkout/index.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "task/CART-001/index.md",

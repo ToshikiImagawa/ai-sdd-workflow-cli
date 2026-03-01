@@ -53,7 +53,7 @@
       {
         "source": "specification/search-feature_spec.md",
         "target": "prd/search-feature.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "task/SEARCH-001/index.md",
@@ -113,7 +113,7 @@
       {
         "source": "specification/search-feature_spec.md",
         "target": "prd/search-feature.md",
-        "type": "implicit"
+        "type": "explicit"
       },
       {
         "source": "task/SEARCH-001/index.md",
