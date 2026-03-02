@@ -1,0 +1,63 @@
+{
+  "issues": [
+    {
+      "severity": "error",
+      "rule": "circular-dependency",
+      "file_path": "requirement/feature-a.md",
+      "line": null,
+      "message": "Circular dependency detected: prd-feature-a → prd-feature-b → prd-feature-a",
+      "details": "prd-feature-a → prd-feature-b → prd-feature-a"
+    },
+    {
+      "severity": "error",
+      "rule": "broken-link",
+      "file_path": "specification/feature-a_spec.md",
+      "line": 17,
+      "message": "Link target does not exist: ../requirement/missing.md",
+      "details": "../requirement/missing.md"
+    },
+    {
+      "severity": "warning",
+      "rule": "missing-required-field",
+      "file_path": "specification/feature-a_design.md",
+      "line": null,
+      "message": "Required field 'impl-status' is missing for document type 'design'",
+      "details": null
+    },
+    {
+      "severity": "warning",
+      "rule": "invalid-field-value",
+      "file_path": "specification/feature-a_design.md",
+      "line": null,
+      "message": "Invalid status value 'invalid-value'. Expected one of: active, approved, deprecated, draft, review",
+      "details": null
+    },
+    {
+      "severity": "error",
+      "rule": "duplicate-id",
+      "file_path": "specification/feature-a_spec.md",
+      "line": null,
+      "message": "Duplicate document ID 'spec-feature-a' (also in specification/feature-a_design.md)",
+      "details": "spec-feature-a"
+    },
+    {
+      "severity": "warning",
+      "rule": "unresolved-dependency",
+      "file_path": "specification/feature-b_spec.md",
+      "line": null,
+      "message": "depends-on references non-existent ID 'prd-nonexistent'",
+      "details": "prd-nonexistent"
+    },
+    {
+      "severity": "warning",
+      "rule": "orphan-reference",
+      "file_path": "specification/feature-a_spec.md",
+      "line": null,
+      "message": "Referenced requirement ID 'FR-999' not found in requirement/",
+      "details": "FR-999"
+    }
+  ],
+  "error_count": 3,
+  "warning_count": 4,
+  "files_checked": 5
+}

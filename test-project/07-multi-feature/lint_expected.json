@@ -1,0 +1,15 @@
+{
+  "issues": [
+    {
+      "severity": "warning",
+      "rule": "missing-required-field",
+      "file_path": "specification/user-auth_design.md",
+      "line": null,
+      "message": "Required field 'impl-status' is missing for document type 'design'",
+      "details": null
+    }
+  ],
+  "error_count": 0,
+  "warning_count": 1,
+  "files_checked": 7
+}

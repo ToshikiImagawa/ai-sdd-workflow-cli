@@ -113,6 +113,26 @@ class DependencyGraph(TypedDict):
     edges: list[GraphEdge]
 
 
+class LintIssue(TypedDict):
+    """Individual issue detected by lint checks."""
+
+    severity: str  # "error" | "warning"
+    rule: str  # "circular-dependency" | "broken-link" | ...
+    file_path: str  # Relative path
+    line: Optional[int]  # Line number (for link validation only)
+    message: str  # Issue description
+    details: Optional[str]  # Additional info (cycle path, link target, etc.)
+
+
+class LintResult(TypedDict):
+    """Aggregated result of all lint checks."""
+
+    issues: list  # list[LintIssue]
+    error_count: int
+    warning_count: int
+    files_checked: int
+
+
 class SDDDirectories(TypedDict):
     """SDD directory configuration"""
 
