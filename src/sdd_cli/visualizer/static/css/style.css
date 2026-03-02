@@ -54,6 +54,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background 0.4s ease;
+}
+
+.header.lint-has-errors {
+    background: linear-gradient(135deg, #c62828 0%, #8e24aa 100%);
+}
+
+.header.lint-has-warnings {
+    background: linear-gradient(135deg, #e65100 0%, #764ba2 100%);
 }
 
 .header-content {

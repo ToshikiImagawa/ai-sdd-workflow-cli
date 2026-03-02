@@ -86,6 +86,18 @@ function updateLintSummary(graphData) {
     }
 
     const summaryEl = document.getElementById('lint-summary');
+    const headerEl = document.querySelector('.header');
+
+    // Update header style based on lint status
+    if (headerEl) {
+        headerEl.classList.remove('lint-has-errors', 'lint-has-warnings');
+        if (errorCount > 0) {
+            headerEl.classList.add('lint-has-errors');
+        } else if (warningCount > 0) {
+            headerEl.classList.add('lint-has-warnings');
+        }
+    }
+
     if (!summaryEl) return;
 
     if (errorCount === 0 && warningCount === 0) {
