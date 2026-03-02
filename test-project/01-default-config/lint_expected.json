@@ -1,0 +1,23 @@
+{
+  "issues": [
+    {
+      "severity": "warning",
+      "rule": "missing-required-field",
+      "file_path": "specification/payment_design.md",
+      "line": null,
+      "message": "Required field 'impl-status' is missing for document type 'design'",
+      "details": null
+    },
+    {
+      "severity": "warning",
+      "rule": "missing-required-field",
+      "file_path": "specification/auth_design.md",
+      "line": null,
+      "message": "Required field 'impl-status' is missing for document type 'design'",
+      "details": null
+    }
+  ],
+  "error_count": 0,
+  "warning_count": 2,
+  "files_checked": 6
+}
