@@ -102,7 +102,7 @@ class DependencyAnalyzer:
 
         # Post-processing
         self.dependencies = self._deduplicate_edges(self.dependencies)
-        self.dependencies = self._remove_transitive_link_edges(self.dependencies)
+        self.dependencies = self._remove_transitive_redundant_edges(self.dependencies)
 
         return self.dependencies
 
@@ -137,12 +137,13 @@ class DependencyAnalyzer:
         return list(best.values())
 
     @staticmethod
-    def _remove_transitive_link_edges(
+    def _remove_transitive_redundant_edges(
         dependencies: list[tuple[str, str, str]],
     ) -> list[tuple[str, str, str]]:
-        """Remove link edges that are reachable through other edges.
+        """Remove link/explicit edges that are reachable through other edges.
 
-        If A -> B (any edge) and B -> C (any edge), then A -> C (link) is redundant.
+        If A -> B (any edge) and B -> C (any edge), then A -> C (link or explicit) is redundant.
+        Implicit and constitution edges are always preserved.
         """
         # Build adjacency map from all edges
         adjacency: dict[str, set[str]] = {}
@@ -166,7 +167,7 @@ class DependencyAnalyzer:
         return [
             (src, tgt, lt)
             for src, tgt, lt in dependencies
-            if lt != EDGE_LINK or not is_reachable_without_direct(src, tgt)
+            if lt not in (EDGE_LINK, EDGE_EXPLICIT) or not is_reachable_without_direct(src, tgt)
         ]
 
     def _filter_to_leaf_targets(self, targets: list[str]) -> list[str]:
