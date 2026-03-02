@@ -45,8 +45,9 @@ def run_lint(root: Path, json_output: bool, quiet: bool) -> tuple[str, bool]:
     scanner = DocumentScanner(sdd_root)
     scan_results = scanner.scan_all()
 
-    # Exclude task/ directory
+    # Exclude task/ directory and sort for deterministic output across platforms
     scan_results = [sr for sr in scan_results if sr["directory"] != "task"]
+    scan_results.sort(key=lambda sr: sr["file_path"])
 
     documents: list[DocumentRecord] = []
     parsed_docs: list[ParsedDocument] = []

@@ -6,8 +6,8 @@ import json
 from pathlib import Path
 
 from click.testing import CliRunner
-
 from helpers import write_md
+
 from sdd_cli.cli import main
 from sdd_cli.commands.lint import run_lint
 
@@ -74,7 +74,7 @@ class TestRunLint:
                          "created": "2026-01-01", "updated": "2026-01-01"},
             body="# A\n\n[missing](missing.md)\n",
         )
-        output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
+        _output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
         assert has_errors
 
     def test_task_excluded(self, tmp_path: Path):
@@ -95,7 +95,7 @@ class TestRunLint:
                          "created": "2026-01-01", "updated": "2026-01-01"},
             body="# Tasks",
         )
-        output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
+        output, _has_errors = run_lint(tmp_path, json_output=False, quiet=False)
         # task/ should not be counted in checked files
         assert "task-x" not in output
 
@@ -107,13 +107,13 @@ class TestRunLint:
 
     def test_json_output(self, tmp_path: Path):
         root = self._setup_project(tmp_path)
-        output, has_errors = run_lint(root, json_output=True, quiet=False)
+        output, _has_errors = run_lint(root, json_output=True, quiet=False)
         data = json.loads(output)
         assert "issues" in data
         assert "error_count" in data
 
     def test_no_sdd_directory(self, tmp_path: Path):
-        output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
+        _output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
         assert not has_errors
 
 

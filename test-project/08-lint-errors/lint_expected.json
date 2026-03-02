@@ -5,16 +5,8 @@
       "rule": "circular-dependency",
       "file_path": "requirement/feature-a.md",
       "line": null,
-      "message": "Circular dependency detected: prd-feature-a \u2192 prd-feature-b \u2192 prd-feature-a",
-      "details": "prd-feature-a \u2192 prd-feature-b \u2192 prd-feature-a"
-    },
-    {
-      "severity": "error",
-      "rule": "circular-dependency",
-      "file_path": "specification/feature-a_design.md",
-      "line": null,
-      "message": "Circular dependency detected: spec-feature-a \u2192 spec-feature-a",
-      "details": "spec-feature-a \u2192 spec-feature-a"
+      "message": "Circular dependency detected: prd-feature-a → prd-feature-b → prd-feature-a",
+      "details": "prd-feature-a → prd-feature-b → prd-feature-a"
     },
     {
       "severity": "error",
@@ -43,9 +35,9 @@
     {
       "severity": "error",
       "rule": "duplicate-id",
-      "file_path": "specification/feature-a_design.md",
+      "file_path": "specification/feature-a_spec.md",
       "line": null,
-      "message": "Duplicate document ID 'spec-feature-a' (also in specification/feature-a_spec.md)",
+      "message": "Duplicate document ID 'spec-feature-a' (also in specification/feature-a_design.md)",
       "details": "spec-feature-a"
     },
     {
@@ -65,7 +57,7 @@
       "details": "FR-999"
     }
   ],
-  "error_count": 4,
+  "error_count": 3,
   "warning_count": 4,
   "files_checked": 5
 }
