@@ -1,3 +1,3 @@
 """SDD CLI - AI-SDD Workflow Document Management Tool."""
 
-__version__ = "0.2.1"
+__version__ = "1.0.0"

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-03-02
+
+### Added
+
+- **`sdd-cli lint`**: New document linting command for validating `.sdd/` documents
+  - Checks frontmatter field validity (required fields, format, allowed values)
+  - Detects broken `depends-on` references and circular dependencies
+  - Validates document naming conventions and directory placement
+  - Supports `--format` option (`text` / `json`) for CI integration
+  - Exit code `1` when lint errors are found for use in pre-commit hooks
+- **Lint error overlay in dependency visualization**: `sdd-cli visualize` now displays lint errors directly on the dependency graph
+  - Error/warning badges shown on document nodes
+  - Toggle button to show/hide lint annotations
+  - Color-coded severity indicators (error: red, warning: yellow)
+
 ## [0.2.1] - 2026-03-02
 
 ### Fixed
