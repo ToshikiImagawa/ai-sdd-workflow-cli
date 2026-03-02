@@ -203,6 +203,42 @@ class TestFilterToLeafTargets:
         assert "specification/a_spec.md" in result
         assert "requirement/a.md" not in result
 
+    def test_order_independent_with_task_first(self, tmp_path):
+        """Task doc listed first in documents should not affect _filter_to_leaf_targets.
+
+        Before the 2-pass fix, if a task doc appeared before its spec/req targets
+        in self.documents, _filter_to_leaf_targets would run with incomplete
+        dependency data and fail to remove ancestors.
+        """
+        # Create files for link resolution
+        req_file = tmp_path / "requirement" / "auth.md"
+        req_file.parent.mkdir(parents=True)
+        req_file.write_text("# Auth")
+        spec_file = tmp_path / "specification" / "auth_spec.md"
+        spec_file.parent.mkdir(parents=True)
+        spec_file.write_text("# Auth Spec")
+
+        # Task doc listed FIRST (before spec/requirement)
+        docs = [
+            _doc(
+                "task/T-1/index.md",
+                "task",
+                "T-1",
+                "task",
+                links=["../../requirement/auth.md", "../../specification/auth_spec.md"],
+            ),
+            _doc("requirement/auth.md", "requirement", "auth"),
+            _doc("specification/auth_spec.md", "spec", "auth", "specification"),
+        ]
+        analyzer = DependencyAnalyzer(docs, tmp_path)
+        deps = analyzer.analyze()
+        link_deps = [(s, t) for s, t, lt in deps if lt == "link"]
+
+        # spec→requirement is an implicit edge, so requirement is an ancestor.
+        # _filter_to_leaf_targets should keep only spec.
+        assert ("task/T-1/index.md", "specification/auth_spec.md") in link_deps
+        assert ("task/T-1/index.md", "requirement/auth.md") not in link_deps
+
 
 # ---------------------------------------------------------------------------
 # analyze(): depends-on with full document ID (prefixed)
@@ -279,3 +315,56 @@ class TestFullIdDependsOn:
         deps = DependencyAnalyzer(docs, tmp_path).analyze()
         explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
         assert ("specification/sale-state-display_design.md", "specification/sale-state_spec.md") in explicit
+
+
+# ---------------------------------------------------------------------------
+# analyze(): transitive redundant edge removal for explicit edges
+# ---------------------------------------------------------------------------
+
+
+class TestTransitiveExplicitEdgeRemoval:
+    def test_transitive_explicit_removed(self, tmp_path):
+        """A→B→C chain: A depends_on [B, C] → A→C is redundant and removed."""
+        docs = [
+            _doc("requirement/c.md", "requirement", "c"),
+            _doc("requirement/b.md", "requirement", "b", depends_on=["c"]),
+            _doc("requirement/a.md", "requirement", "a", depends_on=["b", "c"]),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("requirement/a.md", "requirement/b.md") in explicit
+        assert ("requirement/a.md", "requirement/c.md") not in explicit
+
+    def test_non_transitive_explicit_preserved(self, tmp_path):
+        """A→B, A→C (no B→C relation) → both preserved."""
+        docs = [
+            _doc("requirement/b.md", "requirement", "b"),
+            _doc("requirement/c.md", "requirement", "c"),
+            _doc("requirement/a.md", "requirement", "a", depends_on=["b", "c"]),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        assert ("requirement/a.md", "requirement/b.md") in explicit
+        assert ("requirement/a.md", "requirement/c.md") in explicit
+
+    def test_transitive_via_implicit_removes_explicit(self, tmp_path):
+        """pay_spec→pay_req(implicit), pay_req→auth_req(explicit), pay_spec→auth_req(explicit)
+        → pay_spec→auth_req is redundant (reachable via pay_req)."""
+        docs = [
+            _doc("requirement/auth.md", "requirement", "auth"),
+            _doc("requirement/pay.md", "requirement", "pay", depends_on=["auth"]),
+            _doc(
+                "specification/pay_spec.md",
+                "spec",
+                "pay",
+                "specification",
+                depends_on=["auth"],
+            ),
+        ]
+        deps = DependencyAnalyzer(docs, tmp_path).analyze()
+        explicit = [(s, t) for s, t, lt in deps if lt == "explicit"]
+        # pay_spec has implicit→pay_req and explicit→auth_req
+        # pay_req has explicit→auth_req
+        # Chain: pay_spec→pay_req→auth_req, so pay_spec→auth_req is redundant
+        assert ("requirement/pay.md", "requirement/auth.md") in explicit
+        assert ("specification/pay_spec.md", "requirement/auth.md") not in explicit

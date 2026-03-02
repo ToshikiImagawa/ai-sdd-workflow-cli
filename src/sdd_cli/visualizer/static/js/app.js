@@ -73,6 +73,45 @@ document.querySelectorAll('.tab-button').forEach(button => {
     });
 });
 
+// Update lint summary badge in controls bar
+function updateLintSummary(graphData) {
+    const lintIssues = graphData.lintIssues || {};
+    let errorCount = 0;
+    let warningCount = 0;
+    for (const issues of Object.values(lintIssues)) {
+        for (const issue of issues) {
+            if (issue.severity === 'error') errorCount++;
+            else if (issue.severity === 'warning') warningCount++;
+        }
+    }
+
+    const summaryEl = document.getElementById('lint-summary');
+    const headerEl = document.querySelector('.header');
+
+    // Update header style based on lint status
+    if (headerEl) {
+        headerEl.classList.remove('lint-has-errors', 'lint-has-warnings');
+        if (errorCount > 0) {
+            headerEl.classList.add('lint-has-errors');
+        } else if (warningCount > 0) {
+            headerEl.classList.add('lint-has-warnings');
+        }
+    }
+
+    if (!summaryEl) return;
+
+    if (errorCount === 0 && warningCount === 0) {
+        summaryEl.style.display = 'none';
+        return;
+    }
+
+    const parts = [];
+    if (errorCount > 0) parts.push(`<span class="lint-badge lint-badge-error">${errorCount} errors</span>`);
+    if (warningCount > 0) parts.push(`<span class="lint-badge lint-badge-warning">${warningCount} warnings</span>`);
+    summaryEl.innerHTML = parts.join(' ');
+    summaryEl.style.display = 'inline';
+}
+
 // Single graph mode
 async function loadSingleData() {
     try {
@@ -83,6 +122,9 @@ async function loadSingleData() {
         document.getElementById('graph-title').textContent = graphData.title || 'SDD Dependency Graph';
         document.getElementById('graph-subtitle').textContent = graphData.subtitle || 'Interactive dependency graph visualization';
         document.getElementById('single-title').textContent = graphData.title || 'SDD Dependency Graph';
+
+        // Update lint summary
+        updateLintSummary(graphData);
 
         singleDataLoaded = true;
         initializeAfterLoad('mermaid-diagram', nodeMetadata);

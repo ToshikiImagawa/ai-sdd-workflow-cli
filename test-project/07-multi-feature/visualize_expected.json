@@ -124,11 +124,6 @@
     "edges": [
       {
         "source": "requirement/dashboard.md",
-        "target": "requirement/user-auth.md",
-        "type": "explicit"
-      },
-      {
-        "source": "requirement/dashboard.md",
         "target": "requirement/user-profile.md",
         "type": "explicit"
       },
@@ -293,11 +288,6 @@
       }
     ],
     "edges": [
-      {
-        "source": "requirement/dashboard.md",
-        "target": "requirement/user-auth.md",
-        "type": "explicit"
-      },
       {
         "source": "requirement/dashboard.md",
         "target": "requirement/user-profile.md",
