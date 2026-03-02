@@ -17,6 +17,7 @@ _TEST_PROJECTS = [
     "05-nested-features",
     "06-minimal",
     "07-multi-feature",
+    "08-lint-errors",
 ]
 
 _ENV_VARS = ["SDD_ROOT", "SDD_REQUIREMENT_DIR", "SDD_SPECIFICATION_DIR", "SDD_TASK_DIR"]
