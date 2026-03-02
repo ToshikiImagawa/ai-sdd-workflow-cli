@@ -23,15 +23,27 @@ class TestRunLint:
 
         write_md(
             req / "auth.md",
-            frontmatter={"id": "prd-auth", "title": "Auth", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01"},
+            frontmatter={
+                "id": "prd-auth",
+                "title": "Auth",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+            },
             body="# Auth\n\nFR-001: Login feature\n",
         )
         write_md(
             spec / "auth_spec.md",
-            frontmatter={"id": "spec-auth", "title": "Auth Spec", "type": "spec", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01",
-                         "depends-on": ["prd-auth"]},
+            frontmatter={
+                "id": "spec-auth",
+                "title": "Auth Spec",
+                "type": "spec",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+                "depends-on": ["prd-auth"],
+            },
             body="# Auth Spec\n\nCovers FR-001.\n\n[auth.md](../requirement/auth.md)\n",
         )
         return tmp_path
@@ -48,16 +60,28 @@ class TestRunLint:
         req.mkdir(parents=True)
         write_md(
             req / "a.md",
-            frontmatter={"id": "prd-a", "title": "A", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01",
-                         "depends-on": ["prd-b"]},
+            frontmatter={
+                "id": "prd-a",
+                "title": "A",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+                "depends-on": ["prd-b"],
+            },
             body="# A",
         )
         write_md(
             req / "b.md",
-            frontmatter={"id": "prd-b", "title": "B", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01",
-                         "depends-on": ["prd-a"]},
+            frontmatter={
+                "id": "prd-b",
+                "title": "B",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+                "depends-on": ["prd-a"],
+            },
             body="# B",
         )
         output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
@@ -70,8 +94,14 @@ class TestRunLint:
         req.mkdir(parents=True)
         write_md(
             req / "a.md",
-            frontmatter={"id": "prd-a", "title": "A", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01"},
+            frontmatter={
+                "id": "prd-a",
+                "title": "A",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+            },
             body="# A\n\n[missing](missing.md)\n",
         )
         _output, has_errors = run_lint(tmp_path, json_output=False, quiet=False)
@@ -85,14 +115,26 @@ class TestRunLint:
         task.mkdir(parents=True)
         write_md(
             req / "a.md",
-            frontmatter={"id": "prd-a", "title": "A", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01"},
+            frontmatter={
+                "id": "prd-a",
+                "title": "A",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+            },
             body="# A",
         )
         write_md(
             task / "tasks.md",
-            frontmatter={"id": "task-x", "title": "Task", "type": "task", "status": "pending",
-                         "created": "2026-01-01", "updated": "2026-01-01"},
+            frontmatter={
+                "id": "task-x",
+                "title": "Task",
+                "type": "task",
+                "status": "pending",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+            },
             body="# Tasks",
         )
         output, _has_errors = run_lint(tmp_path, json_output=False, quiet=False)
@@ -124,8 +166,14 @@ class TestLintCli:
         req.mkdir(parents=True)
         write_md(
             req / "a.md",
-            frontmatter={"id": "prd-a", "title": "A", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01"},
+            frontmatter={
+                "id": "prd-a",
+                "title": "A",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+            },
             body="# A",
         )
         return tmp_path
@@ -148,16 +196,28 @@ class TestLintCli:
         req.mkdir(parents=True)
         write_md(
             req / "a.md",
-            frontmatter={"id": "prd-a", "title": "A", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01",
-                         "depends-on": ["prd-b"]},
+            frontmatter={
+                "id": "prd-a",
+                "title": "A",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+                "depends-on": ["prd-b"],
+            },
             body="# A",
         )
         write_md(
             req / "b.md",
-            frontmatter={"id": "prd-b", "title": "B", "type": "prd", "status": "draft",
-                         "created": "2026-01-01", "updated": "2026-01-01",
-                         "depends-on": ["prd-a"]},
+            frontmatter={
+                "id": "prd-b",
+                "title": "B",
+                "type": "prd",
+                "status": "draft",
+                "created": "2026-01-01",
+                "updated": "2026-01-01",
+                "depends-on": ["prd-a"],
+            },
             body="# B",
         )
         runner = CliRunner()

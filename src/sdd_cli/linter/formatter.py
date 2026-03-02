@@ -36,9 +36,7 @@ def _format_text(result: LintResult) -> str:
     error_count = result["error_count"]
     warning_count = result["warning_count"]
     files_checked = result["files_checked"]
-    lines.append(
-        f"Found {error_count} errors, {warning_count} warnings in {files_checked} files"
-    )
+    lines.append(f"Found {error_count} errors, {warning_count} warnings in {files_checked} files")
 
     return "\n".join(lines)
 

@@ -257,9 +257,7 @@ class TestCheckIdIntegrity:
     def test_orphan_reference(self):
         docs = [
             sample_doc_record("requirement/a.md", doc_id="prd-a", directory="requirement", file_type="requirement"),
-            sample_doc_record(
-                "specification/b_spec.md", doc_id="spec-b", directory="specification", file_type="spec"
-            ),
+            sample_doc_record("specification/b_spec.md", doc_id="spec-b", directory="specification", file_type="spec"),
         ]
         parsed = [
             sample_parsed_data(
@@ -275,9 +273,7 @@ class TestCheckIdIntegrity:
     def test_code_block_excluded(self):
         docs = [
             sample_doc_record("requirement/a.md", doc_id="prd-a", directory="requirement", file_type="requirement"),
-            sample_doc_record(
-                "specification/b_spec.md", doc_id="spec-b", directory="specification", file_type="spec"
-            ),
+            sample_doc_record("specification/b_spec.md", doc_id="spec-b", directory="specification", file_type="spec"),
         ]
         parsed = [
             sample_parsed_data(doc_id="prd-a", content="# Requirements\n\nFR-001: Login", file_type="requirement"),
