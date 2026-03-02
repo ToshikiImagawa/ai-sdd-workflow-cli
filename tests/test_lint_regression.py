@@ -37,6 +37,14 @@ def _load_expected(project_name: str) -> dict:
         return json.load(f)
 
 
+def _issue_sort_key(issue: dict) -> tuple:
+    """Sort key for deterministic issue comparison across platforms.
+
+    File scan order varies by OS, so issues must be sorted before comparison.
+    """
+    return (issue.get("file_path", ""), issue.get("rule", ""), issue.get("message", ""))
+
+
 @pytest.mark.parametrize("project_name", _TEST_PROJECTS)
 def test_lint_regression(project_name):
     project_dir = _TEST_PROJECTS_DIR / project_name
@@ -53,8 +61,10 @@ def test_lint_regression(project_name):
     assert actual["files_checked"] == expected["files_checked"], (
         f"{project_name}: files_checked mismatch: got {actual['files_checked']}, expected {expected['files_checked']}"
     )
-    assert len(actual["issues"]) == len(expected["issues"]), (
-        f"{project_name}: issue count mismatch: got {len(actual['issues'])}, expected {len(expected['issues'])}"
+    actual_sorted = sorted(actual["issues"], key=_issue_sort_key)
+    expected_sorted = sorted(expected["issues"], key=_issue_sort_key)
+    assert len(actual_sorted) == len(expected_sorted), (
+        f"{project_name}: issue count mismatch: got {len(actual_sorted)}, expected {len(expected_sorted)}"
     )
-    for i, (act, exp) in enumerate(zip(actual["issues"], expected["issues"])):
+    for i, (act, exp) in enumerate(zip(actual_sorted, expected_sorted)):
         assert act == exp, f"{project_name}: issue #{i} mismatch at {exp.get('file_path')}"

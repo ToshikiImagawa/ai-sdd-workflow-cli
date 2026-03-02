@@ -4,16 +4,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from helpers import sample_doc_record, sample_parsed_data, write_md
+
 from sdd_cli.linter.checks import (
     check_broken_links,
     check_circular_dependencies,
     check_id_integrity,
     check_required_fields,
 )
-
 
 # ── check_circular_dependencies ──────────────────────────────────────
 
@@ -264,7 +262,9 @@ class TestCheckIdIntegrity:
             ),
         ]
         parsed = [
-            sample_parsed_data(doc_id="prd-a", content="# Requirements\n\nFR-001: Login feature", file_type="requirement"),
+            sample_parsed_data(
+                doc_id="prd-a", content="# Requirements\n\nFR-001: Login feature", file_type="requirement"
+            ),
             sample_parsed_data(doc_id="spec-b", content="# Spec\n\nThis covers FR-001 and FR-099.", file_type="spec"),
         ]
         issues = check_id_integrity(docs, parsed)
