@@ -2,7 +2,7 @@
 id: "spec-document-lint"
 title: "ドキュメント静的解析コマンド 抽象仕様書"
 type: "spec"
-status: "draft"
+status: "approved"
 sdd-phase: "specify"
 created: "2026-03-02"
 updated: "2026-03-02"

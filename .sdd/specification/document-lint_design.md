@@ -2,9 +2,9 @@
 id: "design-document-lint"
 title: "ドキュメント静的解析コマンド 技術設計書"
 type: "design"
-status: "draft"
+status: "approved"
 sdd-phase: "plan"
-impl-status: "not-implemented"
+impl-status: "implemented"
 created: "2026-03-02"
 updated: "2026-03-02"
 depends-on: ["spec-document-lint"]
@@ -26,15 +26,15 @@ category: "document-quality"
 
 # 1. 実装ステータス
 
-**ステータス:** 🔴 未実装
+**ステータス:** 🟢 実装完了
 
 | モジュール/機能 | ステータス | 備考 |
 |:--|:--|:--|
-| `commands/lint.py` | 🔴 | CLI サブコマンド定義 |
-| `linter/checks.py` | 🔴 | 4 種類のチェックロジック |
-| `linter/formatter.py` | 🔴 | テキスト/JSON 出力フォーマッター |
-| `linter/__init__.py` | 🔴 | パッケージ初期化 |
-| テスト | 🔴 | ユニットテスト + 統合テスト |
+| `commands/lint.py` | 🟢 | CLI サブコマンド定義 + run_lint オーケストレーション |
+| `linter/checks.py` | 🟢 | 4 種類のチェックロジック（循環依存・リンク検証・必須フィールド・ID整合性） |
+| `linter/formatter.py` | 🟢 | テキスト/JSON 出力フォーマッター |
+| `linter/__init__.py` | 🟢 | パッケージ初期化 |
+| テスト | 🟢 | ユニットテスト 26 件 + 統合テスト 12 件（全 38 件パス） |
 
 ---
 

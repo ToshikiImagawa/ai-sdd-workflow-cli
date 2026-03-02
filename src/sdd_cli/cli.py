@@ -64,6 +64,30 @@ def init(root, env):
 
 @main.command()
 @root_option
+@click.option("--json", "json_output", is_flag=True, default=False, help="Output results in JSON format")
+@click.option("--quiet", is_flag=True, default=False, help="Suppress output when no issues found")
+def lint(root, json_output, quiet):
+    """Run static analysis on SDD documents.
+
+    Checks for circular dependencies, broken links, missing required fields,
+    and ID integrity issues in .sdd/ documents.
+
+    Examples:
+        sdd-cli lint
+        sdd-cli lint --json
+        sdd-cli lint --root /path/to/project --quiet
+    """
+    from sdd_cli.commands.lint import run_lint
+
+    output, has_errors = run_lint(root, json_output, quiet)
+    if output:
+        click.echo(output)
+    if has_errors:
+        raise SystemExit(1)
+
+
+@main.command()
+@root_option
 @click.option(
     "--quiet",
     is_flag=True,
