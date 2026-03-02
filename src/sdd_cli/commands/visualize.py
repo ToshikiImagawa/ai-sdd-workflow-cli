@@ -79,9 +79,7 @@ def generate_visualization(
 
     # Build in-memory JSON data for the server
     json_data = {}
-    json_data["dependency-graph.json"] = _build_graph_data(
-        graph, title, subtitle, lint_issues_by_file
-    )
+    json_data["dependency-graph.json"] = _build_graph_data(graph, title, subtitle, lint_issues_by_file)
 
     # If --output specifies a path, write to file
     if output:
