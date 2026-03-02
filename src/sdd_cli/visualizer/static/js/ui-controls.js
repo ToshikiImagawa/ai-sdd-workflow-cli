@@ -168,6 +168,26 @@ function showNodeDetail(nodeId, nodeData) {
         ? nodeData.links.map(l => `<span class="parent-tag">${l}</span>`).join(' ')
         : 'N/A';
 
+    // Build lint issues section
+    let lintHtml = '';
+    const issues = nodeData.lintIssues || [];
+    if (issues.length > 0) {
+        const issueItems = issues.map(issue => {
+            const severityClass = issue.severity === 'error' ? 'lint-error' : 'lint-warning';
+            const icon = issue.severity === 'error' ? '🔴' : '🟡';
+            return `<div class="lint-issue ${severityClass}">
+                <span class="lint-severity">${icon} ${issue.severity}</span>
+                <span class="lint-rule">${issue.rule}</span>
+                <div class="lint-message">${issue.message}</div>
+            </div>`;
+        }).join('');
+        lintHtml = `
+        <div class="detail-item">
+            <div class="detail-label">Lint Issues (${issues.length})</div>
+            <div class="detail-value lint-issues-list">${issueItems}</div>
+        </div>`;
+    }
+
     const detailContent = document.getElementById('detail-content');
     detailContent.innerHTML = `
         <h2>${nodeData.title || nodeId}</h2>
@@ -191,6 +211,7 @@ function showNodeDetail(nodeId, nodeData) {
             <div class="detail-label">Parent</div>
             <div class="detail-value">${parentHtml}</div>
         </div>
+        ${lintHtml}
     `;
     document.getElementById('overlay').classList.add('active');
     document.getElementById('node-detail').classList.add('active');

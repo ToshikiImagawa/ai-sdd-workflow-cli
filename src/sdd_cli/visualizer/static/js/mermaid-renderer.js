@@ -50,6 +50,7 @@ function generateMermaidCode(graphData) {
 
     const nodes = graphData.nodes || [];
     const edges = graphData.edges || [];
+    const lintIssues = graphData.lintIssues || {};
 
     const colors = getNodeColors();
 
@@ -67,10 +68,22 @@ function generateMermaidCode(graphData) {
         lines.push("");
     }
 
-    // Generate node definitions
+    // Generate node definitions with lint badges
     for (const node of nodes) {
         const nodeId = sanitizeNodeId(node.id);
-        const title = (node.title || node.id).replace(/"/g, '\\"');
+        let title = (node.title || node.id).replace(/"/g, '\\"');
+
+        // Add lint badge if issues exist for this node
+        const nodeIssues = lintIssues[node.id] || [];
+        if (nodeIssues.length > 0) {
+            const errorCount = nodeIssues.filter(i => i.severity === "error").length;
+            const warnCount = nodeIssues.filter(i => i.severity === "warning").length;
+            const badge = [];
+            if (errorCount > 0) badge.push(`E:${errorCount}`);
+            if (warnCount > 0) badge.push(`W:${warnCount}`);
+            if (badge.length > 0) title += ` [${badge.join(' ')}]`;
+        }
+
         lines.push(`    ${nodeId}["${title}"]`);
     }
 
@@ -137,9 +150,48 @@ function generateMermaidCode(graphData) {
         }
     }
 
+    // Add ghost nodes for unresolved dependencies (max 10)
+    const ghostNodes = new Set();
+    for (const issues of Object.values(lintIssues)) {
+        for (const issue of issues) {
+            if (issue.rule === "unresolved-dependency") {
+                // Extract unresolved ID from message
+                const match = issue.message.match(/Unresolved depends-on reference: (.+)/);
+                if (match) {
+                    ghostNodes.add(match[1]);
+                }
+            }
+            if (ghostNodes.size >= 10) break;
+        }
+        if (ghostNodes.size >= 10) break;
+    }
+
+    if (ghostNodes.size > 0) {
+        lines.push("");
+        lines.push("    %% Ghost nodes (unresolved dependencies)");
+        for (const ghostId of ghostNodes) {
+            const ghostNodeId = sanitizeNodeId("ghost_" + ghostId);
+            lines.push(`    ${ghostNodeId}["${ghostId} ❓"]`);
+        }
+
+        // Add edges from source nodes to ghost nodes
+        for (const [filePath, issues] of Object.entries(lintIssues)) {
+            for (const issue of issues) {
+                if (issue.rule === "unresolved-dependency") {
+                    const match = issue.message.match(/Unresolved depends-on reference: (.+)/);
+                    if (match && ghostNodes.has(match[1])) {
+                        const sourceId = sanitizeNodeId(filePath);
+                        const ghostNodeId = sanitizeNodeId("ghost_" + match[1]);
+                        lines.push(`    ${sourceId} --x ${ghostNodeId}`);
+                    }
+                }
+            }
+        }
+    }
+
     lines.push("");
 
-    // Generate styles
+    // Generate styles with lint-aware stroke colors
     for (const node of nodes) {
         const nodeId = sanitizeNodeId(node.id);
         let color;
@@ -148,12 +200,34 @@ function generateMermaidCode(graphData) {
         } else {
             color = colors[node.file_type] || colors.default;
         }
-        lines.push(`    style ${nodeId} fill:${color},stroke:${colors.stroke},color:${colors.textColor}`);
+
+        // Check lint issues for this node to apply error/warning stroke
+        const nodeIssues = lintIssues[node.id] || [];
+        const hasError = nodeIssues.some(i => i.severity === "error");
+        const hasWarning = nodeIssues.some(i => i.severity === "warning");
+
+        let strokeColor = colors.stroke;
+        let strokeWidth = "1px";
+        if (hasError) {
+            strokeColor = "#d32f2f";
+            strokeWidth = "3px";
+        } else if (hasWarning) {
+            strokeColor = "#f9a825";
+            strokeWidth = "2px";
+        }
+
+        lines.push(`    style ${nodeId} fill:${color},stroke:${strokeColor},stroke-width:${strokeWidth},color:${colors.textColor}`);
+    }
+
+    // Ghost node styles (dashed border, faded background)
+    for (const ghostId of ghostNodes) {
+        const ghostNodeId = sanitizeNodeId("ghost_" + ghostId);
+        lines.push(`    style ${ghostNodeId} fill:${colors.empty},stroke:${colors.emptyStroke},stroke-dasharray: 5 5,color:${colors.textColor}`);
     }
 
     // Add CONSTITUTION style
     if (!hasConstitution && nodes.length > 0) {
-        lines.push(`    style CONSTITUTION fill:${colors.constitution},stroke:${colors.stroke},color:${colors.textColor}`);
+        lines.push(`    style CONSTITUTION fill:${colors.constitution},stroke:${colors.stroke},stroke-width:1px,color:${colors.textColor}`);
     }
 
     return lines.join("\n");
@@ -186,6 +260,7 @@ async function loadGraphData(dataUrl, elementId, renderDivId, metadata) {
     const graphData = await response.json();
 
     // Build node metadata
+    const lintIssues = graphData.lintIssues || {};
     for (const node of graphData.nodes) {
         const nodeId = sanitizeNodeId(node.id);
         metadata[nodeId] = {
@@ -193,7 +268,8 @@ async function loadGraphData(dataUrl, elementId, renderDivId, metadata) {
             path: node.id,
             directory: node.directory,
             featureId: node.feature_id || 'N/A',
-            links: node.links || []
+            links: node.links || [],
+            lintIssues: lintIssues[node.id] || []
         };
     }
     buildParentMap(graphData, metadata);
