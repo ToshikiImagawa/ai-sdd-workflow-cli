@@ -63,6 +63,9 @@ class DependencyAnalyzer:
         """
         self.dependencies = []
 
+        # Pass 1: explicit + implicit + parent-child (all documents)
+        # These must be fully populated before Pass 2, because _filter_to_leaf_targets
+        # reads self.dependencies to determine ancestor relationships.
         for doc in self.documents:
             file_path = doc["file_path"]
 
@@ -86,19 +89,22 @@ class DependencyAnalyzer:
                 if parent_doc:
                     self.dependencies.append((file_path, parent_doc["file_path"], EDGE_IMPLICIT))
 
-            # 4. Dependencies from markdown links (task files only)
-            # Task files use links to reference their parent spec/requirement docs.
-            # Only keep edges to the deepest nodes in the dependency chain.
-            if doc.get("file_type") == FILE_TYPE_TASK and doc.get("links"):
-                targets = []
-                for link in doc["links"]:
-                    target = self._resolve_relative_link(file_path, link)
-                    if target:
-                        targets.append(target)
-                # Filter to leaf targets only
-                leaf_targets = self._filter_to_leaf_targets(targets)
-                for target in leaf_targets:
-                    self.dependencies.append((file_path, target, EDGE_LINK))
+        # Pass 2: link edges (task documents only)
+        # _filter_to_leaf_targets uses self.dependencies to BFS ancestor chains,
+        # so it requires all explicit/implicit edges to be present.
+        for doc in self.documents:
+            if doc.get("file_type") != FILE_TYPE_TASK or not doc.get("links"):
+                continue
+            file_path = doc["file_path"]
+            targets = []
+            for link in doc["links"]:
+                target = self._resolve_relative_link(file_path, link)
+                if target:
+                    targets.append(target)
+            # Filter to leaf targets only
+            leaf_targets = self._filter_to_leaf_targets(targets)
+            for target in leaf_targets:
+                self.dependencies.append((file_path, target, EDGE_LINK))
 
         # Post-processing
         self.dependencies = self._deduplicate_edges(self.dependencies)

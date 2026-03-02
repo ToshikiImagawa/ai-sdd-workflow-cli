@@ -203,6 +203,42 @@ class TestFilterToLeafTargets:
         assert "specification/a_spec.md" in result
         assert "requirement/a.md" not in result
 
+    def test_order_independent_with_task_first(self, tmp_path):
+        """Task doc listed first in documents should not affect _filter_to_leaf_targets.
+
+        Before the 2-pass fix, if a task doc appeared before its spec/req targets
+        in self.documents, _filter_to_leaf_targets would run with incomplete
+        dependency data and fail to remove ancestors.
+        """
+        # Create files for link resolution
+        req_file = tmp_path / "requirement" / "auth.md"
+        req_file.parent.mkdir(parents=True)
+        req_file.write_text("# Auth")
+        spec_file = tmp_path / "specification" / "auth_spec.md"
+        spec_file.parent.mkdir(parents=True)
+        spec_file.write_text("# Auth Spec")
+
+        # Task doc listed FIRST (before spec/requirement)
+        docs = [
+            _doc(
+                "task/T-1/index.md",
+                "task",
+                "T-1",
+                "task",
+                links=["../../requirement/auth.md", "../../specification/auth_spec.md"],
+            ),
+            _doc("requirement/auth.md", "requirement", "auth"),
+            _doc("specification/auth_spec.md", "spec", "auth", "specification"),
+        ]
+        analyzer = DependencyAnalyzer(docs, tmp_path)
+        deps = analyzer.analyze()
+        link_deps = [(s, t) for s, t, lt in deps if lt == "link"]
+
+        # spec→requirement is an implicit edge, so requirement is an ancestor.
+        # _filter_to_leaf_targets should keep only spec.
+        assert ("task/T-1/index.md", "specification/auth_spec.md") in link_deps
+        assert ("task/T-1/index.md", "requirement/auth.md") not in link_deps
+
 
 # ---------------------------------------------------------------------------
 # analyze(): depends-on with full document ID (prefixed)
