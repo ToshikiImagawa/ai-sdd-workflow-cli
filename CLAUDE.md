@@ -104,7 +104,7 @@ uv build
 
 GitHub Actions (`.github/workflows/ci.yml`):
 - **Lint**: Ubuntu / Python 3.13 で `ruff check`, `ruff format --check`, `mypy`
-- **Test**: Ubuntu + macOS × Python 3.9, 3.11, 3.13 のマトリックス
+- **Test**: Ubuntu + macOS + Windows × Python 3.9, 3.11, 3.13 のマトリックス
 
 ## コードスタイル
 
