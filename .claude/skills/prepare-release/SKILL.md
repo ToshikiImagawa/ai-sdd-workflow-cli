@@ -46,6 +46,8 @@ $ARGUMENTS
 |:---|:---|
 | `pyproject.toml` | `version` |
 | `src/sdd_cli/__init__.py` | `__version__` |
+| `tests/test_init.py` | `assert __version__ == "VERSION"` |
+| `tests/test_cli.py` | `assert "VERSION" in result.output` |
 
 ## Processing Flow
 
@@ -140,15 +142,19 @@ CHANGELOG ファイルに対して以下を実行する:
 
 ### Step 7: Update Version Manifests
 
-2箇所のバージョンフィールドをすべて新バージョンに更新する:
+4箇所のバージョンフィールドをすべて新バージョンに更新する:
 
 1. `pyproject.toml` → `version = "NEW_VERSION"`
 2. `src/sdd_cli/__init__.py` → `__version__ = "NEW_VERSION"`
+3. `tests/test_init.py` → `assert __version__ == "NEW_VERSION"`
+4. `tests/test_cli.py` → `assert "NEW_VERSION" in result.output`
 
 **更新方法:**
 
 - `pyproject.toml`: Edit tool で `version = "OLD_VERSION"` → `version = "NEW_VERSION"` に置換
 - `__init__.py`: Edit tool で `__version__ = "OLD_VERSION"` → `__version__ = "NEW_VERSION"` に置換
+- `tests/test_init.py`: Edit tool で `== "OLD_VERSION"` → `== "NEW_VERSION"` に置換
+- `tests/test_cli.py`: Edit tool で `"OLD_VERSION" in` → `"NEW_VERSION" in` に置換
 
 ### Step 8: Summary
 
