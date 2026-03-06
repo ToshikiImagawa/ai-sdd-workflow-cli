@@ -1,6 +1,6 @@
 [project]
 name = "sdd-cli"
-version = "1.0.0"
+version = "1.1.0"
 description = "CLI tool for AI-SDD workflow document management and visualization"
 readme = "README.md"
 requires-python = ">=3.9"

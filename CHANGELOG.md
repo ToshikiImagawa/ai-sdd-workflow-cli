@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-06
+
+### Fixed
+
+- **Windows path handling** - Normalized path separators to POSIX format (`/`) in parser, scanner, and analyzer, fixing document indexing and dependency resolution failures on Windows
+
 ## [1.0.0] - 2026-03-02
 
 ### Added
