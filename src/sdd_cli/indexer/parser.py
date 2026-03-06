@@ -329,7 +329,7 @@ class DocumentParser:
             return "unknown"
 
         # Fallback: infer from path string (backward compatibility)
-        path_str = str(file_path)
+        path_str = file_path.as_posix()
         file_name = file_path.name
 
         # Check if file is in task directory

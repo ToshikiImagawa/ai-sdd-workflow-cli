@@ -66,7 +66,7 @@ class DocumentScanner:
 
                 documents.append(
                     ScanResult(
-                        file_path=str(rel_path),
+                        file_path=rel_path.as_posix(),
                         file_name=file_name,
                         directory=dir_name,
                         full_path=md_file,
@@ -108,7 +108,7 @@ class DocumentScanner:
 
             documents.append(
                 ScanResult(
-                    file_path=str(rel_path),
+                    file_path=rel_path.as_posix(),
                     file_name=file_name,
                     directory=directory,
                     full_path=md_file,

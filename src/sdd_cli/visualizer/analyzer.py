@@ -286,7 +286,7 @@ class DependencyAnalyzer:
             source_dir = self.root / Path(source_path).parent
             target_path = (source_dir / link).resolve()
             rel_path = target_path.relative_to(self.root.resolve())
-            rel_path_str = str(rel_path)
+            rel_path_str = rel_path.as_posix()
 
             if self._document_exists(rel_path_str):
                 return rel_path_str
