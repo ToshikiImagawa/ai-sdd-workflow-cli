@@ -1,11 +1,26 @@
 """SQLite FTS5 index manager for SDD documents."""
 
 import json
+import re
 import sqlite3
 from pathlib import Path
 from typing import Any, Optional, cast
 
-from sdd_cli.types import DocumentInfo, DocumentRecord, ParsedDocument, SearchResult
+from sdd_cli.types import DocumentInfo, DocumentRecord, FilterCondition, ParsedDocument, SearchResult
+
+# Fields allowed in filter DSL to prevent injection via field names
+_ALLOWED_FILTER_FIELDS = frozenset({"feature_id", "status", "type", "tags", "category", "directory", "file_type"})
+
+
+def _regexp_func(pattern: str, value: Optional[str]) -> bool:
+    """SQLite REGEXP UDF backed by Python re.search().
+
+    Raises ValueError on invalid regex pattern.
+    """
+    try:
+        return bool(re.search(pattern, value or ""))
+    except re.error as e:
+        raise ValueError(f"Invalid regex pattern '{pattern}': {e}") from e
 
 
 class IndexDB:
@@ -21,6 +36,7 @@ class IndexDB:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.conn = sqlite3.connect(str(db_path))
         self.conn.row_factory = sqlite3.Row
+        self.conn.create_function("REGEXP", 2, _regexp_func)
         self._create_tables()
 
     def _create_tables(self):
@@ -137,12 +153,40 @@ class IndexDB:
 
         self.conn.commit()
 
+    def get_descendants(self, feature_id: str) -> set[str]:
+        """Iteratively traverse parent_feature_id chain and return all descendant feature_ids.
+
+        Args:
+            feature_id: Starting feature ID (excluded from result)
+
+        Returns:
+            Set of descendant feature_ids (excluding the given feature_id itself)
+        """
+        visited: set[str] = set()
+        queue = [feature_id]
+        while queue:
+            current = queue.pop()
+            if current in visited:
+                continue
+            visited.add(current)
+            cursor = self.conn.cursor()
+            cursor.execute(
+                "SELECT feature_id FROM documents_meta WHERE parent_feature_id = ?",
+                (current,),
+            )
+            children = [row[0] for row in cursor.fetchall()]
+            queue.extend(children)
+        return visited - {feature_id}
+
     def search(
         self,
         query: Optional[str] = None,
         feature_id: Optional[str] = None,
         tag: Optional[str] = None,
         directory: Optional[str] = None,
+        filters: Optional[list[FilterCondition]] = None,
+        or_operator: bool = False,
+        parent: Optional[str] = None,
         limit: int = 10,
     ) -> list[SearchResult]:
         """Search indexed documents.
@@ -152,6 +196,9 @@ class IndexDB:
             feature_id: Filter by feature ID
             tag: Filter by tag
             directory: Filter by directory type
+            filters: List of DSL filter conditions (field:op:value)
+            or_operator: If True, combine filters with OR instead of AND
+            parent: Retrieve all descendants of this feature_id
             limit: Maximum number of results
 
         Returns:
@@ -211,7 +258,7 @@ class IndexDB:
                 WHERE 1=1
             """
 
-        # Add filters
+        # Add legacy filters
         if feature_id:
             sql += " AND fts.feature_id = ?"
             params.append(feature_id)
@@ -223,6 +270,45 @@ class IndexDB:
         if directory:
             sql += " AND fts.directory = ?"
             params.append(directory)
+
+        # Resolve --parent: collect all descendant feature_ids
+        if parent is not None:
+            descendants = self.get_descendants(parent)
+            if not descendants:
+                # No descendants found; return empty result immediately
+                return []
+            placeholders = ", ".join("?" for _ in descendants)
+            sql += f" AND meta.feature_id IN ({placeholders})"
+            params.extend(sorted(descendants))
+
+        # Apply DSL filters
+        if filters:
+            filter_clauses: list[str] = []
+            for cond in filters:
+                field = cond["field"]
+                op = cond["op"]
+                value = cond["value"]
+                if field not in _ALLOWED_FILTER_FIELDS:
+                    raise ValueError(f"Invalid filter field: '{field}'. Allowed: {sorted(_ALLOWED_FILTER_FIELDS)}")
+                col = f"meta.{field}"
+                if op == "exact":
+                    filter_clauses.append(f"{col} = ?")
+                    params.append(value)
+                elif op == "contains":
+                    filter_clauses.append(f"{col} LIKE ?")
+                    params.append(f"%{value}%")
+                elif op == "regex":
+                    # Validate pattern before sending to DB
+                    try:
+                        re.compile(value)
+                    except re.error as e:
+                        raise ValueError(f"Invalid regex pattern '{value}': {e}") from e
+                    filter_clauses.append(f"REGEXP(?, {col})")
+                    params.append(value)
+            if filter_clauses:
+                joiner = " OR " if or_operator else " AND "
+                combined = joiner.join(filter_clauses)
+                sql += f" AND ({combined})"
 
         # Add ordering and limit
         if query:

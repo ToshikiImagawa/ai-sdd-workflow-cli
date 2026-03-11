@@ -122,6 +122,23 @@ def index(root, quiet):
     help="Filter by directory type",
 )
 @click.option(
+    "--filter",
+    "filter_strs",
+    multiple=True,
+    help='Filter by metadata field: "field:op:value" (op: exact/contains/regex). Repeatable.',
+)
+@click.option(
+    "--or",
+    "or_operator",
+    is_flag=True,
+    default=False,
+    help="Combine --filter conditions with OR (default: AND)",
+)
+@click.option(
+    "--parent",
+    help="Retrieve all descendant documents of the specified parent feature_id",
+)
+@click.option(
     "--format",
     "output_format",
     type=click.Choice(["text", "json"]),
@@ -139,7 +156,7 @@ def index(root, quiet):
     default=10,
     help="Maximum number of results (default: 10)",
 )
-def search(query, root, feature_id, tag, directory, output_format, output, limit):
+def search(query, root, feature_id, tag, directory, filter_strs, or_operator, parent, output_format, output, limit):
     """Search SDD documents.
 
     Performs full-text search across all indexed documents with optional
@@ -149,8 +166,17 @@ def search(query, root, feature_id, tag, directory, output_format, output, limit
         sdd-cli search "authentication"
         sdd-cli search --feature-id user-login
         sdd-cli search "login" --tag security --dir specification
+        sdd-cli search --filter "status:exact:approved"
+        sdd-cli search --filter "type:exact:spec" --filter "type:exact:design" --or
+        sdd-cli search --parent document-search
     """
-    from sdd_cli.commands.search import search_documents
+    from sdd_cli.commands.search import _parse_filter, search_documents
+    from sdd_cli.types import FilterCondition
+
+    # Parse --filter strings into FilterCondition list
+    filters: list[FilterCondition] = []
+    for f in filter_strs:
+        filters.append(_parse_filter(f))
 
     results = search_documents(
         root=root,
@@ -158,6 +184,9 @@ def search(query, root, feature_id, tag, directory, output_format, output, limit
         feature_id=feature_id,
         tag=tag,
         directory=directory,
+        filters=filters or None,
+        or_operator=or_operator,
+        parent=parent,
         output_format=output_format,
         limit=limit,
     )

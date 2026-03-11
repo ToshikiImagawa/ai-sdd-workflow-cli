@@ -1,7 +1,17 @@
 """TypedDict definitions for SDD CLI data structures."""
 
 from pathlib import Path
-from typing import Optional, TypedDict
+from typing import Literal, Optional, TypedDict
+
+MatchOp = Literal["exact", "contains", "regex"]
+
+
+class FilterCondition(TypedDict):
+    """Parsed structure of --filter "field:op:value" argument."""
+
+    field: str
+    op: MatchOp
+    value: str
 
 
 class DocumentInfo(TypedDict):

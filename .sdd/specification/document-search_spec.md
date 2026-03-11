@@ -2,19 +2,19 @@
 id: spec-document-search
 title: ドキュメント検索機能 抽象仕様書
 type: spec
-status: approved
+status: draft
 created: 2026-02-24
-updated: 2026-02-24
+updated: 2026-03-12
 sdd-phase: specify
 depends-on: [prd-document-search]
-tags: [search, cli, fts5, query, filter]
+tags: [search, cli, fts5, query, filter, filter-dsl, parent-child, regex]
 ---
 
 # ドキュメント検索機能
 
 **ドキュメント種別:** 抽象仕様書 (Spec)
 **SDDフェーズ:** Specify (仕様化)
-**最終更新日:** 2026-02-23
+**最終更新日:** 2026-03-12
 **関連 Design Doc:** [document-search_design.md](document-search_design.md)
 **関連 PRD:** [document-search.md](../requirement/document-search.md)
 
@@ -33,11 +33,12 @@ AI-SDD Workflow (AI-driven Specification-Driven Development) では、`.sdd/` �
 本機能は `sdd-cli search` コマンドとして実装され、以下の検索機能を提供する:
 
 1. **全文検索**: FTS5 MATCH によるキーワード検索（trigram tokenizer で日本語対応）
-2. **フィルタ検索**: feature_id / tag / directory によるメタデータ絞り込み
-3. **柔軟な出力**: text（人間可読）/ json（プログラム連携用）形式での結果出力
-4. **明確なエラーハンドリング**: インデックス未構築時・結果なし時の適切なメッセージ
-
-クエリなしでのフィルタのみ検索にも対応し、複数フィルタは AND 条件で結合される。
+2. **フィルタ検索**: feature_id / tag / directory によるメタデータ絞り込み（従来互換）
+3. **フィルタ DSL**: `--filter "field:op:value"` 形式で任意のメタデータフィールドに完全一致・部分一致・正規表現マッチを指定
+4. **論理演算子**: 複数フィルタの AND（デフォルト）/ OR 結合（`--or` フラグ、異なるフィールド間も可）
+5. **親子関係トラバーサル**: `--parent` で `parent_feature_id` チェーンを再帰的に辿り全子孫ドキュメントを取得
+6. **柔軟な出力**: text（人間可読）/ json（プログラム連携用）形式での結果出力
+7. **明確なエラーハンドリング**: インデックス未構築時・結果なし時・不正入力時の適切なメッセージ
 
 ---
 
@@ -60,6 +61,11 @@ AI-SDD Workflow (AI-driven Specification-Driven Development) では、`.sdd/` �
 | FR-011 | `--limit` で結果件数の上限を設定する（デフォルト 10） | Must | UR-003: 結果量の制御 |
 | FR-012 | インデックス DB が存在しない場合に明確なエラーメッセージを返す | Must | UR-004: 未構築時のユーザーガイダンス |
 | FR-013 | タグの JSON 文字列を json.loads() でパースし Python リストとして返却する | Must | UR-003: 構造化されたタグデータの提供 |
+| FR-014 | `--filter "field:op:value"` DSL 構文で任意のメタデータフィールドにフィルタを指定する | Must | UR-005/UR-007: 高度な絞り込み |
+| FR-015 | `--or` フラグで全 `--filter` 条件を OR 結合する（異なるフィールド間も可）。デフォルトは AND | Must | UR-005: 論理演算子のサポート |
+| FR-016 | `--parent` で `parent_feature_id` チェーンを再帰的に辿り全子孫ドキュメントを取得する | Must | UR-006: 親子関係トラバーサル |
+| FR-017 | `op=regex` 時にメタデータフィールド（feature_id/status/type/tags/category/directory/file_type）に正規表現マッチを適用する | Must | UR-007: 正規表現マッチ |
+| FR-018 | 不正な正規表現パターンはエラーメッセージを stderr に出力しコード 1 で終了する | Must | UR-004/UR-007: 明確なエラーハンドリング |
 
 ## 3.2. 非機能要件 (Non-Functional Requirements)
 
@@ -82,9 +88,12 @@ AI-SDD Workflow (AI-driven Specification-Driven Development) では、`.sdd/` �
 |:--------|:-------------|:---|:---------|:-----|
 | `sdd-cli search` | `QUERY` | str (任意) | なし | 全文検索クエリ |
 | | `--root` | Path | カレントディレクトリ | プロジェクトルートディレクトリ |
-| | `--feature-id` | str | なし | feature_id 完全一致フィルタ |
-| | `--tag` | str | なし | タグ部分一致フィルタ |
-| | `--dir` | Choice[requirement, specification, task] | なし | ディレクトリタイプフィルタ |
+| | `--feature-id` | str | なし | feature_id 完全一致フィルタ（従来互換） |
+| | `--tag` | str | なし | タグ部分一致フィルタ（従来互換） |
+| | `--dir` | Choice[requirement, specification, task] | なし | ディレクトリタイプフィルタ（従来互換） |
+| | `--filter` | str (複数指定可) | なし | DSL フィルタ `"field:op:value"` 形式 |
+| | `--or` | flag | False（AND） | `--filter` 条件を OR 結合に切り替える |
+| | `--parent` | str | なし | 全子孫を再帰取得する親 feature_id |
 | | `--format` | Choice[text, json] | text | 出力形式 |
 | | `--output` | Path | なし | 出力先ファイルパス |
 | | `--limit` | int | 10 | 結果件数上限 |
@@ -93,13 +102,22 @@ AI-SDD Workflow (AI-driven Specification-Driven Development) では、`.sdd/` �
 
 | パッケージ | モジュール | メンバー | 概要 |
 |:---------|:---------|:--------|:-----|
-| commands | search | `search_documents(root, query, feature_id, tag, directory, output_format, limit) -> str` | 検索実行・結果フォーマット |
-| indexer | db | `IndexDB.search(query, feature_id, tag, directory, limit) -> list[SearchResult]` | FTS5 検索クエリの実行 |
+| commands | search | `search_documents(root, query, feature_id, tag, directory, filters, or_operator, parent, output_format, limit) -> str` | 検索実行・結果フォーマット |
+| indexer | db | `IndexDB.search(query, feature_id, tag, directory, filters, or_operator, parent, limit) -> list[SearchResult]` | FTS5 検索クエリの実行 |
 
 ## 4.3. 型定義
 
 ```python
-from typing import Optional, TypedDict
+from typing import Literal, Optional, TypedDict
+
+# フィルタ DSL の op に指定できるマッチ種別
+MatchOp = Literal["exact", "contains", "regex"]
+
+class FilterCondition(TypedDict):
+    """--filter "field:op:value" をパースした構造体"""
+    field: str   # 対象フィールド名
+    op: MatchOp  # マッチ種別
+    value: str   # フィルタ値
 
 class SearchResult(TypedDict):
     file_path: str
@@ -110,6 +128,12 @@ class SearchResult(TypedDict):
     feature_id: str
     parent_feature_id: Optional[str]
     tags: list[str]
+    id: Optional[str]
+    type: Optional[str]
+    status: Optional[str]
+    created: Optional[str]
+    updated: Optional[str]
+    category: Optional[str]
     snippet: Optional[str]
 ```
 
@@ -125,7 +149,12 @@ class SearchResult(TypedDict):
 | snippet | FTS5 の snippet() 関数が生成する、マッチ箇所の前後文脈付き抜粋テキスト |
 | rank | FTS5 が算出する検索結果のスコア値。値が小さいほど関連度が高い |
 | feature_id | ドキュメントが属する機能を識別する ID |
+| parent_feature_id | ドキュメントが属する親機能の feature_id。階層構造の親子関係を表す |
 | SearchResult | 検索結果を表す TypedDict 型 |
+| FilterCondition | フィルタ DSL をパースした構造体。field/op/value を保持する |
+| MatchOp | フィルタのマッチ種別。`exact`（完全一致）/ `contains`（部分一致）/ `regex`（正規表現）|
+| フィルタ DSL | `--filter "field:op:value"` 形式のフィルタ指定構文 |
+| 再帰トラバーサル | parent_feature_id チェーンを反復的に辿り全子孫ドキュメントを収集する処理 |
 | XDG Base Directory | Linux/macOS のディレクトリ配置標準仕様 |
 
 ---
@@ -153,6 +182,24 @@ sdd-cli search "テスト" --limit 5
 
 # フィルタのみ（クエリなし）
 sdd-cli search --dir requirement --feature-id document-indexing
+
+# フィルタ DSL: 完全一致
+sdd-cli search --filter "status:exact:approved"
+
+# フィルタ DSL: 正規表現
+sdd-cli search --filter "feature_id:regex:^document-.*"
+
+# フィルタ DSL: OR 結合（同一フィールド）
+sdd-cli search --filter "tag:contains:cli" --filter "tag:contains:search" --or
+
+# フィルタ DSL: OR 結合（異なるフィールド）
+sdd-cli search --filter "type:exact:spec" --filter "directory:exact:requirement" --or
+
+# 親子関係トラバーサル
+sdd-cli search --parent document-indexing
+
+# 親子トラバーサル + 全文検索の組み合わせ
+sdd-cli search "認証" --parent auth
 ```
 
 ---
@@ -213,6 +260,55 @@ sequenceDiagram
     end
 ```
 
+## 7.3. フィルタ DSL フロー
+
+```mermaid
+sequenceDiagram
+    participant User as 開発者
+    participant CLI as sdd-cli search
+    participant Search as search_documents()
+    participant DB as IndexDB.search()
+
+    User ->> CLI: sdd-cli search --filter "field:op:value" [--or]
+    CLI ->> Search: search_documents(filters=[FilterCondition(...)], or_operator=True/False)
+    Search ->> DB: search(filters=[...], or_operator=...)
+    DB ->> DB: FilterCondition をパース
+    alt op = exact
+        DB ->> DB: field = ? (完全一致)
+    else op = contains
+        DB ->> DB: field LIKE ? (部分一致)
+    else op = regex
+        DB ->> DB: REGEXP(field, ?) (Python UDF)
+    end
+    alt or_operator = True
+        DB ->> DB: (cond1 OR cond2 OR ...)
+    else or_operator = False
+        DB ->> DB: cond1 AND cond2 AND ...
+    end
+    DB -->> Search: list[SearchResult]
+    Search -->> User: フォーマット済み結果
+```
+
+## 7.4. 親子関係トラバーサルフロー
+
+```mermaid
+sequenceDiagram
+    participant User as 開発者
+    participant Search as search_documents()
+    participant DB as IndexDB.search()
+
+    User ->> Search: search_documents(parent="feature-x")
+    Search ->> DB: get_descendants("feature-x")
+    loop 再帰トラバーサル
+        DB ->> DB: SELECT feature_id WHERE parent_feature_id = current
+        DB ->> DB: 子の feature_id を次の探索対象に追加
+    end
+    DB -->> Search: 全子孫 feature_id のセット
+    Search ->> DB: search(filters=[feature_id IN descendants])
+    DB -->> Search: list[SearchResult]
+    Search -->> User: フォーマット済み結果
+```
+
 ---
 
 # 8. 制約事項
@@ -222,12 +318,15 @@ sequenceDiagram
 - tags の LIKE フィルタはスペース区切り文字列に対する部分一致のため、短いタグ名で意図しないマッチが発生する可能性がある
 - 検索対象は `sdd-cli index` で事前にインデックス構築されたドキュメントに限定される
 - ファイルパス操作は `pathlib.Path` を使用し、パストラバーサル攻撃を防止する必要がある (T-003 準拠)
-- すべての SQL クエリはパラメータ化クエリ（`?` プレースホルダー）を使用し、SQL インジェクションを防止する必要がある (T-002 準拠)
+- すべての SQL クエリはパラメータ化クエリ（`?` プレースホルダー）を使用し、SQL インジェクションを防止する必要がある (T-002 準拠)（フィルタ DSL のユーザー入力も同様）
 - AI-SDD Workflow プラグインとの互換性を維持する必要がある (B-001 準拠)
+- 正規表現マッチはメタデータフィールドのみ対象。コンテンツフィールドへの適用は対象外
+- 正規表現マッチは全件走査となるためインデックスが利用されず、大量ドキュメント時にパフォーマンスが低下する可能性がある
+- 親子再帰トラバーサルは Python 側で反復クエリを実行するため、深いネストでは複数回の DB クエリが発生する
 
 ---
 
 ## PRD Reference
 
 - Corresponding PRD: `.sdd/requirement/document-search.md`
-- Covered Requirements: UR-001, UR-002, UR-003, UR-004, FR-001, FR-002, FR-003, FR-004, FR-005, FR-006, FR-007, FR-008, FR-009, FR-010, FR-011, FR-012, FR-013, NFR-001, NFR-002, NFR-003, NFR-004, NFR-005
+- Covered Requirements: UR-001, UR-002, UR-003, UR-004, UR-005, UR-006, UR-007, FR-001, FR-002, FR-003, FR-004, FR-005, FR-006, FR-007, FR-008, FR-009, FR-010, FR-011, FR-012, FR-013, FR-014, FR-015, FR-016, FR-017, FR-018, NFR-001, NFR-002, NFR-003, NFR-004, NFR-005, NFR-006
