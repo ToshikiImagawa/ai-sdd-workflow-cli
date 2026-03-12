@@ -18,6 +18,9 @@ AI-SDD Workflow のドキュメント管理 CLI ツール。
 - **プロジェクト初期化**: `.sdd-config.json` の生成と SDD 環境変数のエクスポート
 - **インデックス構築**: `.sdd/` 配下のドキュメントを SQLite FTS5 でインデックス化
 - **全文検索**: キーワード、feature ID、タグによる高速検索
+- **フィルタ DSL**: `--filter "field:op:value"` による柔軟なメタデータフィルタ（完全一致 / 部分一致 / 正規表現）
+- **OR 検索**: `--or` フラグで複数フィルタ条件を OR 結合
+- **親子関係トラバーサル**: `--parent` で指定した feature の全子孫ドキュメントを取得
 - **依存関係可視化**: ドキュメント間の依存関係をインタラクティブ HTML ビューアで表示
 - **キャッシュ管理**: プロジェクト別キャッシュの一覧・削除
 
@@ -91,6 +94,21 @@ sdd-cli search "ログイン" --format json --output results.json
 
 # 結果数を制限
 sdd-cli search "ログイン" --limit 5
+
+# メタデータフィールドで絞り込み（完全一致）
+sdd-cli search --filter "status:exact:implemented"
+
+# メタデータフィールドで絞り込み（部分一致）
+sdd-cli search --filter "type:contains:spec"
+
+# メタデータフィールドで絞り込み（正規表現）
+sdd-cli search --filter "feature_id:regex:^auth-"
+
+# 複数フィルタを OR で結合
+sdd-cli search --filter "type:exact:spec" --filter "type:exact:design" --or
+
+# 親 feature の全子孫ドキュメントを取得
+sdd-cli search --parent auth
 ```
 
 ### 依存関係可視化
@@ -149,15 +167,30 @@ sdd-cli cache clean --all
 
 ### `sdd-cli search [QUERY]`
 
-| オプション                                      | 説明                                 |
-|--------------------------------------------|------------------------------------|
-| `--root DIRECTORY`                         | プロジェクトルートディレクトリ（デフォルト: カレントディレクトリ） |
-| `--feature-id TEXT`                        | Feature ID でフィルタ                   |
-| `--tag TEXT`                               | タグでフィルタ                            |
-| `--dir [requirement\|specification\|task]` | ディレクトリタイプでフィルタ                     |
-| `--format [text\|json]`                    | 出力形式（デフォルト: text）                  |
-| `--output PATH`                            | 出力ファイルパス（デフォルト: stdout）            |
-| `--limit INTEGER`                          | 最大結果数（デフォルト: 10）                   |
+| オプション                                      | 説明                                                                                  |
+|--------------------------------------------|--------------------------------------------------------------------------------------|
+| `--root DIRECTORY`                         | プロジェクトルートディレクトリ（デフォルト: カレントディレクトリ）                                                  |
+| `--feature-id TEXT`                        | Feature ID でフィルタ                                                                    |
+| `--tag TEXT`                               | タグでフィルタ                                                                             |
+| `--dir [requirement\|specification\|task]` | ディレクトリタイプでフィルタ                                                                      |
+| `--filter TEXT`                            | メタデータフィールドで絞り込み: `"field:op:value"`（op: `exact`/`contains`/`regex`）。複数指定可。 |
+| `--or`                                     | `--filter` 条件を OR で結合（デフォルト: AND）                                                   |
+| `--parent TEXT`                            | 指定した feature ID の全子孫ドキュメントを取得                                                       |
+| `--format [text\|json]`                    | 出力形式（デフォルト: text）                                                                   |
+| `--output PATH`                            | 出力ファイルパス（デフォルト: stdout）                                                             |
+| `--limit INTEGER`                          | 最大結果数（デフォルト: 10）                                                                    |
+
+#### `--filter` で指定できるフィールド
+
+| フィールド名     | 説明               |
+|------------|------------------|
+| `status`   | ドキュメントのステータス     |
+| `type`     | ドキュメントタイプ        |
+| `feature_id` | Feature ID       |
+| `tags`     | タグ               |
+| `category` | カテゴリ             |
+| `directory` | ディレクトリタイプ        |
+| `file_type` | ファイルタイプ分類        |
 
 ### `sdd-cli visualize`
 
