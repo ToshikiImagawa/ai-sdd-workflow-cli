@@ -4,8 +4,8 @@ title: ドキュメント検索機能 要求仕様書
 type: prd
 status: approved
 created: 2026-02-24
-updated: 2026-02-24
-tags: [search, cli, fts5, query]
+updated: 2026-03-12
+tags: [search, cli, fts5, query, filter-dsl, parent-child, regex]
 ---
 
 # ドキュメント検索機能 要求仕様書
@@ -14,8 +14,7 @@ tags: [search, cli, fts5, query]
 
 本ドキュメントは、sdd-cli のドキュメント検索機能に関する要求仕様書（PRD）です。
 
-SQLite FTS5 によるインデックス済みドキュメントに対して全文検索を行い、フィルタ（feature_id, tag,
-directory）と組み合わせて結果を取得する機能を対象とします。CLI コマンド `sdd-cli search` がこの機能のエントリーポイントです。
+SQLite FTS5 によるインデックス済みドキュメントに対して全文検索を行い、フィルタ DSL（`--filter "field:op:value"`）・論理演算子（AND/OR）・親子関係トラバーサル（`--parent`）と組み合わせて結果を取得する機能を対象とします。CLI コマンド `sdd-cli search` がこの機能のエントリーポイントです。
 
 ---
 
@@ -65,20 +64,34 @@ flowchart LR
         UC5(["インデックス存在確認"])
         UC6(["スニペット生成"])
         UC7(["スコアソート"])
+        UC8(["フィルタDSL指定"])
+        UC9(["論理演算子結合"])
+        UC10(["親子関係トラバーサル"])
+        UC11(["マッチ種別選択"])
     end
 
     Developer --- UC1
     Developer --- UC2
+    Developer --- UC8
+    Developer --- UC10
     UC1 -.->|" &lt;&lt;include&gt;&gt; "| UC5
     UC2 -.->|" &lt;&lt;include&gt;&gt; "| UC5
+    UC8 -.->|" &lt;&lt;include&gt;&gt; "| UC5
+    UC10 -.->|" &lt;&lt;include&gt;&gt; "| UC5
     UC1 -.->|" &lt;&lt;include&gt;&gt; "| UC6
     UC1 -.->|" &lt;&lt;include&gt;&gt; "| UC7
     UC1 -.->|" &lt;&lt;include&gt;&gt; "| UC3
     UC2 -.->|" &lt;&lt;include&gt;&gt; "| UC3
+    UC8 -.->|" &lt;&lt;include&gt;&gt; "| UC11
+    UC8 -.->|" &lt;&lt;include&gt;&gt; "| UC9
+    UC8 -.->|" &lt;&lt;include&gt;&gt; "| UC3
+    UC10 -.->|" &lt;&lt;include&gt;&gt; "| UC3
     UC4 -.->|" &lt;&lt;extend&gt;&gt; "| UC3
     UC5 --- IndexDB
     UC1 --- IndexDB
     UC2 --- IndexDB
+    UC8 --- IndexDB
+    UC10 --- IndexDB
     classDef actor fill: #4a148c, stroke: #ba68c8, color: #fff
     classDef usecase fill: #bf360c, stroke: #ff8a65, color: #fff
     class Developer,IndexDB actor
@@ -102,6 +115,15 @@ flowchart LR
 | 開発者   | フィルタ検索 (UC2)     | `--feature-id`/`--tag`/`--dir` オプションで絞り込み検索する |
 | -     | インデックス存在確認 (UC5) | 検索実行前にインデックス DB の存在を確認し、未構築時はエラーを返す           |
 
+### フィルタ DSL・論理演算子・親子トラバーサル
+
+| Actor | Use Case              | Description                                                              |
+|:------|:----------------------|:-------------------------------------------------------------------------|
+| 開発者   | フィルタ DSL 指定 (UC8)     | `--filter "field:op:value"` 形式で任意のメタデータフィールドにフィルタを指定する                  |
+| 開発者   | 論理演算子結合 (UC9)         | `--or` フラグで複数の `--filter` 条件を OR 結合する（デフォルト AND）。異なるフィールド間の OR も可       |
+| 開発者   | 親子関係トラバーサル (UC10)     | `--parent` で指定した feature_id を持つドキュメントの全子孫を再帰的に取得する                      |
+| -     | マッチ種別選択 (UC11)        | `op` に `exact`（完全一致）/ `contains`（部分一致）/ `regex`（正規表現）を指定する               |
+
 ### 結果出力
 
 | Actor | Use Case       | Description                          |
@@ -117,10 +139,18 @@ flowchart LR
     - FTS5 rank によるスコア順ソート
     - FTS5 snippet() によるスニペット生成（50 文字）
 - フィルタリング
-    - `--feature-id`: feature_id 完全一致フィルタ
-    - `--tag`: タグ部分一致フィルタ（LIKE）
-    - `--dir`: ディレクトリタイプフィルタ（requirement/specification/task）
-    - 複数フィルタの AND 結合
+    - `--feature-id`: feature_id 完全一致フィルタ（従来互換）
+    - `--tag`: タグ部分一致フィルタ（LIKE）（従来互換）
+    - `--dir`: ディレクトリタイプフィルタ（requirement/specification/task）（従来互換）
+    - 複数フィルタの AND 結合（デフォルト）
+- フィルタ DSL（拡張）
+    - `--filter "field:op:value"`: 任意メタデータフィールドへのフィルタ指定
+    - `op` に `exact`（完全一致）/ `contains`（部分一致）/ `regex`（正規表現）を指定可能
+    - 対象フィールド: `feature_id`, `status`, `type`, `tags`, `category`, `directory`, `file_type`
+    - `--or` フラグ: 全 `--filter` 条件を OR 結合（異なるフィールド間も可）
+    - 不正な正規表現パターンはエラーメッセージを出力しコード 1 で終了
+- 親子関係トラバーサル
+    - `--parent <feature_id>`: `parent_feature_id` チェーンを再帰的に辿り全子孫ドキュメントを取得
 - 結果出力
     - text 形式出力（デフォルト）
     - json 形式出力（`--format json`）
@@ -135,6 +165,8 @@ flowchart LR
 # 3. 要求図（SysML Requirements Diagram）
 
 ## 3.1. 全体要求図
+
+> **注意**: 本図はトップレベルの代表的な要求を示す俯瞰図です。全要求の完全なリストはセクション 4（要求の詳細説明）を参照してください。詳細図（3.2〜3.5）に各カテゴリの完全な要求定義を記載しています。
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
@@ -230,18 +262,87 @@ requirementDiagram
         verifymethod: test
     }
 
+    requirement Advanced_Filter {
+        id: UR_005
+        text: "開発者は --filter DSL で任意のメタデータフィールドに対して AND/OR・マッチ種別を指定して絞り込める"
+        risk: high
+        verifymethod: test
+    }
+
+    requirement Parent_Child_Traversal {
+        id: UR_006
+        text: "開発者は --parent で指定した機能の全子孫ドキュメントを再帰的に取得できる"
+        risk: medium
+        verifymethod: test
+    }
+
+    requirement Match_Type_Selection {
+        id: UR_007
+        text: "開発者はフィールドごとに完全一致・部分一致・正規表現のマッチ種別を選択できる"
+        risk: medium
+        verifymethod: test
+    }
+
+    functionalRequirement Filter_DSL {
+        id: FR_014
+        text: "--filter 'field:op:value' 形式でメタデータフィールドへのフィルタを指定する"
+        risk: high
+        verifymethod: test
+    }
+
+    functionalRequirement OR_Operator {
+        id: FR_015
+        text: "--or フラグで全 --filter 条件を OR 結合する（異なるフィールド間も可）"
+        risk: medium
+        verifymethod: test
+    }
+
+    functionalRequirement Recursive_Parent_Traversal {
+        id: FR_016
+        text: "--parent で parent_feature_id チェーンを再帰的に辿り全子孫ドキュメントを取得する"
+        risk: medium
+        verifymethod: test
+    }
+
+    functionalRequirement Regex_Match {
+        id: FR_017
+        text: "op=regex 時に Python re モジュールでメタデータフィールドに正規表現マッチを適用する"
+        risk: high
+        verifymethod: test
+    }
+
+    functionalRequirement Invalid_Regex_Error {
+        id: FR_018
+        text: "不正な正規表現パターンはエラーメッセージを stderr に出力しコード 1 で終了する"
+        risk: low
+        verifymethod: test
+    }
+
     Full_Text_Search - contains -> FTS5_Match_Query
     Filtered_Search - contains -> Feature_Id_Filter
     Filtered_Search - contains -> Tag_Filter
     Filtered_Search - contains -> Directory_Filter
+    Advanced_Filter - contains -> Filter_DSL
+    Advanced_Filter - contains -> OR_Operator
+    Advanced_Filter - contains -> Regex_Match
+    Match_Type_Selection - contains -> Regex_Match
+    Match_Type_Selection - derives -> Filter_DSL
+    Parent_Child_Traversal - contains -> Recursive_Parent_Traversal
+    Clear_Error_Handling - contains -> Index_Existence_Check
+    Clear_Error_Handling - contains -> Invalid_Regex_Error
     Flexible_Output - contains -> Text_Output
     Flexible_Output - contains -> Json_Output
-    Clear_Error_Handling - contains -> Index_Existence_Check
     FTS5_Match_Query - derives -> Feature_Id_Filter
     FTS5_Match_Query - derives -> Tag_Filter
     FTS5_Match_Query - derives -> Directory_Filter
+    Filter_DSL - derives -> Feature_Id_Filter
+    Filter_DSL - derives -> Tag_Filter
+    OR_Operator - derives -> Filter_DSL
+    Regex_Match - derives -> Filter_DSL
+    Invalid_Regex_Error - derives -> Regex_Match
     FTS5_Trigram_Dependency - traces -> FTS5_Match_Query
     Python_Compat - traces -> FTS5_Match_Query
+    Python_Compat - traces -> Regex_Match
 ```
 
 ## 3.2. 全文検索 詳細図
@@ -368,11 +469,81 @@ requirementDiagram
         verifymethod: test
     }
 
+    functionalRequirement Json_Tag_Parse {
+        id: FR_013
+        text: "JSON 文字列として格納されたタグを json.loads() でパースし Python リストとして返す。パース失敗時は空リストにフォールバックする"
+        risk: low
+        verifymethod: test
+    }
+
     Flexible_Output - contains -> Text_Output
     Flexible_Output - contains -> Json_Output
     File_Output - derives -> Text_Output
     File_Output - derives -> Json_Output
     Result_Limit - derives -> Flexible_Output
+    Json_Tag_Parse - derives -> Json_Output
+```
+
+## 3.5. 設計制約 詳細図
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+requirementDiagram
+    functionalRequirement FTS5_Match_Query {
+        id: FR_001
+        text: "FTS5 MATCH でクエリ文字列にマッチするドキュメントを検索する"
+        risk: high
+        verifymethod: test
+    }
+
+    functionalRequirement Regex_Match {
+        id: FR_017
+        text: "op=regex 時に Python re モジュールでメタデータフィールドに正規表現マッチを適用する"
+        risk: high
+        verifymethod: test
+    }
+
+    designConstraint FTS5_Trigram_Dependency {
+        id: NFR_001
+        text: "FTS5 trigram tokenizer に依存し SQLite 3.9.0 以上が必要"
+        risk: medium
+        verifymethod: test
+    }
+
+    designConstraint Python_Compat {
+        id: NFR_002
+        text: "Python 3.9 から 3.13 で動作する"
+        risk: medium
+        verifymethod: test
+    }
+
+    designConstraint XDG_Cache_Path {
+        id: NFR_003
+        text: "インデックス DB パスは XDG Base Directory 仕様に準拠した ~/.cache/sdd-cli/{project}.{hash}/index.db を使用する"
+        risk: low
+        verifymethod: test
+    }
+
+    designConstraint Unified_Error_Handling {
+        id: NFR_004
+        text: "SDDGroup カスタムクラスにより例外は Error: {message} 形式で stderr に出力し終了コード 1 で終了する"
+        risk: medium
+        verifymethod: test
+    }
+
+    designConstraint Minimal_Runtime_Deps {
+        id: NFR_005
+        text: "検索機能のランタイム依存は click のみとし SQLite は Python 標準ライブラリを使用する"
+        risk: low
+        verifymethod: inspection
+    }
+
+    FTS5_Trigram_Dependency - traces -> FTS5_Match_Query
+    Python_Compat - traces -> FTS5_Match_Query
+    Python_Compat - traces -> Regex_Match
+    XDG_Cache_Path - traces -> FTS5_Match_Query
+    Unified_Error_Handling - traces -> FTS5_Match_Query
+    Minimal_Runtime_Deps - traces -> FTS5_Match_Query
 ```
 
 ---
@@ -419,8 +590,7 @@ found." メッセージを返す。
 
 ### FR-002: スニペット生成
 
-FTS5 の `snippet(documents_fts, 7, '...', '...', '', 50)` 関数を使用し、マッチしたコンテンツ列（content、インデックス
-7）から前後に `...` を付与した 50 文字のスニペットを生成する。クエリなし時は `substr(content, 1, 150)` で先頭 150 文字を切り出す。
+クエリ指定時は FTS5 のスニペット生成機能を用いて、マッチ箇所の前後文脈付きで 50 文字のスニペットを生成する。クエリなし時はコンテンツ先頭 150 文字を切り出す。実装詳細は `document-search_design.md` を参照。
 
 **検証方法:** テストによる検証
 
@@ -471,12 +641,7 @@ FTS5 の `snippet(documents_fts, 7, '...', '...', '', 50)` 関数を使用し、
 
 ### FR-009: json 形式出力
 
-`--format json` オプションで `json.dumps(results, indent=2, ensure_ascii=False)` による JSON 形式の出力を返す。SearchResult
-型の辞書リストをそのままシリアライズする。
-
-**含まれる機能:**
-
-- tags フィールドは JSON 文字列からパースされた Python リストとして出力される
+`--format json` オプションで JSON 形式の検索結果を出力する。tags フィールドは Python リストとして出力される。実装詳細は `document-search_design.md` を参照。
 
 **検証方法:** テストによる検証
 
@@ -500,10 +665,60 @@ FTS5 の `snippet(documents_fts, 7, '...', '...', '', 50)` 関数を使用し、
 
 **検証方法:** テストによる検証
 
+### UR-005: フィルタ DSL による高度な絞り込み
+
+開発者は `--filter "field:op:value"` 形式で任意のメタデータフィールドに対してフィルタを指定できる。`op` には `exact`（完全一致）、`contains`（部分一致）、`regex`（正規表現）を指定可能。複数の `--filter` はデフォルトで AND 結合され、`--or` フラグを付与すると OR 結合に切り替わる。OR は異なるフィールド間にも適用できる。
+
+**検証方法:** テストによる検証
+
+### UR-006: 親子関係トラバーサル
+
+開発者は `--parent <feature_id>` を指定することで、該当 feature_id を `parent_feature_id` として持つドキュメントを起点に、`parent_feature_id` チェーンを再帰的に辿り全子孫ドキュメントを取得できる。
+
+**検証方法:** テストによる検証
+
+### UR-007: マッチ種別の選択
+
+開発者はフィルタ DSL の `op` フィールドにより、フィールドごとに完全一致・部分一致・正規表現のいずれかのマッチ種別を選択できる。正規表現の適用対象はメタデータフィールド（`feature_id`, `status`, `type`, `tags`, `category`, `directory`, `file_type`）に限定される。
+
+**検証方法:** テストによる検証
+
 ### FR-013: タグの JSON パース
 
 `documents_meta` テーブルに JSON 文字列として格納されたタグを `json.loads()` でパースし、Python リストとして返却する。パース失敗時は空リスト
 `[]` にフォールバックする。
+
+**検証方法:** テストによる検証
+
+### FR-014: フィルタ DSL 構文
+
+`--filter "field:op:value"` 形式でフィルタを指定する。`field` は対象メタデータフィールド名、`op` は `exact`/`contains`/`regex` のいずれか、`value` はフィルタ値。複数の `--filter` オプションを指定可能。パース失敗時（区切り文字 `:` が 2 つ未満等）はエラーメッセージを出力しコード 1 で終了する。
+
+対象フィールド: `feature_id`, `status`, `type`, `tags`, `category`, `directory`, `file_type`
+
+**検証方法:** テストによる検証
+
+### FR-015: OR 演算子による結合
+
+`--or` フラグを指定すると、全 `--filter` 条件を `OR` で結合する。`--or` なし時はデフォルトで `AND` 結合。OR は異なるフィールド間にも適用される。従来の `--feature-id`/`--tag`/`--dir` オプションと `--filter` オプションの混在時も同様の論理で結合する。
+
+**検証方法:** テストによる検証
+
+### FR-016: 親子関係再帰トラバーサル
+
+`--parent <feature_id>` が指定された場合、`documents_meta` テーブルを再帰的にクエリし、`parent_feature_id = <feature_id>` となるドキュメントを取得、さらにそれらの `feature_id` を `parent_feature_id` として持つドキュメントを繰り返し辿り、全子孫ドキュメントを収集する。存在しない feature_id を指定した場合は空結果を返す（エラーなし）。
+
+**検証方法:** テストによる検証
+
+### FR-017: 正規表現マッチ
+
+`op=regex` 時、Python の正規表現エンジンを用いてメタデータフィールドの値に正規表現マッチを適用する。適用対象はメタデータフィールド（`feature_id`, `status`, `type`, `tags`, `category`, `directory`, `file_type`）のみ（コンテンツフィールドは対象外）。実装詳細は `document-search_design.md` を参照。
+
+**検証方法:** テストによる検証
+
+### FR-018: 不正な正規表現のエラーハンドリング
+
+`op=regex` 指定時に `re.compile()` で `re.error` が発生した場合、`"Invalid regex pattern: {pattern} - {error}"` メッセージを stderr に出力し、終了コード 1 で終了する。
 
 **検証方法:** テストによる検証
 
@@ -551,11 +766,16 @@ Python 3.9〜3.13 のすべてのバージョンで動作する。型ヒント�
 - SQLite FTS5 の trigram tokenizer を使用するため、SQLite 3.9.0 以上が必要
 - FTS5 MATCH クエリの構文は SQLite の仕様に依存する（不正な構文はランタイムエラーとなる）
 - tags の LIKE フィルタはスペース区切り文字列に対する部分一致のため、短いタグ名で意図しないマッチが発生する可能性がある
+- 正規表現マッチは SQLite の UDF として Python `re.search()` を登録して実現するため、DB 接続ごとに登録が必要
+- 正規表現フィルタはメタデータテーブル全件走査（インデックス未使用）のため、大量ドキュメント環境ではパフォーマンスが低下する可能性がある
+- 親子再帰トラバーサルは Python 側で反復クエリを実行する（SQLite の再帰 CTE を使用しない）ため、深いネストでは複数回の DB クエリが発生する
+- フィルタ DSL のユーザー入力は SQL パラメータ化クエリで処理し、SQL インジェクションを防止すること（T-002 準拠）
 
 ## 5.2. ビジネス的制約
 
 - 検索対象は `sdd-cli index` で事前にインデックス構築されたドキュメントに限定される
 - document-indexing 機能（`sdd-cli index`）が正常に動作していることが前提
+- すべての出力オプション（`--format json`/`--output`）は非対話的実行（CI/CD パイプライン）に対応すること（B-002 準拠）
 
 ---
 
@@ -597,3 +817,9 @@ Python 3.9〜3.13 のすべてのバージョンで動作する。型ヒント�
 | XDG Base Directory | Linux/macOS のディレクトリ配置標準仕様                                                                                     |
 | frontmatter        | Markdown ファイル先頭の `---` で囲まれた YAML メタデータ領域                                                                     |
 | SearchResult       | 検索結果の TypedDict 型。file_path/file_name/directory/file_type/title/feature_id/parent_feature_id/tags/snippet を含む |
+| フィルタ DSL          | `--filter "field:op:value"` 形式のフィルタ指定構文。field はメタデータフィールド名、op はマッチ種別、value はフィルタ値 |
+| op                 | フィルタ DSL のマッチ種別。`exact`（完全一致）/ `contains`（部分一致）/ `regex`（正規表現）の 3 種類 |
+| --or               | 複数の `--filter` 条件を OR 結合に切り替えるフラグ。デフォルトは AND 結合 |
+| --parent           | 指定した feature_id の全子孫ドキュメントを再帰的に取得するオプション |
+| parent_feature_id  | ドキュメントが属する親機能の feature_id。階層構造の親子関係を表す |
+| 再帰トラバーサル          | parent_feature_id チェーンを反復的に辿り、全子孫ドキュメントを収集する処理 |

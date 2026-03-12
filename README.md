@@ -19,6 +19,9 @@ and dependency visualization for specification documents.
 - **Project Init**: Generate `.sdd-config.json` and export SDD environment variables
 - **Index Building**: Index documents under `.sdd/` with SQLite FTS5
 - **Full-Text Search**: Fast search by keyword, feature ID, or tag
+- **Filter DSL**: Flexible metadata filtering with `--filter "field:op:value"` (exact / contains / regex)
+- **OR Search**: Combine multiple filter conditions with OR using `--or`
+- **Parent-Child Traversal**: Retrieve all descendant documents of a feature with `--parent`
 - **Dependency Visualization**: Interactive HTML viewer for document dependencies
 - **Cache Management**: List and clean per-project caches
 
@@ -92,6 +95,21 @@ sdd-cli search "login" --format json --output results.json
 
 # Limit results
 sdd-cli search "login" --limit 5
+
+# Filter by metadata field (exact match)
+sdd-cli search --filter "status:exact:implemented"
+
+# Filter by metadata field (partial match)
+sdd-cli search --filter "type:contains:spec"
+
+# Filter by metadata field (regex)
+sdd-cli search --filter "feature_id:regex:^auth-"
+
+# Combine multiple filters with OR
+sdd-cli search --filter "type:exact:spec" --filter "type:exact:design" --or
+
+# Retrieve all descendant documents of a parent feature
+sdd-cli search --parent auth
 ```
 
 ### Dependency Visualization
@@ -150,15 +168,30 @@ sdd-cli cache clean --all
 
 ### `sdd-cli search [QUERY]`
 
-| Option                                     | Description                                         |
-|--------------------------------------------|-----------------------------------------------------|
-| `--root DIRECTORY`                         | Project root directory (default: current directory) |
-| `--feature-id TEXT`                        | Filter by feature ID                                |
-| `--tag TEXT`                               | Filter by tag                                       |
-| `--dir [requirement\|specification\|task]` | Filter by directory type                            |
-| `--format [text\|json]`                    | Output format (default: text)                       |
-| `--output PATH`                            | Output file path (default: stdout)                  |
-| `--limit INTEGER`                          | Maximum number of results (default: 10)             |
+| Option                                     | Description                                                                                    |
+|--------------------------------------------|------------------------------------------------------------------------------------------------|
+| `--root DIRECTORY`                         | Project root directory (default: current directory)                                            |
+| `--feature-id TEXT`                        | Filter by feature ID                                                                           |
+| `--tag TEXT`                               | Filter by tag                                                                                  |
+| `--dir [requirement\|specification\|task]` | Filter by directory type                                                                       |
+| `--filter TEXT`                            | Filter by metadata field: `"field:op:value"` (op: `exact`/`contains`/`regex`). Repeatable.   |
+| `--or`                                     | Combine `--filter` conditions with OR (default: AND)                                           |
+| `--parent TEXT`                            | Retrieve all descendant documents of the specified parent feature ID                           |
+| `--format [text\|json]`                    | Output format (default: text)                                                                  |
+| `--output PATH`                            | Output file path (default: stdout)                                                             |
+| `--limit INTEGER`                          | Maximum number of results (default: 10)                                                        |
+
+#### Filterable fields for `--filter`
+
+| Field        | Description               |
+|--------------|---------------------------|
+| `status`     | Document status           |
+| `type`       | Document type             |
+| `feature_id` | Feature ID                |
+| `tags`       | Tags                      |
+| `category`   | Category                  |
+| `directory`  | Directory type            |
+| `file_type`  | File type classification  |
 
 ### `sdd-cli visualize`
 
